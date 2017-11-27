@@ -6,27 +6,27 @@ using namespace std;
 
 int main()
 {
-    char *simbol = new char[256];
+    char *symbol = new char[256];
     Stack *result = createStack();
     cout << "enter postfix string: \n";
-    cin.getline(simbol, 256, '\n');
-    int length = strlen(simbol);
+    cin.getline(symbol, 256, '\n');
+    int length = strlen(symbol);
     for (int i = 0; i < length; i++)
     {
-        if (isDigit(simbol[i]))
-            push(result, numeral(simbol[i]));
-        else if(!isSpace(simbol[i]))
+        if (isDigit(symbol[i]))
+            push(result, numeral(symbol[i]));
+        else if(!isSpace(symbol[i]))
         {
             int front = top(result);
             pop(result);
             int beforeFront = top(result);
             pop(result);
-            int resultOperation = action(simbol[i], beforeFront, front);
+            int resultOperation = action(symbol[i], beforeFront, front);
             push(result, resultOperation);
         }
     }
     cout << "result your postfix string: \n";
     cout << top(result);
-    delete[] simbol;
+    delete[] symbol;
     deleteStack(result);
 }

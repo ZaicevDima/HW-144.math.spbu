@@ -4,53 +4,53 @@
 #include "stack.h"
 using namespace std;
 
-bool isDigit(char simbol)
+bool isDigit(char symbol)
 {
-    if (simbol >= '0' && simbol <= '9')
+    if (symbol >= '0' && symbol <= '9')
         return true;
     return false;
 }
 
-bool isSpace(char simbol)
+bool isSpace(char symbol)
 {
-    return (simbol == ' ');
+    return (symbol == ' ');
 }
 
-int numeral(char simbol)
+int numeral(char symbol)
 {
-    return simbol - '0';
+    return symbol - '0';
 }
 
-int action(char simbol, int number1, int number2)
+int action(char symbol, int number1, int number2)
 {
-    if (simbol == '+')
+    if (symbol == '+')
         return number1 + number2;
 
-    if (simbol == '-')
+    if (symbol == '-')
         return number1 - number2;
 
-    if (simbol == '*')
+    if (symbol == '*')
         return number1 * number2;
 
-    if (simbol == '/')
+    if (symbol == '/')
         return number1 / number2;
 }
 
-void printResult(char* simbol)
+void printResult(char* symbol)
 {
-    int n = strlen(simbol);
+    int n = strlen(symbol);
     Stack* result = createStack();
     for (int i = 0; i < n; i++)
     {
-        if (isDigit(simbol[i]))
-            push(result, numeral(simbol[i]));
-        else if(!isSpace(simbol[i]))
+        if (isDigit(symbol[i]))
+            push(result, numeral(symbol[i]));
+        else if(!isSpace(symbol[i]))
         {
             int front = top(result);
             pop(result);
             int beforeFront = top(result);
             pop(result);
-            int resultOperation = action(simbol[i], beforeFront, front);
+            int resultOperation = action(symbol[i], beforeFront, front);
             push(result, resultOperation);
         }
     }
