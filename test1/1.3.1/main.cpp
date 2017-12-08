@@ -64,7 +64,6 @@ int main()
         {
             fout << amount <<"\n" << symbols[i] << " - ";
             amount = 1;
-
         }
     }
     fout << amount;
