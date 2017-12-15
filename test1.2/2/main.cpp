@@ -8,7 +8,7 @@ int biggest(int size1, int size2, bool* firstNumber, bool* secondNumber)
         return 1;
     if (size1 < size2)
         return 2;
-    for (int i = size1 - 1; i >= 0; i--)
+    for (int i = 0; i < size1; i--)
     {
         if (firstNumber[i] && !secondNumber[i])
             return 1;
