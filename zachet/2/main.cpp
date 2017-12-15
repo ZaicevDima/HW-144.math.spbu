@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 int main()
 {
     cout << "enter the dimensions of the matrix \n";
@@ -16,7 +15,7 @@ int main()
         cin >> n >> m;
     }
 
-    int **matrix = new int*[n];
+    int **matrix = new int* [n];
     for (int i = 0; i < m; i++)
         matrix[i] = new int [m];
 
@@ -28,7 +27,7 @@ int main()
     printSaddlePoint(matrix, n, m);
 
     for (int i = 0; i < n; i++)
-       delete [] matrix[i];
+        delete [] matrix[i];
     delete [] matrix;
 
     return 0;
