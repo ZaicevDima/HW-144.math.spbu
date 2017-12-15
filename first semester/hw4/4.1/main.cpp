@@ -43,5 +43,6 @@ int main()
     deleteStack(spiral);
     for (int i = 0; i < 100; i++)
         delete [] numbers[i];
+    delete [] numbers;
     return 0;
 }
