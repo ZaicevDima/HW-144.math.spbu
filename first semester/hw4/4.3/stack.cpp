@@ -11,8 +11,7 @@ struct Stack {
 
 void push(Stack* stack, TypeElement value)
 {
-    StackElement* newElement = new StackElement{value, stack->head};
-    stack->head = newElement;
+    stack->head = new StackElement{value, stack->head};
 }
 
 TypeElement pop(Stack* stack)

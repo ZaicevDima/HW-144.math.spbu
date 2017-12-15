@@ -7,21 +7,21 @@ using namespace std;
 
 int main()
 {
-    char *simbol = new char[256];
+    char *symbols = new char[256];
     int amount = 0;
     int i = 0;
     cout << "enter your exppression: \n";
-    cin.getline(simbol, 256);
-    amount = strlen(simbol);
+    cin.getline(symbols, 256);
+    amount = strlen(symbols);
     char *result = new char[256];
     int amountSpaces = 0;
 
-    conversionToPostfix(simbol, result, amount, amountSpaces);
+    conversionToPostfix(symbols, result, amount, amountSpaces);
     cout << "postfix form: \n";
     for (i = 0; i < amount - amountSpaces - 2; i++)
         cout << result[i] <<' ';
 
-    delete []simbol;
+    delete []symbols;
     delete []result;
 }
 
