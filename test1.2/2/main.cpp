@@ -44,4 +44,7 @@ int main()
     for (int i = 0; i < size2; i++)
         cin >> secondNumber[i];
     printBiggest(size1, size2, firstNumber, secondNumber);
+
+    delete[] firstNumber;
+    delete[] secondNumber;
 }
