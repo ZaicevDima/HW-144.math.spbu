@@ -8,12 +8,13 @@ int biggest(int size1, int size2, bool* firstNumber, bool* secondNumber)
         return 1;
     if (size1 < size2)
         return 2;
-    for (int i = 0; i < size1; i--)
+    for (int i = 0; i < size1; i++)
     {
         if (firstNumber[i] && !secondNumber[i])
             return 1;
-        else if (secondNumber[i] && !firstNumber)
+        if (secondNumber[i] && !firstNumber[i])
             return 2;
+
     }
     return 0;
 }
@@ -44,7 +45,7 @@ int main()
     for (int i = 0; i < size2; i++)
         cin >> secondNumber[i];
     printBiggest(size1, size2, firstNumber, secondNumber);
-
     delete[] firstNumber;
     delete[] secondNumber;
+    return 0;
 }
