@@ -15,9 +15,9 @@ int main()
     }
 
     cout << "enter array: \n";
-    int **numbers = new int* [100];
-    for (int i = 0; i < 100; i++)
-        numbers[i] = new int [100];
+    int **numbers = new int* [length];
+    for (int i = 0; i < length; i++)
+        numbers[i] = new int [length];
     for (int i = 0; i < length; i++)
         for (int j = 0; j < length; j++)
             cin >> numbers[i][j];
@@ -41,7 +41,7 @@ int main()
         pop(spiral);
     }
     deleteStack(spiral);
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < length; i++)
         delete [] numbers[i];
     delete [] numbers;
     return 0;
