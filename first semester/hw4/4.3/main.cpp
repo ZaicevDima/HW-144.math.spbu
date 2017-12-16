@@ -18,10 +18,9 @@ int main()
 
     conversionToPostfix(symbols, result, amount, amountSpaces);
     cout << "postfix form: \n";
-    for (i = 0; i < amount - amountSpaces - 2; i++)
+    for (i = 0; i < amount - amountSpaces; i++)
         cout << result[i] <<' ';
 
     delete []symbols;
     delete []result;
 }
-

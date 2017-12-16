@@ -1,45 +1,45 @@
 #include <iostream>
 #include "postfix.h"
 
-bool isOperator(char k)
+bool isOperator(char symbol)
 {
-    return (k == '*') || (k == '+') || (k == '-') || (k == '/');
+    return (symbol == '*') || (symbol == '+') || (symbol == '-') || (symbol == '/');
 }
 
-int prioritet (char k)
+int priority(char symbol)
 {
-    if (k == '(')
+    if (symbol == '(')
         return 0;
-    if (k == ')')
+    if (symbol == ')')
         return 1;
-    if ((k == '+') || (k == '-'))
+    if ((symbol == '+') || (symbol == '-'))
         return 2;
-    if ((k == '*') || (k == '/'))
+    if ((symbol == '*') || (symbol == '/'))
         return 3;
 }
 
-void conversionToPostfix(char* simbol, char* result, int amount, int &amountSpaces)
+void conversionToPostfix(char* symbols, char* result, int amount, int &amountSpaces)
 {
     int topIndexResult = 0;
     Stack* operations = createStack();
     for (int i = 0; i < amount; i++)
     {
-        if (simbol[i] == ' ')
+        if (symbols[i] == ' ')
             amountSpaces++;
-        else if ((!isOperator(simbol[i])) && (simbol[i] != '(') && (simbol[i] != ')'))
+        else if ((!isOperator(symbols[i])) && (symbols[i] != '(') && (symbols[i] != ')'))
         {
-            result[topIndexResult] = simbol[i];
+            result[topIndexResult] = symbols[i];
             topIndexResult++;
         }
-        else if (isOperator(simbol[i]))
+        else if (isOperator(symbols[i]))
         {
             if ((isEmpty(operations)) || (top(operations) == '('))
-                push(operations, simbol[i]);
-            else if ((!isEmpty(operations)) && (prioritet(simbol[i]) > prioritet(top(operations))))
-                push(operations, simbol[i]);
+                push(operations, symbols[i]);
+            else if ((!isEmpty(operations)) && (priority(symbols[i]) > priority(top(operations))))
+                push(operations, symbols[i]);
             else
             {
-                while ((!isEmpty(operations)) && (top(operations) != '(') && (prioritet(top(operations)) >= prioritet(simbol[i])))
+                while ((!isEmpty(operations)) && (top(operations) != '(') && (priority(top(operations)) >= priority(symbols[i])))
                 {
                     result[topIndexResult] = top(operations);
                     topIndexResult++;
@@ -47,13 +47,17 @@ void conversionToPostfix(char* simbol, char* result, int amount, int &amountSpac
                 }
                 if ((!isEmpty(operations)) && (top(operations) == '('))
                     pop(operations);
-                push(operations, simbol[i]);
+                push(operations, symbols[i]);
             }
         }
-        else if (simbol[i] == '(')
-            push(operations, simbol[i]);
-        else if (simbol[i] == ')')
+        else if (symbols[i] == '(')
         {
+            push(operations, symbols[i]);
+            amountSpaces++;
+        }
+        else if (symbols[i] == ')')
+        {
+            amountSpaces++;
             while ((!isEmpty(operations)) && (top(operations) != '(' ))
             {
                 result[topIndexResult] = top(operations);

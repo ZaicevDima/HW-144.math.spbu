@@ -2,7 +2,6 @@
 #include <iostream>
 
 typedef char TypeElement;
-
 struct Stack;
 
 Stack* createStack();
