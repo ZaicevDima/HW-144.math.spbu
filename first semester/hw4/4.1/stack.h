@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-typedef int TypeElement;
+typedef char TypeElement;
 
 struct Stack;
 
