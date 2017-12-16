@@ -5,22 +5,19 @@
 #include <stdio.h>
 using namespace std;
 
-
-
 int main()
 {
-    char *simbol = new char[256];
+    char *symbols = new char[256];
     int amount = 0;
     cout << "enter your expression: \n";
-    cin.getline(simbol, 256);
-    amount = strlen(simbol);
-    char result[256] = {};
+    cin.getline(symbols, 256);
+    amount = strlen(symbols);
+    char* result = new char[256];
     int amountSpaces = 0;
     Stack* operation = createStack();
-    conversionToPostfix(simbol, result, amount, amountSpaces);
-
+    conversionToPostfix(symbols, result, amount, amountSpaces);
     printResult(result);
 
-    delete[] simbol;
+    delete[] symbols;
     deleteStack(operation);
 }
