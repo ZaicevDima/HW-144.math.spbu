@@ -1,39 +1,39 @@
 #include "stack.h"
 
-struct StackElement {
+struct StackElement
+{
     TypeElement value;
     StackElement* next;
 };
 
-struct Stack {
+struct Stack
+{
     StackElement* head;
 };
 
 void push(Stack* stack, TypeElement value)
 {
-    StackElement* newElement = new StackElement{value, stack->head};
+    StackElement* newElement = new StackElement;
+    newElement->value = value;
+    newElement->next = stack->head;
     stack->head = newElement;
 }
 
 TypeElement pop(Stack* stack)
 {
-    if (stack->head != nullptr) {
+    if ((stack->head != nullptr) && !isEmpty(stack)) {
         TypeElement value = stack->head->value;
         StackElement* next = stack->head->next;
         delete stack->head;
         stack->head = next;
         return value;
     }
-    else
-        return {};
 }
 
 TypeElement top(Stack* stack)
 {
-    if (stack->head != nullptr)
+    if ((stack->head != nullptr) && !isEmpty(stack))
         return stack->head->value;
-    else
-        return {};
 }
 
 bool isEmpty(Stack* stack)
@@ -43,7 +43,9 @@ bool isEmpty(Stack* stack)
 
 Stack* createStack()
 {
-    return new Stack{};
+    Stack *stack = new Stack;
+    stack->head = nullptr;
+    return stack;
 }
 
 void deleteStack(Stack* stack)

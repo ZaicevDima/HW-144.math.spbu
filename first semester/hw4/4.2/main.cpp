@@ -49,7 +49,6 @@ void printTransformation(Stack* newWord)
 
 int main()
 {
-
     fin.open("in.txt");
     fout.open("out.txt");
     if (!fin.good())
@@ -59,19 +58,22 @@ int main()
     }
     char *simbols = new char[256];
     Stack* word = createStack();
-    fin.getline(simbols, 256, '\n');
-    int length = strlen(simbols);
-    for(int i = 0; i < length; i++)
+    while (!fin.eof())
     {
-        int size = i;
-        while ((simbols[size] != ' ') && (size < length))
-            size++;
-        Stack* word = createStack();
-        for (int j = i;j < size; j++)
-            push(word, simbols[j]);
-        printTransformation(word);
-        print(word);
-        i = size;
+        fin.getline(simbols, 256, ' ');
+        int length = strlen(simbols);
+        for(int i = 0; i < length; i++)
+        {
+            int size = i;
+            while ((simbols[size] != ' ') && (size < length))
+                size++;
+            Stack* word = createStack();
+            for (int j = i;j < size; j++)
+                push(word, simbols[j]);
+            printTransformation(word);
+            print(word);
+            i = size;
+        }
     }
     deleteStack(word);
     delete[] simbols;
