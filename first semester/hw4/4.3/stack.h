@@ -4,7 +4,6 @@
 typedef char TypeElement;
 
 struct Stack;
-
 Stack* createStack();
 bool isEmpty(Stack* stack);
 void push(Stack* stack, TypeElement value);

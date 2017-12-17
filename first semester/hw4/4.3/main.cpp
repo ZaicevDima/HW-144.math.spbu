@@ -1,7 +1,5 @@
 #include <iostream>
 #include <cstring>
-#include <fstream>
-#include "stack.h"
 #include "postfix.h"
 using namespace std;
 
@@ -10,7 +8,7 @@ int main()
     char *symbols = new char[256];
     int amount = 0;
     int i = 0;
-    cout << "enter your exppression: \n";
+    cout << "enter your expression: \n";
     cin.getline(symbols, 256);
     amount = strlen(symbols);
     char *result = new char[256];
@@ -23,4 +21,6 @@ int main()
 
     delete []symbols;
     delete []result;
+    return 0;
 }
+

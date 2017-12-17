@@ -21,23 +21,19 @@ void push(Stack* stack, TypeElement value)
 
 TypeElement pop(Stack* stack)
 {
-    if (stack->head != nullptr) {
+    if ((stack->head != nullptr) && !isEmpty(stack)) {
         TypeElement value = stack->head->value;
         StackElement* next = stack->head->next;
         delete stack->head;
         stack->head = next;
         return value;
     }
-    std::cout << "stack is Empty \n";
-    return -1;
 }
 
 TypeElement top(Stack* stack)
 {
-    if (stack->head != nullptr)
+    if ((stack->head != nullptr) && !isEmpty(stack))
         return stack->head->value;
-    std::cout << "stack is Empty \n";
-    return -1;
 }
 
 bool isEmpty(Stack* stack)
