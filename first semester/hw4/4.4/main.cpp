@@ -10,4 +10,5 @@ int main()
     cin.getline(symbols, 256, '\n');
     printResult(symbols);
     delete[] symbols;
+    return 0;
 }
