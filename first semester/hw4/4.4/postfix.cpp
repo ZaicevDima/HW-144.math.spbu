@@ -56,4 +56,5 @@ void printResult(char* symbols)
     }
     cout << "result your expression: \n";
     cout << top(result);
+    deleteStack(result);
 }
