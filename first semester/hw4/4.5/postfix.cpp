@@ -9,7 +9,7 @@ bool isOperator(char symbol)
     return (symbol == '*') || (symbol == '+') || (symbol == '-') || (symbol == '/');
 }
 
-int priority (char symbol)
+int priority(char symbol)
 {
     if (symbol == '(')
         return 0;
@@ -21,7 +21,57 @@ int priority (char symbol)
         return 3;
 }
 
-void conversionToPostfix(char* symbols, char* result, int amount, int &amountSpaces)
+void actionOnOperator(char symbol, char* result, Stack* operations, int& topIndexResult)
+{
+    if ((isEmpty(operations)) || (top(operations) == '('))
+        push(operations, symbol);
+    else if ((!isEmpty(operations)) && (priority(symbol) > priority(top(operations))))
+        push(operations, symbol);
+    else
+    {
+        while ((!isEmpty(operations)) && (top(operations) != '(') &&
+               (priority(top(operations)) >= priority(symbol)))
+        {
+            result[topIndexResult] = top(operations);
+            topIndexResult++;
+            pop(operations);
+        }
+        if ((!isEmpty(operations)) && (top(operations) == '('))
+            pop(operations);
+        push(operations, symbol);
+    }
+}
+
+void actionOnOpeningBracket(char symbol, Stack* operations, int& amountSpaces)
+{
+    push(operations, symbol);
+    amountSpaces++;
+}
+
+void actionOnClosingBracket(char* result, Stack* operations, int& amountSpaces, int& topIndexResult)
+{
+    amountSpaces++;
+    while ((!isEmpty(operations)) && (top(operations) != '(' ))
+    {
+        result[topIndexResult] = top(operations);
+        topIndexResult++;
+        pop(operations);
+    }
+    if (!isEmpty(operations))
+        pop(operations);
+}
+
+void actionOnRemainingOperations(char* result, Stack* operations, int& topIndexResult)
+{
+    while (!isEmpty(operations))
+    {
+        result[topIndexResult] = top(operations);
+        topIndexResult++;
+        pop(operations);
+    }
+}
+
+void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpaces)
 {
     int topIndexResult = 0;
     Stack* operations = createStack();
@@ -36,48 +86,19 @@ void conversionToPostfix(char* symbols, char* result, int amount, int &amountSpa
         }
         else if (isOperator(symbols[i]))
         {
-            if ((isEmpty(operations)) || (top(operations) == '('))
-                push(operations, symbols[i]);
-            else if ((!isEmpty(operations)) && (priority(symbols[i]) > priority(top(operations))))
-                push(operations, symbols[i]);
-            else
-            {
-                while ((!isEmpty(operations)) && (top(operations) != '(') && (priority(top(operations)) >= priority(symbols[i])))
-                {
-                    result[topIndexResult] = top(operations);
-                    topIndexResult++;
-                    pop(operations);
-                }
-                if ((!isEmpty(operations)) && (top(operations) == '('))
-                    pop(operations);
-                push(operations, symbols[i]);
-            }
+            actionOnOperator(symbols[i], result, operations, topIndexResult);
         }
         else if (symbols[i] == '(')
         {
-            push(operations, symbols[i]);
-            amountSpaces++;
+            actionOnOpeningBracket(symbols[i], operations, amountSpaces);
         }
         else if (symbols[i] == ')')
         {
-            amountSpaces++;
-            while ((!isEmpty(operations)) && (top(operations) != '(' ))
-            {
-                result[topIndexResult] = top(operations);
-                topIndexResult++;
-                pop(operations);
-            }
-            if (!isEmpty(operations))
-                pop(operations);
+            actionOnClosingBracket(result, operations, amountSpaces, topIndexResult);
         }
         if (i == amount - 1)
         {
-            while (!isEmpty(operations))
-            {
-                result[topIndexResult] = top(operations);
-                topIndexResult++;
-                pop(operations);
-            }
+            actionOnRemainingOperations(result, operations, topIndexResult);
         }
     }
     deleteStack(operations);
@@ -95,7 +116,7 @@ bool isSpace(char symbol)
     return (symbol == ' ');
 }
 
-int action(char symbol)
+int numeral(char symbol)
 {
     return symbol - '0';
 }
@@ -104,13 +125,10 @@ int action(char symbol, int number1, int number2)
 {
     if (symbol == '+')
         return number1 + number2;
-
     if (symbol == '-')
         return number1 - number2;
-
     if (symbol == '*')
         return number1 * number2;
-
     if (symbol == '/')
         return number1 / number2;
 }
@@ -122,7 +140,7 @@ void printResult(char* symbols)
     for (int i = 0; i < n; i++)
     {
         if (isDigit(symbols[i]))
-            push(result, action(symbols[i]));
+            push(result, numeral(symbols[i]));
         else if(!isSpace(symbols[i]))
         {
             int front = top(result);
@@ -135,5 +153,5 @@ void printResult(char* symbols)
     }
     cout << "result your expression: \n";
     cout << top(result);
-
+    deleteStack(result);
 }
