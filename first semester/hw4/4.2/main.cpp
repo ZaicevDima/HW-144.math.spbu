@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 ifstream fin;
 ofstream fout;
 
@@ -56,25 +55,27 @@ int main()
         cout << "error, file not opened";
         return 1;
     }
-    char *simbols = new char[256];
-    Stack* word = createStack();
+    char *symbols = new char[256];
     while (!fin.eof())
     {
-        fin.getline(simbols, 256, ' ');
-        int length = strlen(simbols);
-        for(int i = 0; i < length; i++)
+        fin.getline(symbols, 256, ' ');
+        int length = strlen(symbols);
+        for (int i = 0; i < length; i++)
         {
             int size = i;
-            while ((simbols[size] != ' ') && (size < length))
+            while ((symbols[size] != ' ') && (size < length))
                 size++;
             Stack* word = createStack();
-            for (int j = i;j < size; j++)
-                push(word, simbols[j]);
+            for (int j = i; j < size; j++)
+                push(word, symbols[j]);
             printTransformation(word);
             print(word);
             i = size;
         }
     }
+
+    fin.close();
+    fout.close();
     deleteStack(word);
-    delete[] simbols;
+    delete[] symbols;
 }
