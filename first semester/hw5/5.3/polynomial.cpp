@@ -15,7 +15,7 @@ int amountNumeral(int number)
     return amount;
 }
 
-void lengthSpace(int* lengthSimbols, int* coefficients, int degree)
+void lengthSpace(int *lengthSimbols,int *coefficients, int degree)
 {
     bool wasFirstNotZeroCoefficient = false;
     for (int i = 0; i < degree + 1; i++)
@@ -44,9 +44,9 @@ void lengthSpace(int* lengthSimbols, int* coefficients, int degree)
 }
 
 
-void printDegrees(int degree, int* coefficients)
+void printDegrees(int degree, int *coefficients)
 {
-    int* lengthSimbols = new int[degree + 1];
+    int *lengthSimbols = new int[degree + 1];
     lengthSpace(lengthSimbols, coefficients, degree);
     for (int i = 0; i < degree + 1; i++)
     {
