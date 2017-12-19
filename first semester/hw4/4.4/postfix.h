@@ -1,4 +1,4 @@
 #pragma once
 #include "stack.h"
 
-void printResult(char* symbols);
+int result(char* symbols);

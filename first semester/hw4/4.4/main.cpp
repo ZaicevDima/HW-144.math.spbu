@@ -8,7 +8,8 @@ int main()
     char *symbols = new char[256];
     cout << "enter postfix string: \n";
     cin.getline(symbols, 256, '\n');
-    printResult(symbols);
+    cout << "result your expression: \n";
+    cout << result(symbols);
+
     delete[] symbols;
-    return 0;
 }

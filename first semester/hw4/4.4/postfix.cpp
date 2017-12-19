@@ -6,14 +6,12 @@ using namespace std;
 
 bool isDigit(char symbol)
 {
-    if ((symbol >= '0') && (symbol <= '9'))
-        return true;
-    return false;
+    return (symbol >= '0') && (symbol <= '9');
 }
 
 bool isSpace(char symbol)
 {
-    return (symbol == ' ');
+    return symbol == ' ';
 }
 
 int numeral(char symbol)
@@ -36,7 +34,7 @@ int action(char symbol, int number1, int number2)
         return number1 / number2;
 }
 
-void printResult(char* symbols)
+int result(char* symbols)
 {
     int length = strlen(symbols);
     Stack* result = createStack();
@@ -54,7 +52,7 @@ void printResult(char* symbols)
             push(result, resultOperation);
         }
     }
-    cout << "result your expression: \n";
-    cout << top(result);
+    return top(result);
+
     deleteStack(result);
 }
