@@ -39,28 +39,34 @@ int main()
             add(name, number, book);
             menu();
             cin >> operation;
+            delete[] name;
+            delete[] number;
         }
         if (operation == 2)
         {
-            isError = true;
+            isError = false;
             cout << "enter name\n";
             char* name = new char[256];
             input(name);
             numberSearch(name, book);
+            menu();
+            cin >> operation;
+            delete[] name;
         }
         if (operation == 3)
         {
-            isError = true;
+            isError = false;
             cout << "enter number\n";
             char* number = new char[256];
             input(number);
             nameSearch(number, book);
             menu();
             cin >> operation;
+            delete[] number;
         }
         if (operation == 4)
         {
-            isError = true;
+            isError = false;
             upload(book);
             menu();
             cin >> operation;
