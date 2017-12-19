@@ -106,14 +106,12 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
 
 bool isDigit(char symbol)
 {
-    if (symbol >= '0' && symbol <= '9')
-        return true;
-    return false;
+    return (symbol >= '0' && symbol <= '9');
 }
 
 bool isSpace(char symbol)
 {
-    return (symbol == ' ');
+    return symbol == ' ';
 }
 
 int numeral(char symbol)
@@ -133,7 +131,7 @@ int action(char symbol, int number1, int number2)
         return number1 / number2;
 }
 
-void printResult(char* symbols)
+int resultExpression(char* symbols)
 {
     int n = strlen(symbols);
     Stack* result = createStack();
@@ -151,7 +149,7 @@ void printResult(char* symbols)
             push(result, resultOperation);
         }
     }
-    cout << "result your expression: \n";
-    cout << top(result);
+    return top(result);
+
     deleteStack(result);
 }
