@@ -1,17 +1,17 @@
 #include <iostream>
 #include <cmath>
-#include "bynary.h"
+#include "binary.h"
 using namespace std;
 
-void printBinaryTranslation(bool* bytes)
+void printBinaryTranslation(int* bytes)
 {
     for (int i = maxLength - 1; i >= 0; i--)
         cout << bytes[i];
 }
 
-bool* binaryTranslation(int number)
+int* binaryTranslation(int number)
 {
-    bool *bytes = new bool[maxLength + 1];
+    int *bytes = new int[maxLength + 1];
     fill(bytes, bytes + maxLength, 0);
     if (number < 0)
     {
@@ -28,41 +28,55 @@ bool* binaryTranslation(int number)
         length++;
     };
     return bytes;
+    delete [] bytes;
 }
 
-bool* sum(bool *number1,bool *number2)
+int* sum(int* number1, int* number2)
 {
-    bool *number = new bool[maxLength];
+    int* number = new int[maxLength];
     fill(number, number + maxLength, 0);
-    bool carry = false;
+    bool isCarry = false;
     for (int i = 0; i < maxLength; i++)
     {
-        if (carry)
+        if (isCarry)
         {
             if (!(number1[i] ^ number2[i]) && (number1[i] & number2[i]))
                 number[i] = 1;
             if ((number1[i] ^ number2[i]))
                 number[i] = 0;
             if (!(number1[i] ^ number2[i]) && !(number1[i] & number2[i]))
-                carry = false;
+            {
+                isCarry = false;
+                number[i] = 1;
+            }
             continue;
         }
         number[i] = number1[i] ^ number2[i];
         if (number1[i] & number2[i])
-            carry = true;
+            isCarry = true;
     }
 
-    if (carry)
+    if (isCarry)
     {
-        bool *overcoming = new bool[maxLength];
+        int *overcoming = new int[maxLength];
         fill(overcoming, overcoming + maxLength, 0);
         overcoming[0] = 1;
         sum(number, overcoming);
+        delete [] overcoming;
     }
+    return number;
+    delete [] number;
+}
+
+int inDecimalSystem(int* bytes)
+{
+    int number = 0;
+    for (int i = 0;i < maxLength; i++)
+        number += bytes[i] * pow(2, i);
     return number;
 }
 
-void printToDirectCode(bool* bytes)
+void printToDirectCode(int* bytes)
 {
     for (int i = maxLength - 1; i >= 0; i--)
         cout << (bytes[i] == 0);
