@@ -34,7 +34,13 @@ void add(char* name, char* number, PhoneBook *book)
 
 void upload(PhoneBook *book)
 {
-    ofstream fout("text.txt");
+    ofstream fout;
+    fout.open("book.txt");
+    if (!fout.good())
+    {
+        cout << "error, file not opened";
+        return;
+    }
     for (int i = 0; i <= book->previousIndex; i++)
         fout << book->phonebook->name << ' ' << book->phonebook->number;
     fout.close();
