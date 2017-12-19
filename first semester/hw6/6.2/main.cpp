@@ -10,28 +10,28 @@ int main()
     int m = 0;
     cin >> n >> m;
 
-    CycleList* wars = createCycle();
-    addFirst(0, wars);
-    CycleListElement* current = firstElement(wars);
+    CycleList* warriors = createCycle();
+    addFirst(0, warriors);
+    CycleListElement* current = firstElement(warriors);
     for (int i = 1; i < n; i++)
     {
-        insert(i, current, wars);
+        insert(i, current, warriors);
         current = next(current);
     }
 
-    current = firstElement(wars);
-    int amountNow = size(wars);
+    current = firstElement(warriors);
+    int amountNow = size(warriors);
     while (amountNow > 1)
     {
         current = moveNext(current, m);
-        CycleListElement* prev = previous(current);
-        remove(current, wars);
-        current = prev;
+        CycleListElement* previousWarrior = previous(current);
+        remove(current, warriors);
+        current = previousWarrior;
         amountNow--;
     }
     cout << "The last warrior is ";
-    printCycle(wars);
+    printCycle(warriors);
 
-    deleteCycle(wars);
+    deleteCycle(warriors);
     return 0;
 }
