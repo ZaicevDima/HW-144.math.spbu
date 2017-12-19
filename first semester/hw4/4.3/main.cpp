@@ -7,7 +7,6 @@ int main()
 {
     char *symbols = new char[256];
     int amount = 0;
-    int i = 0;
     cout << "enter your expression: \n";
     cin.getline(symbols, 256);
     amount = strlen(symbols);
@@ -16,7 +15,7 @@ int main()
 
     conversionToPostfix(symbols, result, amount, amountSpaces);
     cout << "postfix form: \n";
-    for (i = 0; i < amount - amountSpaces; i++)
+    for (int i = 0; i < amount - amountSpaces; i++)
         cout << result[i] <<' ';
 
     delete []symbols;
