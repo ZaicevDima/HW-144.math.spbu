@@ -15,7 +15,7 @@ void printMenu()
 
 int main()
 {
-    Tree *currentTree = createTree();
+    Tree* currentTree = createTree();
 
     printMenu();
 

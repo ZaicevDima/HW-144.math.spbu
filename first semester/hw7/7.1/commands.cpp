@@ -3,48 +3,48 @@
 
 struct Tree
 {
-    BinaryTree *tree;
+    BinaryTree* tree;
 };
 
-Tree *createTree()
+Tree* createTree()
 {
-    Tree *newTree = new Tree;
+    Tree* newTree = new Tree;
     newTree->tree = createBinaryTree();
     return newTree;
 }
 
-void addValue(Tree *currentTree, int value)
+void addValue(Tree* currentTree, int value)
 {
     add(currentTree->tree, value);
 }
 
-void popValue(Tree *currentTree, int value)
+void popValue(Tree* currentTree, int value)
 {
     remove(currentTree->tree, value);
 }
 
-bool isBelong(Tree *currentTree, int value)
+bool isBelong(Tree* currentTree, int value)
 {
     return isBelong(currentTree->tree, value);
 }
 
-void deleteTree(Tree *currentTree)
+void deleteTree(Tree* currentTree)
 {
     deleteBinaryTree(currentTree->tree);
     delete currentTree;
 }
 
-void printLeft(Tree *currentTree)
+void printLeft(Tree* currentTree)
 {
     printLeft(currentTree->tree);
 }
 
-void printRight(Tree *currentTree)
+void printRight(Tree* currentTree)
 {
     printRight(currentTree->tree);
 }
 
-void printTree(Tree *currentTree)
+void printTree(Tree* currentTree)
 {
     printTree(currentTree->tree);
 }

@@ -8,13 +8,13 @@ int const stringSize = 256;
 struct Node
 {
     int value;
-    Node *left;
-    Node *right;
+    Node* left;
+    Node* right;
 };
 
 struct BinaryTree
 {
-    Node *root;
+    Node* root;
 };
 
 BinaryTree* createBinaryTree()
@@ -50,21 +50,24 @@ void add(Node *&node, int value)
         add(node->right, value);
 }
 
-void add(BinaryTree *tree, int value)
+void add(BinaryTree* tree, int value)
 {
     add(tree->root, value);
 }
 
 void removeNode(Node *&node)
 {
-    if (node->left == nullptr && node->right == nullptr)
+    if (node == nullptr)
+        return;
+
+    if ((node->left == nullptr) && (node->right == nullptr))
     {
         delete node;
         node = nullptr;
         return;
     }
 
-    if (node->left != nullptr && node->right == nullptr)
+    if ((node->left != nullptr) && (node->right == nullptr))
     {
         Node* tempNode = node;
         node = node->left;
@@ -72,7 +75,7 @@ void removeNode(Node *&node)
         return;
     }
 
-    if (node->left == nullptr && node->right != nullptr)
+    if ((node->left == nullptr) && (node->right != nullptr))
     {
         Node* tempNode = node;
         node = node->right;
@@ -80,9 +83,9 @@ void removeNode(Node *&node)
         return;
     }
 
-    if (node->left != nullptr && node->right != nullptr)
+    if ((node->left != nullptr) && (node->right != nullptr))
     {
-        Node **tempNode = &node->left;
+        Node** tempNode = &node->left;
         while ((*tempNode)->right != nullptr)
             tempNode = &(*tempNode)->right;
         node->value = (*tempNode)->value;
@@ -107,12 +110,12 @@ void remove(Node *&node, int value)
         remove(node->left, value);
 }
 
-void remove(BinaryTree *tree, int value)
+void remove(BinaryTree* tree, int value)
 {
     remove(tree->root, value);
 }
 
-bool belong(Node* node, int value)
+bool isBelong(Node* node, int value)
 {
     if (node == nullptr)
         return false;
@@ -121,22 +124,22 @@ bool belong(Node* node, int value)
         return true;
 
     if (node->value < value)
-        belong(node->right, value);
+        isBelong(node->right, value);
     else
-        belong(node->left, value);
+        isBelong(node->left, value);
 }
 
-bool isBelong(BinaryTree *tree, int value)
+bool isBelong(BinaryTree* tree, int value)
 {
-    belong(tree->root, value);
+    isBelong(tree->root, value);
 }
 
-bool isEmpty(BinaryTree *tree)
+bool isEmpty(BinaryTree* tree)
 {
     return tree->root == nullptr;
 }
 
-void deleteTree(Node *node)
+void deleteTree(Node* node)
 {
     if (node == nullptr)
         return;
@@ -153,7 +156,7 @@ void deleteBinaryTree(BinaryTree *&tree)
     tree = nullptr;
 }
 
-void printLeftNode(Node *node)
+void printLeftNode(Node* node)
 {
     if (node == nullptr)
         return;
@@ -163,14 +166,14 @@ void printLeftNode(Node *node)
     printLeftNode(node->right);
 }
 
-void printLeft(BinaryTree *tree)
+void printLeft(BinaryTree* tree)
 {
     printLeftNode(tree->root);
 }
 
 
 
-void printRightNode(Node *node)
+void printRightNode(Node* node)
 {
     if (node == nullptr)
         return;
@@ -180,16 +183,16 @@ void printRightNode(Node *node)
     printRightNode(node->left);
 }
 
-void printRight(BinaryTree *tree)
+void printRight(BinaryTree* tree)
 {
     printRightNode(tree->root);
 }
 
-void printTreeNode(Node *node)
+void printTreeNode(Node* node)
 {
     if (node == nullptr)
     {
-        std::cout << " null";
+        std::cout << "null";
         return;
     }
 
@@ -199,7 +202,7 @@ void printTreeNode(Node *node)
     std::cout << " )";
 }
 
-void printTree(BinaryTree *tree)
+void printTree(BinaryTree* tree)
 {
     printTreeNode(tree->root);
 }
