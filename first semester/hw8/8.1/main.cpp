@@ -47,4 +47,6 @@ int main()
     for (int i = 0; i < amount; i++)
         cout << "number of student: " << children[i].numberOfPerson << " his variant number: " << children[i].numberOfWork << "\n";
 
+    delete[] children;
+    return 0;
 }
