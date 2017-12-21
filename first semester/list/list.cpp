@@ -43,10 +43,9 @@ void add(int value, List* list)
         return;
     }
     ListElement* newElement = new ListElement;
-    ListElement* tempNext = list->end->next;
 
     newElement->value = value;
-    newElement->next = tempNext;
+    newElement->next = nullptr;
     newElement->previous = list->end;
     list->end->next = newElement;
     list->end = newElement;
@@ -62,8 +61,13 @@ void pop(List* list)
         list->end = tempEnd->previous;
         delete tempEnd;
     }
+    else if (list->size == 0)
+        return;
     else
-        delete list->head;
+    {
+        list->end = nullptr;
+        list->head = nullptr;
+    }
     list->size--;
 }
 
@@ -99,18 +103,21 @@ ListElement* next(ListElement* element)
 
 int indexValue(List* list, int index)
 {
-    ListElement* tempElement = list->head;
-    for (int i = 0; i < index; i++)
-        tempElement = next(tempElement);
-    return tempElement->value;
+    if (index < list->size)
+    {
+        ListElement* currentElement = list->head;
+        for (int i = 0; i < index; i++)
+            currentElement = next(currentElement);
+        return currentElement->value;
+    }
 }
 
 void printList(List* list)
 {
-    ListElement* tempElement = list->head;
+    ListElement* currentElement = list->head;
     for (int i = 0; i < list->size; i++)
     {
-        std::cout << tempElement->value <<' ';
-        tempElement = next(tempElement);
+        std::cout << currentElement->value <<' ';
+        currentElement = next(currentElement);
     }
 }

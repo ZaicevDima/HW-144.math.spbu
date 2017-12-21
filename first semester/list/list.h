@@ -1,16 +1,21 @@
-#pragma once
 #include <iostream>
+#include "list.h"
 
-struct ListElement;
-struct List;
+using namespace std;
 
-List* createList();
-void add(int value, List* list);
-void pop(List* list);
-bool isEmpty(List* list);
-void clear(List* list);
-void deleteList(List* list);
-int size(List* list);
-ListElement* next(ListElement* element);
-int indexValue(List* list, int index);
-void printList(List* list);
+int main()
+{
+    List* list = createList();
+    for (int i = 0; i < 5; i++)
+    {
+        int element = 0;
+        cin >> element;
+        add(element, list);
+    }
+    printList(list);
+    pop(list);
+    printList(list);
+    cout << "index" << indexValue(list, 2);
+    deleteList(list);
+    return 0;
+}
