@@ -2,11 +2,11 @@
 
 using namespace std;
 
-void sort(int **array, int row, int col)
+void sort(int **array, int row, int column)
 {
-    for (int i = 0; i < col - 1; i++)
+    for (int i = 0; i < column - 1; i++)
     {
-        for (int j = 0; j < col - i - 1; j++)
+        for (int j = 0; j < column - i - 1; j++)
         {
             if (array[0][j] > array[0][j + 1])
             {
@@ -34,10 +34,12 @@ int main()
 
     cout << "enter your matrix: \n";
     for (int i = 0; i < amountRows; i++)
+    {
         for  (int j = 0; j < amountColumns; j++)
         {
             cin >> matrix[i][j];
         }
+    }
 
     sort(matrix, amountRows, amountColumns);
     cout << "sort matrix: \n";
