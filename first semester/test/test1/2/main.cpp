@@ -40,10 +40,11 @@ int main()
         }
 
     sort(matrix, amountRows, amountColumns);
+    cout << "sort matrix: \n";
 
-    for (int i = 0; i < amountColumns; i++)
+    for (int i = 0; i < amountRows; i++)
     {
-        for  (int j = 0; j < amountRows; j++)
+        for  (int j = 0; j < amountColumns; j++)
         {
             cout << matrix[i][j] << ' ';
         }
