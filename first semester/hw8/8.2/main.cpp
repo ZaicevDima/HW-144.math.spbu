@@ -9,7 +9,7 @@ int main() {
     
     printf("%s", tmp);
     
-    delete tmp;
+    delete[] tmp;
     deleteString(epic);
     delete epic;
     deleteString(win);
