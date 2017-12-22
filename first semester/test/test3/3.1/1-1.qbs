@@ -5,9 +5,7 @@ Project {
 
     CppApplication {
         consoleApplication: true
-        files: [
-            "main.cpp",
-        ]
+        files: "main.cpp"
 
         Group {     // Properties for the produced executable
             fileTagsFilter: product.type
