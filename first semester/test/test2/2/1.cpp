@@ -21,7 +21,6 @@ int reverse(int number)
         newNumber = newNumber * 10 + number % 10;
         number /= 10;
     }
-
     return newNumber;
 }
 
