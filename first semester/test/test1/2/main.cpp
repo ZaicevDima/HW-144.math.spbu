@@ -2,21 +2,21 @@
 
 using namespace std;
 
-void sort(int** array, int row, int col)
+void sort(int **array, int row, int col)
 {
     for (int i = 0; i < col - 1; i++)
     {
-        int minIndex = i;
-        for (int j = i + 1; j < col; j++)
+        for (int j = 0; j < col - i - 1; j++)
         {
-            if (array[0][j] < array[0][minIndex])
-                minIndex = j;
-        }
-
-        if (minIndex != i)
-        {
-            for (int k = 0; k < row; k++)
-                swap(array[row][i], array[row][minIndex]);
+            if (array[0][j] > array[0][j + 1])
+            {
+                for (int i = 0; i < row; i++)
+                {
+                    int temp = array[i][j];
+                    array[i][j] = array[i][j + 1];
+                    array[i][j + 1] = temp;
+                }
+            }
         }
     }
 }
@@ -41,9 +41,9 @@ int main()
 
     sort(matrix, amountRows, amountColumns);
 
-    for (int i = 0; i < amountRows; i++)
+    for (int i = 0; i < amountColumns; i++)
     {
-        for  (int j = 0; j < amountColumns; j++)
+        for  (int j = 0; j < amountRows; j++)
         {
             cout << matrix[i][j] << ' ';
         }
