@@ -55,14 +55,14 @@ void printTreeNode(Node* node)
 {
     if (node == nullptr)
     {
-        std::cout << "null";
+        std::cout << "null ";
         return;
     }
 
     std::cout << "( " << node->value << " ";
     printTreeNode(node->left);
     printTreeNode(node->right);
-    std::cout << " )";
+    std::cout << ")";
 }
 
 void printAVLTree(AVLTree* tree)
