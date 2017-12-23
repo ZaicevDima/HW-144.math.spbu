@@ -51,7 +51,7 @@ int main()
             break;
 
         case print:
-            cout << "print operarion: \n0 - Tree form \n1 - Increasing Order \n2 - Decreasing order \n";
+            cout << "print operarion: \n0 - Tree form \n1 - Increasing order \n2 - Decreasing order \n";
             cin >> value;
             switch (value)
             {
