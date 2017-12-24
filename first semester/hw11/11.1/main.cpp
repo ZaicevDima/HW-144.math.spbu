@@ -3,22 +3,19 @@
 
 using namespace std;
 
-bool isNumber(char symbol)
+bool isDigit(char symbol)
 {
     return ((symbol >= '0') && (symbol <= '9'));
 }
 
-bool isSignNextNumber(char* string, int index)
+bool isSign(char symbol)
 {
-    int size = strlen(string);
-    return ((string[index] == '+') || (string[index] == '-')) &&
-            ((index + 1 < size) && isNumber(string[index + 1]));
+    return ((symbol == '+') || (symbol == '-'));
 }
 
-bool isPointNextNumber(char* string, int index)
+bool isPoint(char symbol)
 {
-    int size = strlen(string);
-    return (string[index] == '.') && (index + 1 < size) && (isNumber(string[index + 1]));
+    return (symbol == '.');
 }
 
 bool isExponent(char symbol)
@@ -26,67 +23,89 @@ bool isExponent(char symbol)
     return (symbol == 'E');
 }
 
-bool isRealNumber(char* number)
+bool isRealNumber(char* digits)
 {
-    int state = 0;
-    int length = strlen(number);
-    for (int i = 0; i < length; i++)
+    enum {start, afterSign, integer, afterPoint, real, exponent, signE, afterSignE, realWithE, fail};
+    int state = start;
+    int i = 0;
+    while (i < strlen(digits))
     {
-        char next = number[i];
+        char current = digits[i];
         switch (state)
         {
-        case 0:
-            if (isSignNextNumber(number, i))
+        case start:
+            if (isSign(current))
+                state = afterSign;
+            else if (isDigit(current))
+                state = integer;
+            else
+                state = fail;
+            break;
+        case afterSign:
+            if (isDigit(current))
+                state = integer;
+            else
+                state = fail;
+        case integer:
+            if (isDigit(current))
+                state = integer;
+            else if (isPoint(current))
             {
-                i++;
-                state = 1;
+                state = afterPoint;
             }
-            else if (isNumber(next))
-                state = 1;
+            else if (isExponent(current))
+                state = exponent;
             else
-                return false;
+                state = fail;
             break;
-        case 1:
-            if (isNumber(next))
-                state = 1;
-            else if (isPointNextNumber(number, i))
+        case afterPoint:
+            if (isDigit(current))
+                state = real;
+            else
+                state = fail;
+            break;
+        case real:
+            if (isDigit(current))
+                state = real;
+            else if (isExponent(current))
+                state = exponent;
+            else
+                state = fail;
+            break;
+        case exponent:
+            if (isSign(current))
             {
-                i++;
-                state = 2;
+                state = signE;
             }
-            else if (isExponent(next))
-                state = 3;
+            else if (isDigit(current))
+                state = real;
             else
-                return false;
+                state = fail;
             break;
-        case 2:
-            if (isNumber(next))
-                state = 2;
-            else if (isExponent(next))
-                state = 3;
+        case signE:
+            if (isSign(current))
+                state = afterSignE;
+            else if (isDigit(current))
+                state = realWithE;
             else
-                return false;
+                state = fail;
             break;
-        case 3:
-            if (isSignNextNumber(number, i))
-            {
-                i++;
-                state = 4;
-            }
-            else if (isNumber(next))
-                state = 4;
+        case afterSignE:
+            if (isSign(current))
+                state = realWithE;
             else
-                return false;
+                state = fail;
             break;
-        case 4:
-            if (isNumber(next))
-                state = 4;
-            else
-                return false;
+        case realWithE:
+            if (!isDigit(current))
+                state = fail;
+            break;
+        default :
             break;
         }
+        i++;
     }
-    return (state == 1) || (state == 2) || (state == 4);
+    return ((state == real) || (state == integer) || (state == realWithE));
 }
 
 int main()
