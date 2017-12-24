@@ -55,6 +55,6 @@ int result(char* symbols)
     int resultExpression = top(result);
 
     deleteStack(result);
-    return top(result);
+    return resultExpression;
 
 }
