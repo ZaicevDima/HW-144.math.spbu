@@ -56,5 +56,4 @@ int result(char* symbols)
 
     deleteStack(result);
     return resultExpression;
-
 }
