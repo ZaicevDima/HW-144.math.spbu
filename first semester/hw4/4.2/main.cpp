@@ -45,7 +45,6 @@ void printTransformation(Stack* newWord)
     delete[] word;
 }
 
-
 int main()
 {
     fin.open("in.txt");
@@ -71,11 +70,12 @@ int main()
             printTransformation(word);
             print(word);
             i = size;
+            deleteStack(word);
         }
     }
 
     fin.close();
     fout.close();
-    deleteStack(word);
     delete[] symbols;
+    return 0;
 }
