@@ -149,7 +149,8 @@ int resultExpression(char* symbols)
             push(result, resultOperation);
         }
     }
-    return top(result);
+    int resultExpression = top(result);
 
     deleteStack(result);
+    return resultExpression;
 }
