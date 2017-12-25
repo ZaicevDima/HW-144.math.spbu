@@ -21,6 +21,9 @@ int main()
     printBinaryTranslation(binarySum);
     cout << "\nsum in direct code: \n";
     printToDirectCode(binarySum);
+
+    if (binarySum[maxLength - 1] == 1)
+        toDirectCode(binarySum);
     cout <<"\nsum in decimal number system: \n";
     cout << inDecimalSystem(binarySum);
 

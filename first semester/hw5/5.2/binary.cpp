@@ -76,6 +76,14 @@ int inDecimalSystem(int* bytes)
     return number;
 }
 
+void toDirectCode(int* bytes)
+{
+    for (int i = maxLength - 1; i >= 0; i--)
+    {
+        bytes[i] = (bytes[i] == 0);
+    }
+}
+
 void printToDirectCode(int* bytes)
 {
     for (int i = maxLength - 1; i >= 0; i--)
