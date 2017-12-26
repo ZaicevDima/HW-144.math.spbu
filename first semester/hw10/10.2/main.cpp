@@ -6,12 +6,19 @@ using namespace std;
 
 int main()
 {
-    char* s1 = new char[1000];
-    char* s2 = new char[1000];
+    cout << "enter max size of your string: \n";
+    int maxSize = 0;
+    cin >> maxSize;
+    char* s1 = new char[maxSize];
+    char* s2 = new char[maxSize];
+    cin.get();
     cout << "enter two string: \n";
-    cin.getline(s1, 256);
-    cin.getline(s2, 256);
+    cin.getline(s1, maxSize);
+    cin.getline(s2, maxSize);
     cout << "index start your substring: \n";
     algorithmRabinKarp(s1, s2, 0);
+
+    delete [] s1;
+    delete [] s2;
     return 0;
 }
