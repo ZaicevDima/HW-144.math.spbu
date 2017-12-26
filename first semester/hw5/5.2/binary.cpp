@@ -69,7 +69,7 @@ int* sum(int* number1, int* number2)
 int inDecimalSystem(int* bytes)
 {
     int number = 0;
-    for (int i = 0; i < maxLength; i++)
+    for (int i = 0;i < maxLength; i++)
         number += bytes[i] * pow(2, i);
     return number;
 }
