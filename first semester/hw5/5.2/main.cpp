@@ -24,6 +24,7 @@ int main()
 
     if (binarySum[maxLength - 1] == 1)
         toDirectCode(binarySum);
+
     cout <<"\nsum in decimal number system: \n";
     cout << inDecimalSystem(binarySum);
 
