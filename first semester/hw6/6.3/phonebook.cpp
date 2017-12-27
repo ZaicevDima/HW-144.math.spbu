@@ -36,16 +36,15 @@ PhoneBookElement *createNewElement(char *name, long long number, PhoneBookElemen
     return newElement;
 }
 
-/*void deletePhoneBookElemment(PhoneBookElement *element)
+void deletePhoneBookElemment(PhoneBookElement *element)
 {
     if (element == nullptr)
         return;
 
     deletePhoneBookElemment(element->next);
-
     delete[] element->name;
     delete element;
-}*/
+}
 
 void deletePhoneBook(PhoneBook *book)
 {
@@ -59,23 +58,22 @@ void deletePhoneBook(PhoneBook *book)
     {
         PhoneBookElement *toDelete = book->phonebook;
         book->phonebook = book->phonebook->next;
-        delete toDelete;
-        //deletePhoneBookElemment(toDelete);
+        deletePhoneBookElemment(toDelete);
     }
 
     delete book->phonebook;
     delete book;
 }
 
-void add(char* name, long long value, PhoneBook* book)
+void add(char* name, long long number, PhoneBook* book)
 {
     if (isEmpty(book))
     {
-        book->phonebook = createNewElement(name, value, nullptr);
+        book->phonebook = createNewElement(name, number, nullptr);
         book->size = 1;
         return;
     }
-    book->phonebook = createNewElement(name, value, book->phonebook);
+    book->phonebook = createNewElement(name, number, book->phonebook);
     book->size++;
 }
 
@@ -85,38 +83,43 @@ long long numberSearch(char *name, PhoneBook *book)
         return -1;
 
     PhoneBookElement *temp = book->phonebook;
-    while (temp->next != nullptr && !(strcmp(temp->name, name) == 0))
+    while ((temp->next != nullptr) && (!(strcmp(temp->name, name) == 0)))
     {
         temp = temp->next;
     }
-    if (temp->next == nullptr && strcmp(temp->name, name) == 0)
+    if ((temp->next == nullptr) && (strcmp(temp->name, name) == 0))
     {
         return temp->number;
     }
     if (!(strcmp(temp->name, name) == 0))
+    {
         return -1;
+    }
 
     long long number = temp->number;
     return number;
 }
 
-char *nameSearch(long long value, PhoneBook *book)
+char *nameSearch(long long number, PhoneBook *book)
 {
     if (isEmpty(book))
         return " ";
 
     PhoneBookElement *temp = book->phonebook;
-    if (temp->next == nullptr && temp->number == value)
+    if ((temp->next == nullptr) && (temp->number == number))
     {
         return temp->name;
     }
 
-    while (temp->next != nullptr && temp->number != value)
+    while ((temp->next != nullptr) && (temp->number != number))
     {
         temp = temp->next;
     }
-    if (temp->number != value)
+
+    if (temp->number != number)
+    {
         return " ";
+    }
 
     return temp->name;
 }
@@ -139,11 +142,11 @@ void saveBook(PhoneBook *book)
     fout.close();
 }
 
-void fillName(char *firstArray, char *secondArray)
+void fillName(char *firstName, char *secondName)
 {
-    int secondLength = strlen(secondArray);
+    int secondLength = strlen(secondName);
     for (int i = 0; i < secondLength; i++)
     {
-        firstArray[i] = secondArray[i];
+        firstName[i] = secondName[i];
     }
 }

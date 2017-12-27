@@ -10,7 +10,7 @@ int main()
 {
     PhoneBook *book = createPhoneBook();
     menu();
-    enum  Command {exit, add, searchValue, searchName, print};
+    enum  Command {exit, add, searchNumber, searchName, print};
     int operation = 0;
     cin >> operation;
 
@@ -22,7 +22,7 @@ int main()
         case add:
             addContact(book);
             break;
-        case searchValue:
+        case searchNumber:
             numberSearch(book);
             break;
         case searchName:
