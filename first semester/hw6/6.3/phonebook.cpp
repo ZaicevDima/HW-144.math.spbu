@@ -1,78 +1,149 @@
-#include <iostream>
 #include "phonebook.h"
+#include <iostream>
 #include <fstream>
+#include <string.h>
+
 using namespace std;
 
 struct PhoneBookElement
 {
-    char* name;
-    char* number;
+    char* name = new char[1000];
+    long long number;
+    PhoneBookElement *next;
 };
 
 struct PhoneBook
 {
     PhoneBookElement *phonebook;
-    int previousIndex;
     int size;
+
 };
 
-PhoneBook *createPhonebook()
+PhoneBook* createPhoneBook()
 {
-    PhoneBookElement* array = new PhoneBookElement[100];
-    PhoneBook *newBook = new PhoneBook{array, -1, 0};
-    return newBook;
+    PhoneBook *book = new PhoneBook;
+    book->phonebook = nullptr;
+    book->size = 0;
+    return book;
 }
 
-void add(char* name, char* number, PhoneBook *book)
+PhoneBookElement *createNewElement(char *name, long long number, PhoneBookElement *next)
 {
-    int newIndex = ++book->previousIndex;
-    book->phonebook[newIndex].name = name;
-    book->phonebook[newIndex].number = number;
-    (book->size)++;
-
+    PhoneBookElement *newElement = new PhoneBookElement;
+    newElement->next = next;
+    newElement->number = number;
+    fillName(newElement->name, name);
+    return newElement;
 }
 
-void upload(PhoneBook *book)
+/*void deletePhoneBookElemment(PhoneBookElement *element)
 {
-    ofstream fout;
-    fout.open("book.txt");
-    if (!fout.good())
+    if (element == nullptr)
+        return;
+
+    deletePhoneBookElemment(element->next);
+
+    delete[] element->name;
+    delete element;
+}*/
+
+void deletePhoneBook(PhoneBook *book)
+{
+    if (isEmpty(book))
     {
-        cout << "error, file not opened";
+        delete book;
         return;
     }
-    for (int i = 0; i <= book->previousIndex; i++)
-        fout << book->phonebook->name << ' ' << book->phonebook->number;
+
+    while (book->phonebook->next != nullptr)
+    {
+        PhoneBookElement *toDelete = book->phonebook;
+        book->phonebook = book->phonebook->next;
+        delete toDelete;
+        //deletePhoneBookElemment(toDelete);
+    }
+
+    delete book->phonebook;
+    delete book;
+}
+
+void add(char* name, long long value, PhoneBook* book)
+{
+    if (isEmpty(book))
+    {
+        book->phonebook = createNewElement(name, value, nullptr);
+        book->size = 1;
+        return;
+    }
+    book->phonebook = createNewElement(name, value, book->phonebook);
+    book->size++;
+}
+
+long long numberSearch(char *name, PhoneBook *book)
+{
+    if (isEmpty(book))
+        return -1;
+
+    PhoneBookElement *temp = book->phonebook;
+    while (temp->next != nullptr && !(strcmp(temp->name, name) == 0))
+    {
+        temp = temp->next;
+    }
+    if (temp->next == nullptr && strcmp(temp->name, name) == 0)
+    {
+        return temp->number;
+    }
+    if (!(strcmp(temp->name, name) == 0))
+        return -1;
+
+    long long number = temp->number;
+    return number;
+}
+
+char *nameSearch(long long value, PhoneBook *book)
+{
+    if (isEmpty(book))
+        return " ";
+
+    PhoneBookElement *temp = book->phonebook;
+    if (temp->next == nullptr && temp->number == value)
+    {
+        return temp->name;
+    }
+
+    while (temp->next != nullptr && temp->number != value)
+    {
+        temp = temp->next;
+    }
+    if (temp->number != value)
+        return " ";
+
+    return temp->name;
+}
+
+bool isEmpty(PhoneBook *book)
+{
+    return !(book->size);
+}
+
+void saveBook(PhoneBook *book)
+{
+    ofstream fout;
+    fout.open("phonebook.txt", ios::out);
+    PhoneBookElement *temp = book->phonebook;
+    while (temp != nullptr)
+    {
+        fout << temp->name << " " << temp->number << endl;
+        temp = temp->next;
+    }
     fout.close();
 }
 
-void nameSearch(char* number, PhoneBook *book)
+void fillName(char *firstArray, char *secondArray)
 {
-    for (int i = 0; i <= book->size; i++)
-        if (number == book->phonebook[i].number)
-        {
-            cout <<"name of number " << book->phonebook[i].name << "\n";
-            break;
-        }
-}
-
-void numberSearch(char* name, PhoneBook *book)
-{
-    for (int i = 0; i <= book->previousIndex; i++)
-        if (name == book->phonebook[i].name)
-        {
-            cout <<"number of name " << book->phonebook[i].number << "\n";
-            break;
-        }
-
-}
-
-void output(PhoneBook *book)
-{
-    int i = 0;
-    while (book->size > 0)
+    int secondLength = strlen(secondArray);
+    for (int i = 0; i < secondLength; i++)
     {
-        cout << book->phonebook[i].name <<' '<<book->phonebook[i].number <<"\n";
-        i++;
+        firstArray[i] = secondArray[i];
     }
 }
