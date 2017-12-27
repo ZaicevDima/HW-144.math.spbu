@@ -6,23 +6,23 @@ using namespace std;
 
 int main()
 {
-    ifstream inputFile;
-    inputFile.open("in.txt");
+    ifstream fin;
+    fin.open("in.txt");
 
-    if (!inputFile.good())
+    if (!fin.good())
     {
         cout << "error, file not opened";
         return 1;
     }
 
     ExpressionTree* expression = createExpressionTree();
-    scanfTree(expression, inputFile);
+    scanfTree(expression, fin);
     cout << "Infix form: ";
     printExpression(expression);
-    cout << "Result: " << result(expression) << "\n";
+    cout << " Result: " << result(expression) << "\n";
 
     deleteExpressionTree(expression);
-    inputFile.close();
+    fin.close();
 
     return 0;
 }

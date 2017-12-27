@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
-#include "expressionTree.h"
+#include "expressiontree.h"
 
 int const stringSize = 256;
 
@@ -9,7 +9,7 @@ struct Node
 {
     char operation;
     int value;
-    bool sheet;
+    bool isLeaf;
     Node *left;
     Node *right;
 };
@@ -54,7 +54,7 @@ void deleteExpressionTree(ExpressionTree *&tree)
 
 int resultOperation(Node* node)
 {
-    if (node->sheet)
+    if (node->isLeaf)
         return node->value;
 
     if (node->operation == '+')
@@ -83,7 +83,7 @@ bool isNumber(char symbol)
     return ((symbol >= '0') && (symbol <= '9'));
 }
 
-Node* scanfNode(fstream &file)
+Node* scanfNode(ifstream &file)
 {
     char symbol = file.get();
     Node* newNode = new Node;
@@ -99,7 +99,7 @@ Node* scanfNode(fstream &file)
         }
         file.unget();
         newNode->value = number;
-        newNode->sheet = true;
+        newNode->isLeaf = true;
         newNode->left = nullptr;
         newNode->right = nullptr;
     }
@@ -111,7 +111,7 @@ Node* scanfNode(fstream &file)
         else
             file.get();
         newNode->operation = symbol;
-        newNode->sheet = false;
+        newNode->isLeaf = false;
         newNode->left = scanfNode(file);
         file.get();
         newNode->right = scanfNode(file);
@@ -121,7 +121,7 @@ Node* scanfNode(fstream &file)
     return newNode;
 }
 
-void scanfTree(ExpressionTree* tree, fstream &file)
+void scanfTree(ExpressionTree* tree, ifstream &file)
 {
     tree->root = scanfNode(file);
 }
@@ -129,7 +129,7 @@ void scanfTree(ExpressionTree* tree, fstream &file)
 
 void printNode(Node* node)
 {
-    if (node->sheet)
+    if (node->isLeaf)
     {
         cout << node->value;
         return;
