@@ -48,7 +48,7 @@ int* sum(int* number1, int* number2)
         if (number1[i] & number2[i])
             isCarry = true;
     }
-
+    
     if (isCarry)
     {
         int *overcoming = new int[maxLength];
@@ -62,12 +62,13 @@ int* sum(int* number1, int* number2)
 
 int inDecimalSystem(int* bits)
 {
-        int degree = 1;
-        int result = 0;
-        for (int i = 0; i < 32; i++)
-        {
-            result += bits[i] * degree;
-            degree = degree << 1;
-        }
-        return result;
+    int degree = 1;
+    int result = 0;
+    for (int i = 0; i < 32; i++)
+    {
+        result += bits[i] * degree;
+        degree = degree << 1;
+    }
+    return result;
 }
+
