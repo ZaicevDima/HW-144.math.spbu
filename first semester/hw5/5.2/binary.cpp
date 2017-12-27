@@ -11,23 +11,17 @@ void printBinaryTranslation(int* bytes)
 
 int* binaryTranslation(int number)
 {
-    int *bytes = new int[maxLength + 1];
-    fill(bytes, bytes + maxLength, 0);
-    if (number < 0)
+    int *bits = new int[maxLength];
+    int mask = 1;
+    for (int i = 0; i < maxLength; i++)
     {
-        bytes = binaryTranslation(abs(number));
-        for (int i = 0; i < maxLength; i++)
-            bytes[i] = !bytes[i];
-        return bytes;
+        if (number & mask)
+            bits[i] = 1;
+        else
+            bits[i] = 0;
+        mask = mask << 1;
     }
-    int length = 0;
-    while (number > 0)
-    {
-        bytes[length] = (number % 2 != 0);
-        number = number >> 1;
-        length++;
-    };
-    return bytes;
+    return bits;
 }
 
 int* sum(int* number1, int* number2)
@@ -66,24 +60,14 @@ int* sum(int* number1, int* number2)
     return number;
 }
 
-int inDecimalSystem(int* bytes)
+int inDecimalSystem(int* bits)
 {
-    int number = 0;
-    for (int i = 0;i < maxLength; i++)
-        number += bytes[i] * pow(2, i);
-    return number;
-}
-
-void toDirectCode(int* bytes)
-{
-    for (int i = maxLength - 1; i >= 0; i--)
-    {
-        bytes[i] = (bytes[i] == 0);
-    }
-}
-
-void printToDirectCode(int* bytes)
-{
-    for (int i = maxLength - 1; i >= 0; i--)
-        cout << (bytes[i] == 0);
+        int degree = 1;
+        int result = 0;
+        for (int i = 0; i < 32; i++)
+        {
+            result += bits[i] * degree;
+            degree = degree << 1;
+        }
+        return result;
 }
