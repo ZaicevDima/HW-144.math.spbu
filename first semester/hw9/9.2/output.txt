@@ -1,0 +1,2 @@
+(-1 (-1 (o null null) (l null null)) (-1 (-1 (-1 (r null null) (e null null)) (w null null)) (-1 (-1 (! null null) (  null null)) (-1 (d null null) (H null null)))))
+1111100101010010111011010010000111101100
