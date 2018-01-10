@@ -68,7 +68,6 @@ int main()
             default:
                 cout << "Wrong operation";
                 break;
-
             }
             cout << "\n";
             break;
@@ -87,3 +86,4 @@ int main()
     deleteTree(currentTree);
     return 0;
 }
+

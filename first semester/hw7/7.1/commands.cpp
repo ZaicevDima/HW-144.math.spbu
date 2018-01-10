@@ -48,3 +48,4 @@ void printTree(Tree* currentTree)
 {
     printTree(currentTree->tree);
 }
+
