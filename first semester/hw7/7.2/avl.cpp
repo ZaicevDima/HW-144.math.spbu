@@ -123,22 +123,22 @@ void rotateLeft(Node *&root)
     root = pivot;
 }
 
-void balance(Node *&p)
+void balance(Node *&pivot)
 {
-    updateHeight(p);
+    updateHeight(pivot);
 
-    if (balanceFactor(p) == 2)
+    if (balanceFactor(pivot) == 2)
     {
-        if (balanceFactor(p->right) < 0)
-            rotateRight(p->right);
-        rotateLeft(p);
+        if (balanceFactor(pivot->right) < 0)
+            rotateRight(pivot->right);
+        rotateLeft(pivot);
     }
 
-    if (balanceFactor(p) == -2)
+    if (balanceFactor(pivot) == -2)
     {
-        if (balanceFactor(p->left) > 0)
-            rotateLeft(p->left);
-        rotateRight(p);
+        if (balanceFactor(pivot->left) > 0)
+            rotateLeft(pivot->left);
+        rotateRight(pivot);
     }
 }
 
