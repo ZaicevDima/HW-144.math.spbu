@@ -13,7 +13,7 @@ void bfs(Student* people, int amount, int v)
 {
     for (int i = 0; i < amount;i++)
     {
-        if (people[v].numberOfPerson == people[i].copied && !people[i].numberOfWork)
+        if ((people[v].numberOfPerson == people[i].copied) && (!people[i].numberOfWork))
         {
             people[i].numberOfWork = people[v].numberOfWork;
             bfs(people, amount, i);
@@ -43,7 +43,7 @@ int main()
     int numberOfPairs = 0;
     cout << "Enter the number of pairs: ";
     cin >> numberOfPairs;
-    for (int i = 0;i < amount; i++)
+    for (int i = 0; i < amount; i++)
     {
         children[i].numberOfPerson = 0;
         children[i].copied = 0;
@@ -51,7 +51,7 @@ int main()
     }
 
     cout << "enter number of the student and with whom he wrote off: \n";
-    for (int i = 0;i < numberOfPairs; i++)
+    for (int i = 0; i < numberOfPairs; i++)
     {
         cin >> children[i].numberOfPerson  >> children[i].copied;
         children[i].numberOfWork = 0;
@@ -73,7 +73,7 @@ int main()
     for (int i = 0; i < amount; i++)
     {
         cout << "number of student: " << i + 1;
-        if ((works[i] != 0))
+        if (works[i] != 0)
             cout << " his variant number: " << works[i] << "\n";
         else
             cout << " did nothing! \n";
