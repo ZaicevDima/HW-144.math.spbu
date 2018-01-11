@@ -1,9 +1,7 @@
 #include <iostream>
-#include "phonebook.h"
-#include "output.h"
-#include <string.h>
+#include <ctime>
+#include "operations.h"
 using namespace std;
-
 void menu()
 {
     cout << "menu: \n";
@@ -14,44 +12,72 @@ void menu()
     cout << "4 - avarage value \n";
 }
 
-void fill(PhoneBook *book)
+void printArray(int *array, int size)
 {
-    char* name = new char[256];
-    long long number = 0;
-    cout << "enter name and number: ";
-    cin >> name;
-    cin >> number;
-    add(name, number, book);
-    delete [] name;
+    for (int i = 0; i < size; i++)
+        std::cout << array[i] << ' ';
+    std::cout << "\n";
 }
 
-void numberSearch(PhoneBook *book)
+int *fillArray(int size, int max, int min)
 {
-    char* name = new char[256];
-    cout << "enter name: ";
-    cin >> name;
-    long long number = numberSearch(name, book);
-    if (number == -1)
-        cout << "not found \n";
-    else
-        cout << "number: " << number << "\n";
-    delete [] name;
+    int *array = new int[size];
+    for (int i = 0; i < size; i++)
+        array[i] = rand() % max + min;
+    return array;
 }
 
-void nameSearch(PhoneBook *book)
+void sortArray(int *array, int size)
 {
-    cout << "enter number: ";
-    long long number = 0;
-    cin >> number;
-    char* name = nameSearch(number, book);
-    if ((name[0] == ' ') && (strlen(name) == 1))
-        cout << "not found \n";
-    else
-        cout << "name: " << name << "\n";
+    int middle = size / 2;
+    int i = 0;
+    int j = size;
+
+    while (i < j)
+    {
+        while (array[i] < array[middle]){
+            i++;
+        }
+        while (array[j] > array[middle]){
+            j--;
+        }
+        if (i <= j){
+            int x = array[i];
+            array[i] = array[j];
+            array[j] = x;
+            i++;
+            j--;
+        }
+    }
+
+    if (j > 0)
+        sortArray(array, j);
+    if (size > i)
+        sortArray(array + i, size - i);
 }
 
-void printToFile(PhoneBook *book)
+void swap(int number1, int number2)
 {
-    saveBook(book);
-    cout << "your phonebook saved \n";
+    int temp = number1;
+    number1 = number2;
+    number2 = temp;
 }
+
+void reverseArray(int *array, int size)
+{
+    for (int i = 0; i < size / 2; i++)
+        swap(array[i], array[size - i - 1]);
+}
+
+double avarageValue(int *array, int size)
+{
+    if (size == 0)
+    {
+        return 999999999;
+    }
+    double sum = 0.0;
+    for (int i = 0; i < size; i++)
+        sum += (double) array[i];
+    return sum / size;
+}
+
