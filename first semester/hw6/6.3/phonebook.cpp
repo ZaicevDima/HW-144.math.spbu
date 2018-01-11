@@ -83,15 +83,15 @@ long long numberSearch(char *name, PhoneBook *book)
         return -1;
 
     PhoneBookElement *temp = book->phonebook;
-    while ((temp->next != nullptr) && (!(strcmp(temp->name, name) == 0)))
+    while ((temp->next != nullptr) && (strcmp(temp->name, name)))
     {
         temp = temp->next;
     }
-    if ((temp->next == nullptr) && (strcmp(temp->name, name) == 0))
+    if ((temp->next == nullptr) && (!strcmp(temp->name, name)))
     {
         return temp->number;
     }
-    if (!(strcmp(temp->name, name) == 0))
+    if (strcmp(temp->name, name))
     {
         return -1;
     }
