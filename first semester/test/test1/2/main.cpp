@@ -9,7 +9,7 @@ int main()
     enum  Command {exit, fill, sort, reverse, avarage};
     int operation = 0;
     cin >> operation;
-    int *array = new int;
+    int *array = nullptr;
     int size = 0;
     int max = 0;
     int min = 0;
@@ -33,7 +33,7 @@ int main()
             printArray(array, size);
             break;
         case avarage:
-            cout << avarageValue(array, size);
+            cout << avarageValue(array, size) << "\n";
             break;
         }
         cin >> operation;

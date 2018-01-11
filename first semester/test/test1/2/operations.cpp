@@ -1,7 +1,9 @@
 #include <iostream>
 #include <ctime>
 #include "operations.h"
+
 using namespace std;
+
 void menu()
 {
     cout << "menu: \n";
@@ -35,13 +37,16 @@ void sortArray(int *array, int size)
 
     while (i < j)
     {
-        while (array[i] < array[middle]){
+        while (array[i] < array[middle])
+        {
             i++;
         }
-        while (array[j] > array[middle]){
+        while (array[j] > array[middle])
+        {
             j--;
         }
-        if (i <= j){
+        if (i <= j)
+        {
             int x = array[i];
             array[i] = array[j];
             array[j] = x;
@@ -56,17 +61,14 @@ void sortArray(int *array, int size)
         sortArray(array + i, size - i);
 }
 
-void swap(int number1, int number2)
-{
-    int temp = number1;
-    number1 = number2;
-    number2 = temp;
-}
-
 void reverseArray(int *array, int size)
 {
     for (int i = 0; i < size / 2; i++)
-        swap(array[i], array[size - i - 1]);
+    {
+        int temp = array[i];
+        array[i] = array[size - i - 1];
+        array[size - i - 1] = temp;
+    }
 }
 
 double avarageValue(int *array, int size)
@@ -80,4 +82,3 @@ double avarageValue(int *array, int size)
         sum += (double) array[i];
     return sum / size;
 }
-
