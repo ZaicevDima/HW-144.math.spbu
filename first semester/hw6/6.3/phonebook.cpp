@@ -36,32 +36,25 @@ PhoneBookElement *createNewElement(char *name, long long number, PhoneBookElemen
     return newElement;
 }
 
-void deletePhoneBookElement(PhoneBookElement *element)
+void deletePhoneBookElemment(PhoneBookElement *element)
 {
     if (element == nullptr)
         return;
 
-    deletePhoneBookElement(element->next);
+    deletePhoneBookElemment(element->next);
     delete[] element->name;
     delete element;
 }
 
 void deletePhoneBook(PhoneBook *book)
 {
-    if (isEmpty(book))
+    while (!isEmpty(book)) 
     {
-        delete book;
-        return;
-    }
-
-    while (book->phonebook->next->next != nullptr)
-    {
-        PhoneBookElement *toDelete = book->phonebook;
-        book->phonebook = book->phonebook->next;
-        deletePhoneBookElement(toDelete);
-    }
-
-    //delete book->phonebook;
+      PhoneBookElement* toDelete = book->phonebook;
+      book->phonebook = book->phonebook->next;
+      deletePhoneBookElement(toDelete);
+    } 
+    delete book->phonebook;
     delete book;
 }
 
@@ -150,4 +143,3 @@ void fillName(char *firstName, char *secondName)
         firstName[i] = secondName[i];
     }
 }
-
