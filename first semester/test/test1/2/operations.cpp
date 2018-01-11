@@ -82,3 +82,4 @@ double avarageValue(int *array, int size)
         sum += (double) array[i];
     return sum / size;
 }
+
