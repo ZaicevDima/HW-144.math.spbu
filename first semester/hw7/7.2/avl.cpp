@@ -243,7 +243,6 @@ bool isBelong(AVLTree* tree, int value)
     return isBelong(tree->root, value);
 }
 
-
 bool isEmpty(AVLTree* tree)
 {
     return tree->root == nullptr;
