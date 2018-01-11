@@ -45,7 +45,6 @@ void printTransformation(Stack* newWord)
     delete[] word;
 }
 
-
 int main()
 {
     fin.open("in.txt");
@@ -58,7 +57,7 @@ int main()
     char *symbols = new char[256];
     while (!fin.eof())
     {
-        fin.getline(symbols, 256, ' ');
+        fin.getline(symbols, 256);
         int length = strlen(symbols);
         for (int i = 0; i < length; i++)
         {
@@ -71,11 +70,13 @@ int main()
             printTransformation(word);
             print(word);
             i = size;
+            deleteStack(word);
         }
     }
 
     fin.close();
     fout.close();
-    deleteStack(word);
     delete[] symbols;
+    return 0;
 }
+
