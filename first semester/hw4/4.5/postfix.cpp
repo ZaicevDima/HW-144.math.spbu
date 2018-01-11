@@ -51,7 +51,7 @@ void actionOnOpeningBracket(char symbol, Stack* operations, int& amountSpaces)
 void actionOnClosingBracket(char* result, Stack* operations, int& amountSpaces, int& topIndexResult)
 {
     amountSpaces++;
-    while ((!isEmpty(operations)) && (top(operations) != '(' ))
+    while ((!isEmpty(operations)) && (top(operations) != '('))
     {
         result[topIndexResult] = top(operations);
         topIndexResult++;
@@ -106,7 +106,7 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
 
 bool isDigit(char symbol)
 {
-    return (symbol >= '0' && symbol <= '9');
+    return ((symbol >= '0') && (symbol <= '9'));
 }
 
 bool isSpace(char symbol)
@@ -139,7 +139,7 @@ int resultExpression(char* symbols)
     {
         if (isDigit(symbols[i]))
             push(result, numeral(symbols[i]));
-        else if(!isSpace(symbols[i]))
+        else if (!isSpace(symbols[i]))
         {
             int front = top(result);
             pop(result);
