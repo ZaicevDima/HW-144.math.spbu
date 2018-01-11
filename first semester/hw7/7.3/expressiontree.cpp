@@ -126,7 +126,6 @@ void scanfTree(ExpressionTree* tree, ifstream &file)
     tree->root = scanfNode(file);
 }
 
-
 void printNode(Node* node)
 {
     if (node->isLeaf)
