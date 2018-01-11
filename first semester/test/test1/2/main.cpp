@@ -38,6 +38,8 @@ int main()
         }
         cin >> operation;
     }
+
     delete [] array;
+    return 0;
 }
 
