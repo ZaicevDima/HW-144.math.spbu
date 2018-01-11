@@ -53,7 +53,7 @@ int main()
     cout << "enter number of the student and with whom he wrote off: \n";
     for (int i = 0; i < numberOfPairs; i++)
     {
-        cin >> children[i].numberOfPerson  >> children[i].copied;
+        cin >> children[i].numberOfPerson >> children[i].copied;
         children[i].numberOfWork = 0;
     }
     int variantNumber = 1;
