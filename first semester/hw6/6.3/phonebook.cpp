@@ -36,12 +36,12 @@ PhoneBookElement *createNewElement(char *name, long long number, PhoneBookElemen
     return newElement;
 }
 
-void deletePhoneBookElemment(PhoneBookElement *element)
+void deletePhoneBookElement(PhoneBookElement *element)
 {
     if (element == nullptr)
         return;
 
-    deletePhoneBookElemment(element->next);
+    deletePhoneBookElement(element->next);
     delete[] element->name;
     delete element;
 }
@@ -54,14 +54,14 @@ void deletePhoneBook(PhoneBook *book)
         return;
     }
 
-    while (book->phonebook->next != nullptr)
+    while (book->phonebook->next->next != nullptr)
     {
         PhoneBookElement *toDelete = book->phonebook;
         book->phonebook = book->phonebook->next;
-        deletePhoneBookElemment(toDelete);
+        deletePhoneBookElement(toDelete);
     }
 
-    delete book->phonebook;
+    //delete book->phonebook;
     delete book;
 }
 
@@ -83,15 +83,15 @@ long long numberSearch(char *name, PhoneBook *book)
         return -1;
 
     PhoneBookElement *temp = book->phonebook;
-    while ((temp->next != nullptr) && (!(strcmp(temp->name, name) == 0)))
+    while ((temp->next != nullptr) && (strcmp(temp->name, name)))
     {
         temp = temp->next;
     }
-    if ((temp->next == nullptr) && (strcmp(temp->name, name) == 0))
+    if ((temp->next == nullptr) && (!strcmp(temp->name, name)))
     {
         return temp->number;
     }
-    if (!(strcmp(temp->name, name) == 0))
+    if (strcmp(temp->name, name))
     {
         return -1;
     }
@@ -150,3 +150,4 @@ void fillName(char *firstName, char *secondName)
         firstName[i] = secondName[i];
     }
 }
+
