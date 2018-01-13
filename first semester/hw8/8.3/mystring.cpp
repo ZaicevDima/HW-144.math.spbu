@@ -47,6 +47,7 @@ void deleteString(String *string) {
     delete[] string->data;
     string->data = nullptr;
     string->size = 0;
+    delete string;
 }
 
 int lengthString(String *string) {
@@ -60,7 +61,7 @@ bool isEmptyString(String *string) {
 }
 
 bool areEqual(String *str1, String *str2) {
-    if (str1 != nullptr && str2 != nullptr)
+    if ((str1 != nullptr) && (str2 != nullptr))
         return (strcmp(str1->data, str2->data) == 0);
     return false;
 }
@@ -119,7 +120,6 @@ String *inputString(std::istream &fin) {
     deleteString(addition);
 
     delete[] buffer;
-
     return result;
 }
 
