@@ -181,36 +181,34 @@ void removeNode(Node *&node, int value)
 
     if (node->value == value)
     {
-        if (node->left == nullptr && node->right == nullptr)
+        if ((node->left == nullptr) && (node->right == nullptr))
         {
             delete node;
             node = nullptr;
-            return;
         }
-        if (node->left == nullptr)
+        else if (node->left == nullptr)
         {
-            Node* temp = node->right;
+            Node *temp = node->right;
             delete node;
             node = temp;
-            return;
         }
-        if (node->right == nullptr)
+        else if (node->right == nullptr)
         {
-            Node* temp = node->left;
+            Node *temp = node->left;
             delete node;
             node = temp;
-            return;
         }
         else
         {
-            Node* maxNode = findMax(node->left);
+            Node *maxNode = findMax(node->left);
             int maxValue = maxNode->value;
-            removeNode(node, maxValue);
+            removeNode(node->left, maxValue);
             node->value = maxValue;
             balance(node);
-            return;
         }
+        return;
     }
+
 
     if (value < node->value)
         removeNode(node->left, value);
@@ -243,7 +241,6 @@ bool isBelong(AVLTree* tree, int value)
     return isBelong(tree->root, value);
 }
 
-
 bool isEmpty(AVLTree* tree)
 {
     return tree->root == nullptr;
@@ -265,3 +262,17 @@ void deleteAVLTree(AVLTree *&tree)
     delete tree;
     tree = nullptr;
 }
+
+/*
+ 1 1
+ 1 2
+ 1 3
+ 1 4
+ 1 5
+ 1 6
+ 1 7
+ 1 8
+ 2 4
+ 2 3
+ */
+
