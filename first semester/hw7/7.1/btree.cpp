@@ -64,26 +64,23 @@ void removeNode(Node *&node)
     {
         delete node;
         node = nullptr;
-        return;
     }
 
-    if ((node->left != nullptr) && (node->right == nullptr))
+    else if ((node->left != nullptr) && (node->right == nullptr))
     {
         Node* tempNode = node;
         node = node->left;
         delete tempNode;
-        return;
     }
 
-    if ((node->left == nullptr) && (node->right != nullptr))
+    else if ((node->left == nullptr) && (node->right != nullptr))
     {
         Node* tempNode = node;
         node = node->right;
         delete tempNode;
-        return;
     }
 
-    if ((node->left != nullptr) && (node->right != nullptr))
+    else if ((node->left != nullptr) && (node->right != nullptr))
     {
         Node* tempNode = node->left;
         while ((tempNode)->right != nullptr)
@@ -205,4 +202,5 @@ void printTree(BinaryTree* tree)
 {
     printTreeNode(tree->root);
 }
+
 
