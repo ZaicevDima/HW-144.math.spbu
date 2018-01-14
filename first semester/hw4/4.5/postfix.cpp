@@ -138,7 +138,7 @@ int resultExpression(char* symbols)
     {
         if (isDigit(symbols[i]))
             push(result, numeral(symbols[i]));
-        else if(!isSpace(symbols[i]))
+        else if (!isSpace(symbols[i]))
         {
             int front = top(result);
             pop(result);
