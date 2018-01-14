@@ -40,15 +40,13 @@ void actionOnOperator(char symbol, char* result, Stack* operations, int& topInde
     }
 }
 
-void actionOnOpeningBracket(char symbol, Stack* operations, int& amountSpaces)
+void actionOnOpeningBracket(char symbol, Stack* operations)
 {
     push(operations, symbol);
-    amountSpaces++;
 }
 
-void actionOnClosingBracket(char* result, Stack* operations, int& amountSpaces, int& topIndexResult)
+void actionOnClosingBracket(char* result, Stack* operations, int& topIndexResult)
 {
-    amountSpaces++;
     while ((!isEmpty(operations)) && (top(operations) != '('))
     {
         result[topIndexResult] = top(operations);
@@ -70,15 +68,13 @@ void actionOnRemainingOperations(char* result, Stack* operations, int& topIndexR
     }
 }
 
-void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpaces)
+void conversionToPostfix(char* symbols, char* result, int amount)
 {
     int topIndexResult = 0;
     Stack* operations = createStack();
     for (int i = 0; i < amount; i++)
     {
-        if (symbols[i] == ' ')
-            amountSpaces++;
-        else if ((!isOperator(symbols[i])) && (symbols[i] != '(') && (symbols[i] != ')'))
+        if ((!isOperator(symbols[i])) && (symbols[i] != '(') && (symbols[i] != ')'))
         {
             result[topIndexResult] = symbols[i];
             topIndexResult++;
@@ -89,11 +85,11 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
         }
         else if (symbols[i] == '(')
         {
-            actionOnOpeningBracket(symbols[i], operations, amountSpaces);
+            actionOnOpeningBracket(symbols[i], operations);
         }
         else if (symbols[i] == ')')
         {
-            actionOnClosingBracket(result, operations, amountSpaces, topIndexResult);
+            actionOnClosingBracket(result, operations, topIndexResult);
         }
         if (i == (amount - 1))
         {
@@ -132,13 +128,13 @@ int action(char symbol, int number1, int number2)
 
 int resultExpression(char* symbols)
 {
-    int n = strlen(symbols);
+    int amountOfSymbols = strlen(symbols);
     Stack* result = createStack();
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < amountOfSymbols; i++)
     {
         if (isDigit(symbols[i]))
             push(result, numeral(symbols[i]));
-        else if (!isSpace(symbols[i]))
+        else if(!isSpace(symbols[i]))
         {
             int front = top(result);
             pop(result);
@@ -153,4 +149,4 @@ int resultExpression(char* symbols)
     deleteStack(result);
     return resultExpression;
 }
-
+	
