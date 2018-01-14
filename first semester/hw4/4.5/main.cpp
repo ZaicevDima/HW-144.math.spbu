@@ -14,9 +14,11 @@ int main()
     int amountSpaces = 0;
 
     conversionToPostfix(symbols, result, amount, amountSpaces);
+
     cout << "result your expression: \n";
-    cout << resultExpression(result);
+    cout << resultExpression(result) << "\n";
 
     delete[] symbols;
     return 0;
 }
+

@@ -36,8 +36,6 @@ void actionOnOperator(char symbol, char* result, Stack* operations, int& topInde
             topIndexResult++;
             pop(operations);
         }
-        if ((!isEmpty(operations)) && (top(operations) == '('))
-            pop(operations);
         push(operations, symbol);
     }
 }
@@ -51,14 +49,15 @@ void actionOnOpeningBracket(char symbol, Stack* operations, int& amountSpaces)
 void actionOnClosingBracket(char* result, Stack* operations, int& amountSpaces, int& topIndexResult)
 {
     amountSpaces++;
-    while ((!isEmpty(operations)) && (top(operations) != '(' ))
+    while ((!isEmpty(operations)) && (top(operations) != '('))
     {
         result[topIndexResult] = top(operations);
         topIndexResult++;
         pop(operations);
     }
-    if (!isEmpty(operations))
+    if (!isEmpty(operations) && (top(operations) == '('))
         pop(operations);
+
 }
 
 void actionOnRemainingOperations(char* result, Stack* operations, int& topIndexResult)
@@ -96,7 +95,7 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
         {
             actionOnClosingBracket(result, operations, amountSpaces, topIndexResult);
         }
-        if (i == amount - 1)
+        if (i == (amount - 1))
         {
             actionOnRemainingOperations(result, operations, topIndexResult);
         }
@@ -106,7 +105,7 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
 
 bool isDigit(char symbol)
 {
-    return (symbol >= '0' && symbol <= '9');
+    return (symbol >= '0') && (symbol <= '9');
 }
 
 bool isSpace(char symbol)
@@ -154,3 +153,4 @@ int resultExpression(char* symbols)
     deleteStack(result);
     return resultExpression;
 }
+
