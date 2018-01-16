@@ -5,33 +5,7 @@
 
 using namespace std;
 
-bool isDelimiter(char symbol)
-{
-    return (symbol == ' ') || (symbol == '\n') || (symbol == '.') ||
-           (symbol == ',') || (symbol == ';')  || (symbol == '\0');
-}
-
-void addWords(HashTable *hastTable, String *string)
-{
-    int beginningOfWord = 0;
-    int endOfWord = 0;
-    int currentIndex = 0;
-    while (currentIndex < lengthString(string))
-    {
-        currentIndex = endOfWord;
-        while ((currentIndex < lengthString(string)) && (isDelimiter(getChar(string, currentIndex))))
-            currentIndex++;
-        beginningOfWord = currentIndex;
-
-        while ((currentIndex < lengthString(string)) && (!isDelimiter(getChar(string, currentIndex))))
-            currentIndex++;
-        endOfWord = currentIndex;
-
-        if (beginningOfWord < endOfWord)
-            addToHashTable(hastTable, subString(string, beginningOfWord, endOfWord - beginningOfWord));
-    }
-    deleteString(string);
-}
+const int maxSize = 10000;
 
 int main()
 {
@@ -43,23 +17,27 @@ int main()
         return 1;
     }
 
-    HashTable *hastTable = createTable();
+    HashTable *hashTable = createTable();
 
+    char *newWord = new char[maxSize];
     while (!fin.eof())
     {
-        String *newLine = inputString(fin);
-        addWords(hastTable, newLine);
+        fin >> newWord;
+        String *newLine = createString(newWord);
+        addToHashTable(hashTable, newLine);
     }
 
     cout << "Words and their frequencies: \n";
-    printCells(hastTable, cout);
-    cout << "Load factor " << loadFactor(hastTable) << "\n";
+    printCells(hashTable);
+    cout << "Load factor " << loadFactor(hashTable) << "\n";
     cout << "Maximal cell: \n";
-    printMaxCells(hastTable, cout);
-    cout << "Amount of words: " << amountWords(hastTable) << "\n";
-    cout << "Amount of empty cells: " << amountEmptyCells(hastTable) << "\n";
+    printMaxCells(hashTable);
+    cout << "Amount of words: " << amountWords(hashTable) << "\n";
+    cout << "Amount of empty cells: " << amountEmptyCells(hashTable) << "\n";
+    cout << "Average chain length: " << averageLength(hashTable) << "\n";
 
     fin.close();
-    deleteTable(hastTable);
+    delete [] newWord;
+    deleteTable(hashTable);
     return 0;
 }

@@ -4,12 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
+    mystring.cpp \
     hashtable.cpp \
-    mystring.cpp
+    list.cpp
 
 HEADERS += \
     hashtable.h \
-    mystring.h
+    mystring.h \
+    list.h
 
 DISTFILES += \
     input.txt

@@ -2,38 +2,38 @@
 #include <fstream>
 #include "hashtable.h"
 #include "mystring.h"
+#include "list.h"
 
 using namespace std;
 
-struct TableElement
-{
-    int amountOfWords;
-    String *string;
-    TableElement* nextElement;
-};
-
 struct HashTable
 {
-    TableElement **cells;
+    int size;
+    int amountWords;
+    List **cells;
 };
 
 HashTable *createTable()
 {
-    HashTable *newHashTable = new HashTable;
-    newHashTable->cells = new TableElement*[tableSize];
-    for (int i = 0; i < tableSize; i++)
-        newHashTable->cells[i] = nullptr;
+    HashTable *newTable = new HashTable;
+    newTable->size = hashSize;
+    newTable->amountWords = 0;
 
-    return newHashTable;
+    newTable->cells = new List*[newTable->size];
+    for (int i = 0; i < newTable->size; i++)
+        newTable->cells[i] = create();
+
+    return newTable;
 }
 
-int hashString(String *stringToHash, int mod)
+int hashString(String *stringToHash)
 {
     int const prime = 63689;
-    int coefficient = 1;
+    int mod = hashSize;
     int hash = 0;
+    int coefficient = 1;
 
-    for(int i = 0; i < lengthString(stringToHash); i++)
+    for (int i = 0; i < lengthString(stringToHash); i++)
     {
         hash = (hash + ((int)getChar(stringToHash, i) * coefficient) % mod) % mod;
         coefficient = (coefficient * prime) % mod;
@@ -44,35 +44,19 @@ int hashString(String *stringToHash, int mod)
 
 void addToHashTable(HashTable *hashTable, String *string)
 {
-    int index = hashString(string, tableSize);
-    TableElement* tempElement = hashTable->cells[index];
-    while (tempElement != nullptr)
-    {
-        if (areEqual(tempElement->string, string))
-        {
-            (tempElement->amountOfWords)++;
-            deleteString(string);
-            return;
-        }
-        tempElement = tempElement->nextElement;
-    }
-    TableElement *newElement = new TableElement;
-    newElement->amountOfWords = 1;
-    newElement->nextElement = hashTable->cells[index];
-    newElement->string = string;
-    hashTable->cells[index] = newElement;
+    int index = hashString(string);
+    (hashTable->amountWords)++;
+    addInList(hashTable->cells[index], string);
 }
 
 int amountDifferentWords(HashTable *hashTable)
 {
     int amount = 0;
-    for (int i = 0; i < tableSize; i++)
+    for (int i = 0; i < hashTable->size; i++)
     {
-        TableElement* tempElement = hashTable->cells[i];
-        while (tempElement != nullptr)
+        if (!isEmptyString(hashTable->cells[i]))
         {
             amount++;
-            tempElement = tempElement->nextElement;
         }
     }
 
@@ -81,91 +65,59 @@ int amountDifferentWords(HashTable *hashTable)
 
 double loadFactor(HashTable *hashTable)
 {
-    return (double)amountWords(hashTable) / tableSize;
+    return (double)amountDifferentWords(hashTable) / hashTable->size;
 }
 
 int amountWords(HashTable *hashTable)
 {
-    int amount = 0;
-    for (int i = 0; i < tableSize; i++)
-    {
-        TableElement* tempElement = hashTable->cells[i];
-        while (tempElement != nullptr)
-        {
-            amount += tempElement->amountOfWords;
-            tempElement = tempElement->nextElement;
-        }
-    }
-
-    return amount;
+    return hashTable->amountWords;
 }
 
 int amountEmptyCells(HashTable *hashTable)
 {
-    int amount = 0;
-    for (int i = 0; i < tableSize; i++)
-    {
-        if (hashTable->cells[i] == nullptr)
-            amount++;
-    }
-
-    return amount;
+    return hashTable->size - amountWords(hashTable);
 }
 
-void printWordsFromCell(HashTable *hashTable, int index,  std::ostream &fout)
+void printCells(HashTable *hashTable)
 {
-    TableElement *tempElement = hashTable->cells[index];
-    while (tempElement != nullptr)
+    for (int i = 0; i < hashTable->size; i++)
     {
-        printString(tempElement->string, fout);
-        fout << ' ' << tempElement->amountOfWords << "\n";
-        tempElement = tempElement->nextElement;
+        if (!isEmptyString(hashTable->cells[i]))
+        {
+            print(hashTable->cells[i]);
+        }
     }
 }
 
-void printCells(HashTable *hashTable,  ostream &fout)
-{
-    for (int i = 0; i < tableSize; i++)
-        printWordsFromCell(hashTable, i, fout);
-}
-
-void printMaxCells(HashTable *hashTable,  ostream &fout)
+void printMaxCells(HashTable *hashTable)
 {
     int maxValue = 0;
     int maxCell = 0;
-    for (int i = 0; i < tableSize; i++)
+    for (int i = 0; i < hashTable->size; i++)
     {
-        int current = 0;
-        TableElement *tempElement = hashTable->cells[i];
-        while (tempElement != nullptr)
+        if (sizeList(hashTable->cells[i]) > maxValue)
         {
-            current++;
-            tempElement = tempElement->nextElement;
-        }
-        if (current > maxValue)
-        {
-            maxValue = current;
+            maxValue = sizeList(hashTable->cells[i]);;
             maxCell = i;
         }
     }
-    printWordsFromCell(hashTable, maxCell, fout);
-}
-
-void deleteCells(TableElement *tableElement)
-{
-    if (tableElement == nullptr)
-        return;
-
-    deleteCells(tableElement->nextElement);
-    deleteString(tableElement->string);
-    delete tableElement;
+    print(hashTable->cells[maxCell]);
 }
 
 void deleteTable(HashTable *hashTable)
 {
-    for (int i = 0; i < tableSize; i++)
-        deleteCells(hashTable->cells[i]);
+    for (int i = 0; i < hashTable->size; i++)
+        deleteList(hashTable->cells[i]);
 
     delete[] hashTable->cells;
     delete hashTable;
+}
+
+double averageLength(HashTable *hashTable)
+{
+    int result = 0;
+    for (int i = 0; i < hashTable->size; i++)
+        result += sizeList(hashTable->cells[i]);
+
+    return (double) result / amountDifferentWords(hashTable);
 }

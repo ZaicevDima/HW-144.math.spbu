@@ -5,17 +5,18 @@
 
 struct HashTable;
 
-const int tableSize = 1500;
+const int hashSize = 1499;
 
 HashTable *createTable();
-void deleteTable(HashTable *hastTable);
+void deleteTable(HashTable *hashTable);
 
 void addToHashTable(HashTable *hashTable, String *string);
 
-double loadFactor(HashTable *hastTable);
-int amountDifferentWords(HashTable *hastTable);
-int amountWords(HashTable *hastTable);
-int amountEmptyCells(HashTable *hastTable);
+double loadFactor(HashTable *hashTable);
+double averageLength(HashTable *hashTable);
 
-void printMaxCells(HashTable *hastTable, std::ostream &fout);
-void printCells(HashTable *hastTable, std::ostream &fout);
+int amountWords(HashTable *hashTable);
+int amountEmptyCells(HashTable *hashTable);
+
+void printMaxCells(HashTable *hashTable);
+void printCells(HashTable *hashTable);
