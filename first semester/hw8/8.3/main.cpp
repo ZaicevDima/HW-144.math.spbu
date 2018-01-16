@@ -23,6 +23,8 @@ int main()
     while (!fin.eof())
     {
         fin >> newWord;
+        if (!fin)
+            break;
         String *newLine = createString(newWord);
         addToHashTable(hashTable, newLine);
     }
