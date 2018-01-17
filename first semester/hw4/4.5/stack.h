@@ -6,7 +6,7 @@ typedef int TypeElement;
 struct Stack;
 
 Stack* createStack();
-bool isEmpty(Stack* stack);
+bool isEmptyString(Stack* stack);
 void push(Stack* stack, TypeElement value);
 TypeElement pop(Stack* stack);
 TypeElement top(Stack* stack);

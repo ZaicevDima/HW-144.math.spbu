@@ -21,8 +21,7 @@ void push(Stack* stack, TypeElement value)
 
 TypeElement pop(Stack* stack)
 {
-    if ((stack->head != nullptr) && !isEmpty(stack))
-    {
+    if ((stack->head != nullptr) && !isEmptyString(stack)) {
         TypeElement value = stack->head->value;
         StackElement* next = stack->head->next;
         delete stack->head;
@@ -33,11 +32,11 @@ TypeElement pop(Stack* stack)
 
 TypeElement top(Stack* stack)
 {
-    if ((stack->head != nullptr) && !isEmpty(stack))
+    if ((stack->head != nullptr) && !isEmptyString(stack))
         return stack->head->value;
 }
 
-bool isEmpty(Stack* stack)
+bool isEmptyString(Stack* stack)
 {
     return (stack->head == nullptr);
 }
@@ -51,10 +50,8 @@ Stack* createStack()
 
 void deleteStack(Stack* stack)
 {
-    while (!isEmpty(stack))
-    {
+    while (!isEmptyString(stack)) {
         pop(stack);
     }
     delete stack;
 }
-
