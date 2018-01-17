@@ -36,24 +36,23 @@ PhoneBookElement *createNewElement(char *name, long long number, PhoneBookElemen
     return newElement;
 }
 
-void deletePhoneBookElemment(PhoneBookElement *element)
+void deletePhoneBookElement(PhoneBookElement *element)
 {
     if (element == nullptr)
         return;
 
-    deletePhoneBookElemment(element->next);
+    deletePhoneBookElement(element->next);
     delete[] element->name;
     delete element;
 }
 
 void deletePhoneBook(PhoneBook *book)
 {
-    while (!isEmpty(book)) 
-    {
+    while (!isEmpty(book)) {
       PhoneBookElement* toDelete = book->phonebook;
       book->phonebook = book->phonebook->next;
       deletePhoneBookElement(toDelete);
-    } 
+    }
     delete book->phonebook;
     delete book;
 }

@@ -14,8 +14,7 @@ int main()
     int operation = 0;
     cin >> operation;
 
-    while (operation)
-    {
+    while (operation){
         switch (operation)
         {
         case exit:
@@ -35,7 +34,7 @@ int main()
         }
         cin >> operation;
     }
-
     deletePhoneBook(book);
+    cout << "kek" << endl;
     return 0;
 }
