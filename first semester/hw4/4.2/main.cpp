@@ -57,7 +57,7 @@ int main()
     char *symbols = new char[256];
     while (!fin.eof())
     {
-        fin.getline(symbols, 256);
+        fin.getline(symbols, 256, '\n');
         int length = strlen(symbols);
         for (int i = 0; i < length; i++)
         {
@@ -72,6 +72,7 @@ int main()
             i = size;
             deleteStack(word);
         }
+        fout << "\n";
     }
 
     fin.close();
@@ -79,4 +80,3 @@ int main()
     delete[] symbols;
     return 0;
 }
-
