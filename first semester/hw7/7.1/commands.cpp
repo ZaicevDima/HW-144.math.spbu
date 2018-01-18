@@ -15,7 +15,7 @@ Tree* createTree()
 
 void addValue(Tree* currentTree, int value)
 {
-    add(currentTree->tree, value);
+    addToHashTable(currentTree->tree, value);
 }
 
 void popValue(Tree* currentTree, int value)
@@ -48,4 +48,5 @@ void printTree(Tree* currentTree)
 {
     printTree(currentTree->tree);
 }
+
 

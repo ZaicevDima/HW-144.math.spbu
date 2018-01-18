@@ -19,7 +19,7 @@ int main()
 
     printMenu();
 
-    enum operations {exit, add, pop, check, print, menu};
+    enum operations {exit, addToHashTable, pop, check, print, menu};
     enum print {treeForm, increasingOrder, decreasingOrder};
 
     int operations;
@@ -30,7 +30,7 @@ int main()
         int value = 0;
         switch (operations)
         {
-        case add:
+        case addToHashTable:
             cout << "Enter number to add: ";
             cin >> value;
             addValue(currentTree, value);
@@ -86,4 +86,3 @@ int main()
     deleteTree(currentTree);
     return 0;
 }
-

@@ -33,7 +33,7 @@ Node* createNode(int value)
     return newNode;
 }
 
-void add(Node *&node, int value)
+void addToHashTable(Node *&node, int value)
 {
     if (node == nullptr)
     {
@@ -45,14 +45,14 @@ void add(Node *&node, int value)
         return;
 
     if (node->value > value)
-        add(node->left, value);
+        addToHashTable(node->left, value);
     else
-        add(node->right, value);
+        addToHashTable(node->right, value);
 }
 
-void add(BinaryTree* tree, int value)
+void addToHashTable(BinaryTree* tree, int value)
 {
-    add(tree->root, value);
+    addToHashTable(tree->root, value);
 }
 
 void removeNode(Node *&node)
@@ -132,7 +132,7 @@ bool isBelong(BinaryTree* tree, int value)
     isBelong(tree->root, value);
 }
 
-bool isEmpty(BinaryTree* tree)
+bool isEmptyString(BinaryTree* tree)
 {
     return tree->root == nullptr;
 }
@@ -202,5 +202,4 @@ void printTree(BinaryTree* tree)
 {
     printTreeNode(tree->root);
 }
-
 
