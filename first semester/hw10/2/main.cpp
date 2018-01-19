@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    int maxSize = 100000;
+    const int maxSize = 100000;
     char* s1 = new char[maxSize];
     char* s2 = new char[maxSize];
     cout << "enter two string: \n";
