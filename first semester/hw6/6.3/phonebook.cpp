@@ -48,12 +48,7 @@ void deletePhoneBookElement(PhoneBookElement *element)
 
 void deletePhoneBook(PhoneBook *book)
 {
-    while (!isEmpty(book)) {
-      PhoneBookElement* toDelete = book->phonebook;
-      book->phonebook = book->phonebook->next;
-      deletePhoneBookElement(toDelete);
-    }
-    delete book->phonebook;
+    deletePhoneBookElement(book->phonebook);
     delete book;
 }
 

@@ -34,7 +34,7 @@ int main()
         }
         cin >> operation;
     }
+
     deletePhoneBook(book);
-    cout << "kek" << endl;
     return 0;
 }
