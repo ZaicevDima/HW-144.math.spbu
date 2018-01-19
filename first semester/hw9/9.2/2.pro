@@ -5,11 +5,13 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     huffman.cpp \
-    queue.cpp
+    queue.cpp \
+    mystring.cpp
 
 HEADERS += \
     huffman.h \
-    queue.h
+    queue.h \
+    mystring.h
 
 DISTFILES += \
     input.txt

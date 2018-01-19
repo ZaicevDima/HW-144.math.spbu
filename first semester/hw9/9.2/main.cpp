@@ -19,9 +19,11 @@ int main()
     char* string = new char[maxSize];
     char* temp = new char[maxSize];
 
-    while (fin.getline(temp, maxSize))
+    while (!fin.eof())
     {
+        fin.getline(temp, maxSize, '\n');
         strcat(string, temp);
+        strcat(string, "\n");
     }
 
     huffmanEncode(string, fout);
