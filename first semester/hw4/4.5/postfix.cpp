@@ -42,15 +42,13 @@ void actionOnOperator(char symbol, char* result, Stack* operations, int& topInde
     }
 }
 
-void actionOnOpeningBracket(char symbol, Stack* operations, int& amountSpaces)
+void actionOnOpeningBracket(char symbol, Stack* operations)
 {
     push(operations, symbol);
-    amountSpaces++;
 }
 
-void actionOnClosingBracket(char* result, Stack* operations, int& amountSpaces, int& topIndexResult)
+void actionOnClosingBracket(char* result, Stack* operations, int& topIndexResult)
 {
-    amountSpaces++;
     while ((!isEmptyString(operations)) && (top(operations) != '('))
     {
         result[topIndexResult] = top(operations);
@@ -71,15 +69,13 @@ void actionOnRemainingOperations(char* result, Stack* operations, int& topIndexR
     }
 }
 
-void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpaces)
+void conversionToPostfix(char* symbols, char* result, int amount)
 {
     int topIndexResult = 0;
     Stack* operations = createStack();
     for (int i = 0; i < amount; i++)
     {
-        if (symbols[i] == ' ')
-            amountSpaces++;
-        else if ((!isOperator(symbols[i])) && (symbols[i] != '(') && (symbols[i] != ')'))
+        if ((!isOperator(symbols[i])) && (symbols[i] != '(') && (symbols[i] != ')'))
         {
             result[topIndexResult] = symbols[i];
             topIndexResult++;
@@ -90,11 +86,11 @@ void conversionToPostfix(char* symbols, char* result, int amount, int& amountSpa
         }
         else if (symbols[i] == '(')
         {
-            actionOnOpeningBracket(symbols[i], operations, amountSpaces);
+            actionOnOpeningBracket(symbols[i], operations);
         }
         else if (symbols[i] == ')')
         {
-            actionOnClosingBracket(result, operations, amountSpaces, topIndexResult);
+            actionOnClosingBracket(result, operations, topIndexResult);
         }
         if (i == amount - 1)
         {
