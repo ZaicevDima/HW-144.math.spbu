@@ -14,5 +14,6 @@ bool isEmpty(PhoneBook *book);
 int size(PhoneBook *book);
 void saveBook(PhoneBook *book);
 void fillName(char* firstName, char* secondName);
+long long toLongLong(char *recordNumber);
 
 void deletePhoneBook(PhoneBook *book);

@@ -16,7 +16,6 @@ struct PhoneBook
 {
     PhoneBookElement *phonebook;
     int size;
-
 };
 
 PhoneBook* createPhoneBook()
@@ -119,7 +118,9 @@ bool isEmpty(PhoneBook *book)
 void saveBook(PhoneBook *book)
 {
     ofstream fout;
-    fout.open("phonebook.txt", ios::out);
+    fout.open("Phonebook.txt");
+
+    fout << book->size << "\n";
     PhoneBookElement *temp = book->phonebook;
     while (temp != nullptr)
     {

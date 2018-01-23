@@ -11,3 +11,9 @@ HEADERS += \
     phonebook.h \
     output.h
 
+DISTFILES += \
+    phonebook.txt \
+    ../build-temp-Desktop_Qt_5_5_1_GCC_64bit-Debug/phonebook1.txt \
+    ../build-temp-Desktop_Qt_5_5_1_GCC_64bit-Debug/Phonebook2.txt \
+    ../build-temp-Desktop_Qt_5_5_1_GCC_64bit-Debug/Phonebook.txt
+
