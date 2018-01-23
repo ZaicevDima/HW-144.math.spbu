@@ -16,8 +16,8 @@ int main()
         return 1;
     }
 
-    char* string = new char[maxSize];
-    char* temp = new char[maxSize];
+    char* string = new char[maxSize]{};
+    char* temp = new char[maxSize]{};
 
     while (!fin.eof())
     {
@@ -25,6 +25,7 @@ int main()
         strcat(string, temp);
         strcat(string, "\n");
     }
+    string[strlen(string) - 2] = '\0';
 
     huffmanEncode(string, fout);
 

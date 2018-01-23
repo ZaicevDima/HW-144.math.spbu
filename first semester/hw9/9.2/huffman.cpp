@@ -117,8 +117,9 @@ char **createCharMatrix(int size)
     char **result = new char*[size];
     for (int i = 0; i < size; i++)
     {
-        result[i] = new char[size];
+        result[i] = new char[size]{};
     }
+
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
@@ -140,8 +141,7 @@ void deletedCharMatrix(char **matrix, int size)
 
 void huffmanEncode(char *string, ofstream &fout)
 {
-    int* frequency = new int[maxSize];
-
+    int *frequency = new int[maxSize]{0};
     calculateFrequency(string, strlen(string), frequency);
     printFrequency(frequency);
 
@@ -152,7 +152,8 @@ void huffmanEncode(char *string, ofstream &fout)
     }
 
     Queue *queue = createQueue();
-    for (int i = 0; i < maxSize; i++) {
+    for (int i = 0; i < maxSize; i++)
+    {
         if (frequency[i])
         {
             queuePush(queue, createNode(frequency[i], (char)(i), nullptr, nullptr));
@@ -170,10 +171,10 @@ void huffmanEncode(char *string, ofstream &fout)
 
     Node *root = queueTop(queue);
     queuePop(queue);
-    queueDelete(queue);
 
+    queueDelete(queue);
     char **code = createCharMatrix(maxSize);
-    char temp[maxSize] = {0};
+    char *temp = new char[maxSize]{};
     getCodes(root, temp, code);
 
     printTree(root, fout);
@@ -187,4 +188,5 @@ void huffmanEncode(char *string, ofstream &fout)
     deleteNode(root);
     deletedCharMatrix(code, maxSize);
     delete [] frequency;
+    delete [] temp;
 }
