@@ -7,15 +7,17 @@ using namespace std;
 int main()
 {
     const int maxSize = 100000;
-    char* s1 = new char[maxSize];
-    char* s2 = new char[maxSize];
-    cout << "enter two string: \n";
-    cin >> s1;
-    cin >> s2;
+    char* string = new char[maxSize];
+    char* substring = new char[maxSize];
+    cout << "enter your string and substring: \n";
+    cin >> string;
+    cin >> substring;
     cout << "index start your substring: \n";
-    algorithmRabinKarp(s1, s2, 0);
+    int *indexes = algorithmRabinKarp(string, substring);
+    printIndexes(indexes, strlen(string));
 
-    delete [] s1;
-    delete [] s2;
+    delete []indexes;
+    delete [] string;
+    delete [] substring;
     return 0;
 }

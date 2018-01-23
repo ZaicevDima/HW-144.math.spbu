@@ -1,6 +1,7 @@
 #pragma once
 
-int const d = 2;
-int const p = 97;
+int const coefficient = 2;
+int const prime = 97;
 
-void algorithmRabinKarp(char* string, char* substring, int amountContained);
+int *algorithmRabinKarp(char* string, char* substring);
+void printIndexes(int* indexes, int size);
