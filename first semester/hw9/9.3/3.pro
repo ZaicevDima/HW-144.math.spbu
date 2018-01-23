@@ -12,5 +12,6 @@ HEADERS += \
     queue.h
 
 DISTFILES += \
-    input.txt
+    input.txt \
+    output.txt
 

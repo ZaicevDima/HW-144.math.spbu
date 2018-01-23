@@ -82,15 +82,21 @@ void getChar(Node *node, int &i, char *code, ofstream &fout)
 
 void huffmanDecode(std::ifstream &fin, ofstream &fout)
 {
-    char tree[maxSize];
-    while (!fin.eof())
+    char *tree = new char[maxSize]{};
+    char *temp = new char[maxSize]{};
+
+    fin.getline(temp, maxSize, '\n');
+    strcat(tree, temp);
+    if (fin.get() == ' ')
     {
-        fin.getline(tree, maxSize, '\n');
+        strcat(tree, "\n ");
+        fin.getline(temp, maxSize, '\n');
+        strcat(tree, temp);
     }
-    cout << tree;
+    delete [] temp;
     int i = 0;
     Node *root = getNode(tree, i);
-    char code[maxSize] = { 0 };
+    char *code = new char[maxSize]{};
     fin >> code;
     i = -1;
     int size = strlen(code);
@@ -99,5 +105,7 @@ void huffmanDecode(std::ifstream &fin, ofstream &fout)
         getChar(root, i, code, fout);
     }
 
+    delete [] code;
+    delete [] tree;
     deleteNode(root);
 }
