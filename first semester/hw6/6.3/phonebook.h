@@ -1,19 +1,20 @@
-#pragma once
+﻿#pragma once
 
 struct PhoneBookElement;
 struct PhoneBook;
 
-PhoneBook* createPhoneBook();
-PhoneBookElement *createNewElement(char* name, long long number, PhoneBookElement *next);
+PhoneBook* loadPhoneBook();
+PhoneBookElement *createNewElement(char* name, char* number, PhoneBookElement *next);
 
-void add(char* name, long long number, PhoneBook *book);
-long long numberSearch(char* name, PhoneBook *book);
-char *nameSearch(long long number, PhoneBook *book);
+void add(char* name, char* number, PhoneBook *book);
+char *numberSearch(char* name, PhoneBook *book);
+char *nameSearch(char* number, PhoneBook *book);
 
 bool isEmpty(PhoneBook *book);
 int size(PhoneBook *book);
 void saveBook(PhoneBook *book);
-void fillName(char* firstName, char* secondName);
+void printBook(PhoneBook *book);
 long long toLongLong(char *recordNumber);
 
 void deletePhoneBook(PhoneBook *book);
+

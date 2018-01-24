@@ -1,60 +1,75 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include "phonebook.h"
 #include <string.h>
-#include "output.h"
 
 using namespace std;
 
-void downloadPhonebook(PhoneBook *book)
+char *input()
 {
-    ifstream fin("Phonebook.txt");
-    if (!fin.good())
-        return;
-    int amountNumbers = 0;
-    fin >> amountNumbers;
-    for (int i = 0; i < amountNumbers; i++)
-    {
-        char *name = new char[256] {};
-        char *number = new char[20] {};
-        fin >> name >> number;
-        add(name, toLongLong(number), book);
-
-        delete [] name;
-        delete [] number;
-    }
-    fin.close();
+    char *line = new char[1000];
+    cin.getline(line, 1000);
+    return line;
 }
 
 int main()
 {
-    PhoneBook *book = createPhoneBook();
-    downloadPhonebook(book);
-    menu();
-    enum  Command {exit, add, searchNumber, searchName, print};
+    PhoneBook *book = loadPhoneBook();
+
+    cout << "menu: \n";
+    cout << "0 - exit \n";
+    cout << "1 - add \n";
+    cout << "2 - search number \n";
+    cout << "3 - search name \n";
+    cout << "4 - save \n";
+
+    enum  Command {exit, addContact, searchNumberContact, searchNameContact, print};
+
     int operation = 0;
     cin >> operation;
+    cin.ignore();
 
     while (operation)
     {
+        char *name = nullptr;
+        char *number = nullptr;
         switch (operation)
         {
         case exit:
             break;
-        case add:
-            addContact(book);
+        case addContact:
+            cout << "enter name: \n";
+            name = input();
+            cout << "enter phone: \n";
+            number = input();
+            add(name, number, book);
             break;
-        case searchNumber:
-            numberSearch(book);
+        case searchNumberContact:
+            cout << "enter name: \n";
+            name = input();
+            cout << "number: " << numberSearch(name, book) << "\n";
+
+            delete[] name;
             break;
-        case searchName:
-            nameSearch(book);
+        case searchNameContact:
+            cout << "enter phone: " << endl;
+            number = input();
+            cout << "name: " << nameSearch(number, book) << "\n";
+
+            delete[] number;
             break;
         case print:
-            printToFile(book);
+            saveBook(book);
+            cout << "your phonebook saved \n";
+
             break;
+
+        default:
+            cout << "unknown command" << endl;
         }
+        cout << "enter operation: \n";
         cin >> operation;
+        cin.ignore();
     }
 
     deletePhoneBook(book);
