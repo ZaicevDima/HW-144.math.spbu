@@ -12,9 +12,10 @@ int main()
     char result[256] = {};
 
     conversionToPostfix(symbols, result, amountSymbols);
+
     cout << "result your expression: \n";
     cout << resultExpression(result) << '\n';
 
-    delete[] symbols;
+    delete [] symbols;
     return 0;
 }
