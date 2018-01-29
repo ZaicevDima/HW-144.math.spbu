@@ -48,22 +48,18 @@ int main()
             cout << "enter name: \n";
             name = input();
             cout << "number: " << numberSearch(name, book) << "\n";
-
             delete[] name;
             break;
         case searchNameContact:
             cout << "enter phone: " << endl;
             number = input();
             cout << "name: " << nameSearch(number, book) << "\n";
-
             delete[] number;
             break;
         case print:
             saveBook(book);
             cout << "your phonebook saved \n";
-
             break;
-
         default:
             cout << "unknown command" << endl;
         }
