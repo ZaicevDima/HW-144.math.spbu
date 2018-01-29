@@ -42,7 +42,7 @@ void deixtra(int **adjacencyMatrix, int amountCities)
          int minDistation = inf;
          for (int i = 0; i < amountCities; i++)
          {
-             if (!used[i] && distance[i] < minDistation)
+             if (!used[i] && (distance[i] < minDistation))
              {
                  minDistation = distance[i];
                  currentIndex = i;
@@ -61,9 +61,9 @@ void deixtra(int **adjacencyMatrix, int amountCities)
         }
      }
 
-    delete[] previous;
-    delete[] distance;
-    delete[] used;
+    delete [] previous;
+    delete [] distance;
+    delete [] used;
 }
 
 int main()
@@ -99,7 +99,7 @@ int main()
     deixtra(adjacencyMatrix, amountCities);
 
     for (int i = 0; i < amountCities; i++)
-        delete[] adjacencyMatrix[i];
-    delete[] adjacencyMatrix;
+        delete [] adjacencyMatrix[i];
+    delete [] adjacencyMatrix;
     return 0;
 }
