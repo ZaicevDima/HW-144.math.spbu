@@ -1,4 +1,4 @@
-#include "stack.h"
+﻿#include "stack.h"
 
 struct StackElement
 {
@@ -55,3 +55,4 @@ void deleteStack(Stack* stack)
     }
     delete stack;
 }
+

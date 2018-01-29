@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstring>
 #include "postfix.h"
 #include "stack.h"
@@ -36,8 +36,6 @@ void actionOnOperator(char symbol, char* result, Stack* operations, int& topInde
             topIndexResult++;
             pop(operations);
         }
-        if ((!isEmptyString(operations)) && (top(operations) == '('))
-            pop(operations);
         push(operations, symbol);
     }
 }
