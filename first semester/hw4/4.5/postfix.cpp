@@ -113,7 +113,7 @@ int numeral(char symbol)
     return symbol - '0';
 }
 
-int action(char symbol, int number1, int number2)
+int action(char symbol, int number1, int number2, bool *error)
 {
     if (symbol == '+')
         return number1 + number2;
@@ -122,14 +122,21 @@ int action(char symbol, int number1, int number2)
     if (symbol == '*')
         return number1 * number2;
     if (symbol == '/')
+    {
+        if (number2 == 0)
+        {
+            *error = true;
+            return 0;
+        }
         return number1 / number2;
+    }
 }
 
-int resultExpression(char* symbols)
+int resultExpression(char* symbols, bool *error)
 {
     int n = strlen(symbols);
     Stack* result = createStack();
-    for (int i = 0; i < n; i++)
+    for (int i = 0; (i < n) && (!*error); i++)
     {
         if (isDigit(symbols[i]))
             push(result, numeral(symbols[i]));
@@ -139,7 +146,7 @@ int resultExpression(char* symbols)
             pop(result);
             int beforeFront = top(result);
             pop(result);
-            int resultOperation = action(symbols[i], beforeFront, front);
+            int resultOperation = action(symbols[i], beforeFront, front, *&error);
             push(result, resultOperation);
         }
     }

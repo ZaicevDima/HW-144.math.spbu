@@ -14,7 +14,13 @@ int main()
     conversionToPostfix(symbols, result, amountSymbols);
 
     cout << "result your expression: \n";
-    cout << resultExpression(result) << '\n';
+    bool error = false;
+
+    int answer = resultExpression(result, &error);
+    if (error)
+        cout << "error, expression / 0 \n";
+    else
+        cout << answer << '\n';
 
     delete [] symbols;
     return 0;
