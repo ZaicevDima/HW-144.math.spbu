@@ -2,7 +2,6 @@ package com.group144.zaicev;
 import java.util.Scanner;
 
 public class List<Type> {
-    Scanner in = new Scanner(System.in);
 
     private class ListElement {
         Type value;
@@ -57,11 +56,9 @@ public class List<Type> {
                 tempElement = tempElement.next;
             }
             tempElement.next = null;
-        }
-        else if (size == 0) {
+        } else if (size == 0) {
             return;
-        }
-        else {
+        } else {
             head = null;
         }
         size--;
@@ -83,3 +80,4 @@ public class List<Type> {
         return current.value;
     }
 }
+

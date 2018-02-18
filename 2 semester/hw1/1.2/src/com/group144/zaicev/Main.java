@@ -9,10 +9,11 @@ public class Main {
     public static void main(String[] args) {
         List<Integer> List = new List<Integer>();
         Scanner in = new Scanner(System.in);
-        Menu();
+        displayMenu();
 
         out.println("Enter operation: ");
         int operation = in.nextInt();
+
 
         while (operation != 0) {
             switch (operation) {
@@ -72,7 +73,7 @@ public class Main {
                     operation = in.nextInt();
                     break;
                 case 7:
-                    Menu();
+                    displayMenu();
                     out.println("Enter operation: ");
                     operation = in.nextInt();
                     break;
@@ -84,7 +85,7 @@ public class Main {
         }
     }
 
-    public static void Menu() {
+    public static void displayMenu() {
         out.println("menu :");
         out.println("0 - exit");
         out.println("1 - add");
@@ -93,6 +94,7 @@ public class Main {
         out.println("4 - clear");
         out.println("5 - value of index");
         out.println("6 - size");
-        out.println("7 - menu");
+        out.println("7 - display the menu");
     }
 }
+
