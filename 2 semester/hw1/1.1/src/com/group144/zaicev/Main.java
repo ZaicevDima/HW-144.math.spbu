@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Stack<Integer> Stack = new Stack<Integer>();
         Scanner in = new Scanner(System.in);
-        Menu();
+        displayMenu();
         int operation = in.nextInt();
 
         while (operation != 0) {
@@ -22,8 +22,7 @@ public class Main {
                 case 2:
                     if (Stack.isEmpty()) {
                         System.out.println("Stack is empty");
-                    }
-                    else {
+                    } else {
                         Stack.pop();
                         System.out.println("Element was deleted");
                     }
@@ -33,15 +32,14 @@ public class Main {
                 case 3:
                     if (Stack.isEmpty()) {
                         System.out.println("Stack is empty");
-                    }
-                    else {
+                    } else {
                         System.out.println("Top value: " + Stack.top());
                     }
                     System.out.println("Enter operation: ");
                     operation = in.nextInt();
                     break;
                 case 4:
-                    Menu();
+                    displayMenu();
                     System.out.println("Enter operation: ");
                     operation = in.nextInt();
                     break;
@@ -53,13 +51,14 @@ public class Main {
         }
     }
 
-    public static void Menu() {
+    public static void displayMenu() {
         System.out.println("menu :");
         System.out.println("0 - exit");
         System.out.println("1 - add");
         System.out.println("2 - pop");
         System.out.println("3 - top");
-        System.out.println("4 - menu");
+        System.out.println("4 - display the menu");
         System.out.println("Enter operation: ");
     }
 }
+
