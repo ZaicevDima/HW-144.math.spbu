@@ -10,7 +10,7 @@ public class BubbleSortTest {
     public void sortArray() {
         int[] array = {1, 2, 3, 4, 5};
         int[] sorted = {1, 2, 3, 4, 5};
-        Sorts sorter = new BubbleSort();
+        Sorter sorter = new BubbleSort();
         sorter.sort(array);
         assertArrayEquals(sorted, array);
     }
@@ -19,7 +19,7 @@ public class BubbleSortTest {
     public void sortSame() {
         int[] array = {1, 1, 1, 1, 1};
         int[] sorted = {1, 1, 1, 1, 1};
-        Sorts sorter = new BubbleSort();
+        Sorter sorter = new BubbleSort();
         sorter.sort(array);
         assertArrayEquals(sorted, array);
     }
@@ -28,7 +28,7 @@ public class BubbleSortTest {
     public void sortUnsorted() {
         int[] array = {1, 3, 5, 4, 2};
         int[] sorted = {1, 2, 3, 4, 5};
-        Sorts sorter = new BubbleSort();
+        Sorter sorter = new BubbleSort();
         sorter.sort(array);
         assertArrayEquals(sorted, array);
     }

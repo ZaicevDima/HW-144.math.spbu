@@ -1,6 +1,6 @@
 package group144.zaicev;
 
-public class InsertionSort implements Sorts {
+public class InsertionSort implements Sorter {
 
     @Override
     public void sort(int[] array) {

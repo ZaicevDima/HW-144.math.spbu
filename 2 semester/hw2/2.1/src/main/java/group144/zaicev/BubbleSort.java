@@ -1,6 +1,6 @@
 package group144.zaicev;
 
-public class BubbleSort implements Sorts {
+public class BubbleSort implements Sorter {
 
     @Override
     public void sort(int[] array) {

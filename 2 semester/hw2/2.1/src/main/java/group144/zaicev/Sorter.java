@@ -1,5 +1,5 @@
 package group144.zaicev;
 
-public interface Sorts {
+public interface Sorter {
     void sort(int[] array);
 }
