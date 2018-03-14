@@ -7,23 +7,15 @@ import static org.junit.Assert.*;
 public class UniqueListTest {
 
     @Test (expected = ElementIsRepeat.class)
-    public void addNumber() throws ElementIsRepeat {
+    public void addRepeatingElementTest() throws ElementIsRepeat {
         UniqueList<Integer> list = new UniqueList<>();
         list.add(1);
         list.add(2);
         list.add(1);
-        assertTrue(list.valueOfIndex(1) == 2);
     }
 
     @Test (expected = ElementIsRepeat.class)
-    public void addRepeating() throws ElementIsRepeat {
-        UniqueList<Integer> list = new UniqueList<>();
-        list.add(1);
-        list.add(1);
-    }
-
-    @Test (expected = ElementIsRepeat.class)
-    public void IntegerList() throws ElementIsRepeat, NotFoundException {
+    public void IntegerListTest() throws ElementIsRepeat, ValueNotFound, IndexBeyondBorders {
         UniqueList<Integer> list = new UniqueList<>();
 
         assertTrue(list.isEmpty());
@@ -51,8 +43,8 @@ public class UniqueListTest {
         list.add(1);
     }
 
-    @Test (expected = NotFoundException.class)
-    public void CharacterList() throws ElementIsRepeat, NotFoundException {
+    @Test (expected = ValueNotFound.class)
+    public void CharacterListTest() throws ElementIsRepeat, ValueNotFound, IndexBeyondBorders {
         UniqueList<Character> list = new UniqueList<>();
 
         assertTrue(list.isEmpty());

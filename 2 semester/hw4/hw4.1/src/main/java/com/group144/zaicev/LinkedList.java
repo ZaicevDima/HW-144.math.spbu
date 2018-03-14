@@ -1,7 +1,13 @@
 package com.group144.zaicev;
 
-public class ListLinked<Type> implements List<Type> {
+/**
+ * One-linked list, which works with elements any type
+ *
+ * @param <Type> element's type your List
+ */
+public class LinkedList<Type> implements List<Type> {
 
+    /** Class, which creates list element */
     private class ListElement {
         Type value;
         ListElement next;
@@ -17,12 +23,12 @@ public class ListLinked<Type> implements List<Type> {
 
     @Override
     public boolean contains(Type element) {
-        ListElement tempElement = head;
+        ListElement current = head;
         for (int i = 0; i < size; i++) {
-            if (tempElement.value == element) {
+            if (current.value == element) {
                 return true;
             }
-            tempElement = tempElement.next;
+            current = current.next;
         }
         return false;
     }
@@ -48,7 +54,7 @@ public class ListLinked<Type> implements List<Type> {
     }
 
     @Override
-    public void delete(Type value) throws NotFoundException {
+    public void delete(Type value) throws ValueNotFound {
         ListElement previous = null;
         ListElement current = head;
 
@@ -71,7 +77,7 @@ public class ListLinked<Type> implements List<Type> {
             previous = current;
             current = current.next;
         }
-        throw new NotFoundException("Not found element");
+        throw new ValueNotFound("Not found element");
     }
 
     @Override
@@ -87,9 +93,9 @@ public class ListLinked<Type> implements List<Type> {
     }
 
     @Override
-    public Type valueOfIndex(int index) {
+    public Type valueOfIndex(int index) throws IndexBeyondBorders {
         if ((index >= size) || (index < 0)) {
-            throw new IndexOutOfBoundsException("Wrong index");
+            throw new IndexBeyondBorders("Wrong index");
         }
 
         ListElement current = head;
