@@ -1,6 +1,6 @@
 package com.group144.zaicev;
 
-class PrintConsole implements Print{
+class PrintConsole implements Print {
     @Override
     public int[] printSpiral(int[][] array) {
         Spiral spiral = new Spiral();
