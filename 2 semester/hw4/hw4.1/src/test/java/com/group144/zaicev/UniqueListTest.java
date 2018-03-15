@@ -61,13 +61,15 @@ public class UniqueListTest {
         assertTrue(list.getSize() == 1);
 
         list.add('3');
-        assertTrue(list.valueOfIndex(0) == '1');
+        assertTrue(list.valueOfIndex(1) == '3');
 
         list.clear();
         assertFalse(list.contains('1'));
         assertFalse(list.contains('3'));
         assertTrue(list.getSize() == 0);
 
+        list.add('1');
+        list.delete('1');
         list.delete('5');
     }
 }

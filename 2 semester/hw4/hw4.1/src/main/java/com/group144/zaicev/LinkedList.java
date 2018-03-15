@@ -41,7 +41,6 @@ public class LinkedList<Type> implements List<Type> {
             this.size++;
             return;
         }
-
         ListElement newElement = new ListElement(value, null);
         tail.next = newElement;
         tail = newElement;
@@ -97,7 +96,6 @@ public class LinkedList<Type> implements List<Type> {
         if ((index >= size) || (index < 0)) {
             throw new IndexBeyondBorders("Wrong index");
         }
-
         ListElement current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;

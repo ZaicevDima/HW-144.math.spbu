@@ -54,6 +54,10 @@ public class ListTest {
         Assert.assertFalse(list.contains(1));
         list.add(1);
         Assert.assertTrue(list.contains(1));
+
+        Assert.assertFalse(list.contains(2));
+        list.add(2);
+        Assert.assertTrue(list.contains(2));
     }
 
     @Test
@@ -94,7 +98,10 @@ public class ListTest {
         list.add(1);
         list.add(2);
         list.add(3);
+        list.add(4);
+        Assert.assertTrue(list.valueOfIndex(0) == 1);
         Assert.assertTrue(list.valueOfIndex(1) == 2);
+        Assert.assertTrue(list.valueOfIndex(3) == 4);
     }
 
     @Test(expected = IndexBeyondBorders.class)
