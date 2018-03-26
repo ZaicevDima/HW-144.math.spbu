@@ -9,12 +9,12 @@ public class UniqueList<Type> extends LinkedList<Type> {
     /**
      * Special method, which adds non-repeating elements
      * @param value value your element
-     * @throws ElementIsRepeat if value your element was repeated
+     * @throws ElementIsRepeatException if value your element was repeated
      */
     @Override
-    public void add(Type value) throws ElementIsRepeat {
+    public void add(Type value) throws ElementIsRepeatException {
         if (this.contains(value)) {
-            throw new ElementIsRepeat("Element is repeat");
+            throw new ElementIsRepeatException("Element is repeat");
         }
         super.add(value);
     }

@@ -10,9 +10,9 @@ public interface List<Type> {
     /**
      * method, which removes list element by the value
      * @param value value, which you want remove
-     * @throws ValueNotFound if value didn't found in the list
+     * @throws ValueNotFoundException if value didn't found in the list
      */
-    void delete(Type value) throws ValueNotFound;
+    void delete(Type value) throws ValueNotFoundException;
 
     /**
      * method, which checks if there is a given element in the list
@@ -24,9 +24,9 @@ public interface List<Type> {
     /**
      * method, which adds value in the list
      * @param value value, which you want add
-     * @throws ElementIsRepeat if you are adding value repeat
+     * @throws ElementIsRepeatException if you are adding value repeat
      */
-    void add(Type value) throws ElementIsRepeat;
+    void add(Type value) throws ElementIsRepeatException;
 
     /**
      * method, which returns size your list
@@ -49,7 +49,7 @@ public interface List<Type> {
      * method, which returns value from the list at your index
      * @param index index, index by which you want to know the meaning
      * @return value from the list
-     * @throws IndexBeyondBorders if index beyond borders
+     * @throws IndexBeyondBordersException if index beyond borders
      */
-    Type valueOfIndex(int index) throws IndexBeyondBorders;
+    Type valueOfIndex(int index) throws IndexBeyondBordersException;
 }

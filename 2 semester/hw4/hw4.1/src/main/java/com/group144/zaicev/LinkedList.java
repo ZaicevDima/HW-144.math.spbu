@@ -34,7 +34,7 @@ public class LinkedList<Type> implements List<Type> {
     }
 
     @Override
-    public void add(Type value) throws ElementIsRepeat {
+    public void add(Type value) throws ElementIsRepeatException {
         if (size == 0) {
             this.head = new ListElement(value, null);
             this.tail = head;
@@ -53,7 +53,7 @@ public class LinkedList<Type> implements List<Type> {
     }
 
     @Override
-    public void delete(Type value) throws ValueNotFound {
+    public void delete(Type value) throws ValueNotFoundException {
         ListElement previous = null;
         ListElement current = head;
 
@@ -76,7 +76,7 @@ public class LinkedList<Type> implements List<Type> {
             previous = current;
             current = current.next;
         }
-        throw new ValueNotFound("Not found element");
+        throw new ValueNotFoundException("Not found element");
     }
 
     @Override
@@ -92,9 +92,9 @@ public class LinkedList<Type> implements List<Type> {
     }
 
     @Override
-    public Type valueOfIndex(int index) throws IndexBeyondBorders {
+    public Type valueOfIndex(int index) throws IndexBeyondBordersException {
         if ((index >= size) || (index < 0)) {
-            throw new IndexBeyondBorders("Wrong index");
+            throw new IndexBeyondBordersException("Wrong index");
         }
         ListElement current = head;
         for (int i = 0; i < index; i++) {

@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class ListTest {
 
     @Test
-    public void deleteExistingElementTest() throws ValueNotFound, ElementIsRepeat {
+    public void deleteExistingElementTest() throws ValueNotFoundException, ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         list.delete(1);
@@ -28,28 +28,28 @@ public class ListTest {
 
     }
 
-    @Test(expected = ValueNotFound.class)
-    public void deletedNonExistingElementTest() throws ValueNotFound {
+    @Test(expected = ValueNotFoundException.class)
+    public void deletedNonExistingElementTest() throws ValueNotFoundException {
         List<Integer> list = new LinkedList<>();
         list.delete(1);
     }
 
     @Test
-    public void containsExistingElementTest() throws ElementIsRepeat {
+    public void containsExistingElementTest() throws ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         Assert.assertTrue(list.contains(1));
     }
 
     @Test
-    public void containsNonExistingElementTest() throws ElementIsRepeat {
+    public void containsNonExistingElementTest() throws ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         Assert.assertFalse(list.contains(0));
     }
 
     @Test
-    public void addTest() throws ElementIsRepeat {
+    public void addTest() throws ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         Assert.assertFalse(list.contains(1));
         list.add(1);
@@ -61,7 +61,7 @@ public class ListTest {
     }
 
     @Test
-    public void getSizeTest() throws ElementIsRepeat, ValueNotFound {
+    public void getSizeTest() throws ElementIsRepeatException, ValueNotFoundException {
         List<Integer> list = new LinkedList<>();
         Assert.assertEquals(0, list.getSize());
         list.add(1);
@@ -75,7 +75,7 @@ public class ListTest {
     }
 
     @Test
-    public void clearTest() throws ElementIsRepeat {
+    public void clearTest() throws ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -85,7 +85,7 @@ public class ListTest {
     }
 
     @Test
-    public void isEmptyTest() throws ElementIsRepeat {
+    public void isEmptyTest() throws ElementIsRepeatException {
         List<Integer> list = new LinkedList<>();
         Assert.assertTrue(list.isEmpty());
         list.add(1);
@@ -93,7 +93,7 @@ public class ListTest {
     }
 
     @Test
-    public void valueOfIndexCorrectIndexTest() throws ElementIsRepeat, IndexBeyondBorders {
+    public void valueOfIndexCorrectIndexTest() throws ElementIsRepeatException, IndexBeyondBordersException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -104,8 +104,8 @@ public class ListTest {
         Assert.assertTrue(list.valueOfIndex(3) == 4);
     }
 
-    @Test(expected = IndexBeyondBorders.class)
-    public void valueOfIndexIncorrectIndexTest() throws ElementIsRepeat, IndexBeyondBorders {
+    @Test(expected = IndexBeyondBordersException.class)
+    public void valueOfIndexIncorrectIndexTest() throws ElementIsRepeatException, IndexBeyondBordersException {
         List<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -114,8 +114,8 @@ public class ListTest {
         list.valueOfIndex(6);
     }
 
-    @Test (expected = IndexBeyondBorders.class)
-    public void IntegerListTest() throws ElementIsRepeat, ValueNotFound, IndexBeyondBorders {
+    @Test (expected = IndexBeyondBordersException.class)
+    public void IntegerListTest() throws ElementIsRepeatException, ValueNotFoundException, IndexBeyondBordersException {
         List<Integer> list = new LinkedList<>();
 
         assertTrue(list.isEmpty());
@@ -142,8 +142,8 @@ public class ListTest {
         list.valueOfIndex(10);
     }
 
-    @Test (expected = ValueNotFound.class)
-    public void CharacterListTest() throws ElementIsRepeat, ValueNotFound, IndexBeyondBorders {
+    @Test (expected = ValueNotFoundException.class)
+    public void CharacterListTest() throws ElementIsRepeatException, ValueNotFoundException, IndexBeyondBordersException {
         UniqueList<Character> list = new UniqueList<>();
 
         assertTrue(list.isEmpty());
