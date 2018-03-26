@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /** class main */
 public class Main {
-    public static void main(String[] args) throws ValueNotFound, FileNotFoundException, ListIsEmptyException {
+    public static void main(String[] args) throws ValueNotFoundException, FileNotFoundException, ListIsEmptyException {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter 1, if you want use polinomialHahFunction, else 2, if you want use lengthHashFunction");
         int answer = in.nextInt();
@@ -47,7 +47,7 @@ public class Main {
                     break;
                 case  "check":
                     System.out.println("enter value, which you want check");
-                    if (hashTable.isContains(in.next())) {
+                    if (hashTable.contains(in.next())) {
                         System.out.println("your value is in hashtable");
                     } else {
                         System.out.println("your value isn't in hashtable");

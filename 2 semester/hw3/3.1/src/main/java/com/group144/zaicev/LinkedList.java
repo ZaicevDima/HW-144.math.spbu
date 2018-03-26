@@ -7,7 +7,7 @@ package com.group144.zaicev;
 class LinkedList<Type extends Comparable> {
 
     /** Class, which creates list element */
-    class ListElement {
+    private class ListElement {
         Type value;
         ListElement next;
         ListElement(Type value, ListElement next) {
@@ -28,7 +28,7 @@ class LinkedList<Type extends Comparable> {
     public boolean contains(Type element) {
         ListElement current = head;
         for (int i = 0; i < size; i++) {
-            if (current.value == element) {
+            if (current.value.equals(element)) {
                 return true;
             }
             current = current.next;
@@ -61,9 +61,9 @@ class LinkedList<Type extends Comparable> {
     /**
      * Method, which remove value from your hash table
      * @param value - value, which you want remove
-     * @throws ValueNotFound, if your value is not found
+     * @throws ValueNotFoundException, if your value is not found
      */
-    public void delete(Type value) throws ValueNotFound {
+    public void delete(Type value) throws ValueNotFoundException {
         ListElement previous = null;
         ListElement current = head;
 
@@ -86,7 +86,7 @@ class LinkedList<Type extends Comparable> {
             previous = current;
             current = current.next;
         }
-        throw new ValueNotFound("Not found element");
+        throw new ValueNotFoundException("Not found element");
     }
 
     /**
@@ -102,11 +102,11 @@ class LinkedList<Type extends Comparable> {
      * Method, which return value by index
      * @param index - your index
      * @return value by index
-     * @throws IndexBeyondBorders if the index is outside the borders
+     * @throws IndexBeyondBordersException if the index is outside the borders
      */
-    public Type valueOfIndex(int index) throws IndexBeyondBorders {
+    public Type valueOfIndex(int index) throws IndexBeyondBordersException {
         if ((index >= size) || (index < 0)) {
-            throw new IndexBeyondBorders("Wrong index");
+            throw new IndexBeyondBordersException("Wrong index");
         }
         ListElement current = head;
         for (int i = 0; i < index; i++) {
@@ -118,11 +118,11 @@ class LinkedList<Type extends Comparable> {
     /**
      * Method, which return list element with this value
      */
-    public ListElement findElement(Type value) {
+    public Type findElement(Type value) {
         ListElement temp = head;
         while ((temp != null)) {
             if (temp.value.equals(value)) {
-                return temp;
+                return temp.value;
             }
             temp = temp.next;
         }

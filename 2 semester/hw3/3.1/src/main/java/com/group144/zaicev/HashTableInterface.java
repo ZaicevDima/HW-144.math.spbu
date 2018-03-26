@@ -16,9 +16,9 @@ public interface HashTableInterface {
     /**
      * Method, which remove value from your hash table
      * @param value - value, which you want remove
-     * @throws ValueNotFound , if your value is not found
+     * @throws ValueNotFoundException , if your value is not found
      */
-    void delete(String value) throws ValueNotFound;
+    void delete(String value) throws ValueNotFoundException;
 
     /**
      * Method, which give you information about hash table
@@ -38,7 +38,7 @@ public interface HashTableInterface {
      * @param value - value, which you want check
      * @return true, if your value is contains in hash table, else false
      */
-    boolean isContains(String value);
+    boolean contains(String value) throws ListIsEmptyException;
 
     /**
      * Method that checks if hash table is empty

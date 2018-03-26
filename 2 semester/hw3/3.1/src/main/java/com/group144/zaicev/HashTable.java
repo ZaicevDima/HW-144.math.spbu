@@ -2,6 +2,9 @@ package com.group144.zaicev;
 
 import java.lang.String;
 
+/**
+ * Class for work with Hash Table
+ */
 public class HashTable implements HashTableInterface {
     private int tableSize = 10000;
     private LinkedList<String>[] list = (LinkedList<String> []) new LinkedList[tableSize];
@@ -25,7 +28,7 @@ public class HashTable implements HashTableInterface {
     }
 
     @Override
-    public void delete(String value) throws ValueNotFound {
+    public void delete(String value) throws ValueNotFoundException {
         int index = hashFunction.hash(value, tableSize);
         list[index].delete(value);
     }
@@ -61,11 +64,9 @@ public class HashTable implements HashTableInterface {
     }
 
     @Override
-    public boolean isContains(String value) {
+    public boolean contains(String value) throws ListIsEmptyException {
         int index = hashFunction.hash(value, tableSize);
-        LinkedList.ListElement temp = list[index].findElement(value);
-        System.out.println();
-        return temp != null;
+        return list[index].contains(value);
     }
 
     @Override

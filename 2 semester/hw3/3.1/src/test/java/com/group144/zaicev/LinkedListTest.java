@@ -32,7 +32,7 @@ public class LinkedListTest {
     }
 
     @Test
-    public void getSizeTest() throws ValueNotFound {
+    public void getSizeTest() throws ValueNotFoundException {
         LinkedList<Integer> list = new LinkedList<>();
         Assert.assertEquals(0, list.getSize());
         list.add(1);
@@ -46,7 +46,7 @@ public class LinkedListTest {
     }
 
     @Test ()
-    public void deleteTest() throws ValueNotFound {
+    public void deleteTest() throws ValueNotFoundException {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
         list.delete(1);
@@ -65,8 +65,8 @@ public class LinkedListTest {
         Assert.assertEquals(1, list.getSize());
     }
 
-    @Test(expected = ValueNotFound.class)
-    public void deletedNonExistingElementTest() throws ValueNotFound {
+    @Test(expected = ValueNotFoundException.class)
+    public void deletedNonExistingElementTest() throws ValueNotFoundException {
         LinkedList<Integer> list = new LinkedList<>();
         list.delete(1);
     }
@@ -82,7 +82,7 @@ public class LinkedListTest {
     }
 
     @Test
-    public void valueOfIndexTest() throws IndexBeyondBorders {
+    public void valueOfIndexTest() throws IndexBeyondBordersException {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -93,8 +93,8 @@ public class LinkedListTest {
         Assert.assertTrue(list.valueOfIndex(3) == 4);
     }
 
-    @Test(expected = IndexBeyondBorders.class)
-    public void valueOfIndexIncorrectIndexTest() throws IndexBeyondBorders {
+    @Test(expected = IndexBeyondBordersException.class)
+    public void valueOfIndexIncorrectIndexTest() throws IndexBeyondBordersException {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -107,9 +107,9 @@ public class LinkedListTest {
     public void findElementTest(){
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
-        Assert.assertTrue(list.findElement(1).value == 1);
+        Assert.assertTrue(list.findElement(1) == 1);
         list.add(2);
-        Assert.assertTrue(list.findElement(2).value == 2);
+        Assert.assertTrue(list.findElement(2) == 2);
         Assert.assertTrue(list.findElement(4) == null);
     }
 
