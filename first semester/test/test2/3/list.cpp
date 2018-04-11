@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "list.h"
 
 struct ListElement
@@ -83,13 +83,14 @@ void pop(List* list)
         {
             temp = temp->next;
         }
-        temp->next = nullptr;
         delete temp->next;
+        temp->next = nullptr;
     }
     else if (list->size == 0)
         return;
     else
     {
+        delete list->head;
         list->head = nullptr;
     }
     list->size--;
@@ -105,6 +106,7 @@ void deleteList(List *list)
 {
     clear(list);
     delete list->head;
+    delete list;
 }
 
 int valueOfIndex(List *list, int index)

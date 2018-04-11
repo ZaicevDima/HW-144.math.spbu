@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "list.h"
 #include "merge.h"
 using namespace std;
@@ -15,6 +15,8 @@ int main()
         cin >> value;
         addList(value, list);
     }
+
+    //printList(list);
 
     mergesort(list, 0, size(list) - 1);
     cout << "\n";
