@@ -1,7 +1,9 @@
 package group144.zaicev;
 
+import javax.jws.soap.SOAPMessageHandlers;
 import java.util.Stack;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.String.copyValueOf;
 
 /**
@@ -23,7 +25,7 @@ class Calculator {
      * @param symbol - your symbol
      * @return priority of your symbol
      */
-    private int priority(char symbol) {
+    private int priority(char symbol) throws WrongExpressionException {
         if (symbol == '(') {
             return 0;
         }
@@ -36,7 +38,7 @@ class Calculator {
         if ((symbol == '*') || (symbol == '/')) {
             return 3;
         }
-        return 10;
+        throw new WrongExpressionException("Operation not found");
     }
 
     /**
@@ -44,7 +46,7 @@ class Calculator {
      * @param expression - your expression
      * @return your expression in postfix form
      */
-    private String toPostfix(String expression) {
+    private String toPostfix(String expression) throws WrongExpressionException {
         StringBuffer result = new StringBuffer();
         Stack<Character> operation = new Stack<>();
 
@@ -109,7 +111,7 @@ class Calculator {
      * @param operations stack of your expression operations
      * @param result variable string in postfix form, in the future the postfix form of your expression
      */
-    private void actionOnOperator(char symbol, Stack<Character> operations, StringBuffer result) {
+    private void actionOnOperator(char symbol, Stack<Character> operations, StringBuffer result) throws WrongExpressionException {
         if ((operations.empty()) || (operations.peek() == '(')) {
             operations.push(symbol);
         } else if ((!operations.empty()) && (priority(symbol) > priority(operations.peek()))) {
@@ -175,7 +177,7 @@ class Calculator {
                 divByZero = true;
                 throw new DivisionByZeroException("Error, division by 0");
             }
-                return number1 / number2;
+            return number1 / number2;
         }
         return 0;
     }
@@ -199,12 +201,14 @@ class Calculator {
                     incorrect = true;
                     throw new WrongExpressionException("Error, expression is incorrect");
                 }
+
                 int front = result.peek();
                 result.pop();
                 if (result.size() == 0) {
                     incorrect = true;
                     throw new WrongExpressionException("Error, expression is incorrect");
                 }
+
                 int beforeFront = result.peek();
                 result.pop();
                 int resultOperation = action(expression.charAt(i), beforeFront, front);
@@ -212,6 +216,28 @@ class Calculator {
             }
         }
         return result.peek();
+    }
+
+    /**
+     * Method, which convert the expression: add * between the number and (
+     * @param expression your expression
+     * @return converting expression
+     */
+    private String convertExpression(String expression) {
+        String result = "";
+        for (int i = 0; i < expression.length() - 1; i++) {
+            result = result.concat(String.valueOf(expression.charAt(i)));
+
+            if ((isDigit(expression.charAt(i))) && (expression.charAt(i + 1) == '(')) {
+                result = result.concat("*");
+            }
+
+            if ((isDigit(expression.charAt(i + 1))) && (expression.charAt(i) == ')')) {
+                return "(";
+            }
+        }
+        result = result.concat(String.valueOf(expression.charAt(expression.length() - 1)));
+        return result;
     }
 
     /**
@@ -224,6 +250,7 @@ class Calculator {
     String calculate(String expression) throws WrongExpressionException, DivisionByZeroException {
         this.divByZero = false;
         this.incorrect = false;
+        expression = convertExpression(expression);
         String postfixForm = toPostfix(expression);
         int result = resultExpression(postfixForm);
         if ((!divByZero) && (!incorrect)) {
@@ -233,6 +260,5 @@ class Calculator {
         } else {
             return "Error, division by 0";
         }
-
     }
 }

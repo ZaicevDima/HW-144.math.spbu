@@ -6,12 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import static java.lang.Integer.parseInt;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("calculator.fxml"));
         primaryStage.setTitle("Calculator");
+        primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.show();
     }

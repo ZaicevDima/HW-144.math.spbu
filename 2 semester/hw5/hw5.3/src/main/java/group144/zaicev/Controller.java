@@ -7,13 +7,19 @@ import javafx.scene.control.TextField;
 /**
  * Controller for calculator
  */
-public class Controller extends Calculator{
+public class Controller extends Calculator {
+    
     /**
-     * TextField - the window of your calculator, in which you write an expression
+     * expression - the window of your calculator, in which you write an expression
      */
     @FXML
     private TextField expression = new TextField();
 
+    /**
+     * result - the window of your calculator, in which write result of your expression
+     */
+    @FXML
+    private TextField result = new TextField();
     /** Button with 1 */
     @FXML
     Button button1 = new Button();
@@ -86,12 +92,26 @@ public class Controller extends Calculator{
     @FXML
     Button buttonCloseBracket = new Button();
 
+    /** Button with ← */
+    @FXML
+    Button buttonBackSpace = new Button();
+
     /**
      * Method, to press a button
      * @param button - Button, which you press
      */
     private void pressNumberButton(Button button) {
-        button.setOnAction(event -> expression.textProperty().setValue(expression.textProperty().getValue().concat(button.getText())));
+        button.setOnAction(event -> {
+            if (!button.getText().equals("="))
+                expression.textProperty().setValue(expression.textProperty().getValue().concat(button.getText()));
+            try {
+                if (!expression.getText().equals("")) {
+                    result.textProperty().setValue(String.valueOf(calculate(expression.getText())));
+                }
+            } catch (WrongExpressionException | DivisionByZeroException exeption) {
+                result.setText("Error");
+            }
+        });
     }
 
     /** initialize */
@@ -111,16 +131,20 @@ public class Controller extends Calculator{
         pressNumberButton(buttonMinus);
         pressNumberButton(buttonMulti);
         pressNumberButton(buttonDiv);
+        pressNumberButton(buttonResult);
         pressNumberButton(buttonOpenBracket);
         pressNumberButton(buttonCloseBracket);
-        buttonClear.setOnAction(event -> expression.textProperty().setValue(""));
-        buttonResult.setOnAction(event -> {
+        buttonClear.setOnAction(event -> {
+            expression.setText("");
+            result.setText("");
+        });
+
+        buttonBackSpace.setOnAction(event -> {
+            expression.setText(expression.getText().substring(0, expression.getText().length() - 1));
             try {
-                expression.textProperty().setValue(String.valueOf(calculate(expression.getText())));
-            } catch (WrongExpressionException e) {
-                expression.textProperty().setValue("Error, expression is incorrect");
-            } catch (DivisionByZeroException e) {
-                expression.textProperty().setValue("Error, division by 0");
+                result.textProperty().setValue(String.valueOf(calculate(expression.getText())));
+            } catch (WrongExpressionException | DivisionByZeroException exception) {
+                result.setText("Error");
             }
         });
     }
