@@ -10,7 +10,7 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     private AVLTreeNode<Type> left;
     private AVLTreeNode<Type> right;
     private AVLTreeNode<Type> parent;
-    private int height = 0;
+    private int height;
 
     /**
      * Constructor AVL Tree node
@@ -29,10 +29,10 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     /**
      * Changes the height value
      *
-     * @param height new value of height
+     * @param newHeight new value of height
      */
-    private void setHeight(int height) {
-        this.height = height;
+    private void setHeight(int newHeight) {
+        height = newHeight;
     }
 
     /**
@@ -50,6 +50,13 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     }
 
     /**
+     * Changes the node value
+     */
+    private void setValue(Type newValue) {
+        value = newValue;
+    }
+
+    /**
      * Returns the left node
      */
     AVLTreeNode<Type> getLeft() {
@@ -59,10 +66,10 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     /**
      * Changes the left node
      *
-     * @param left new left node
+     * @param newLeftNode new left node
      */
-    private void setLeft(AVLTreeNode<Type> left) {
-        this.left = left;
+    private void setLeft(AVLTreeNode<Type> newLeftNode) {
+        left = newLeftNode;
     }
 
     /**
@@ -75,10 +82,10 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     /**
      * Changes the right node
      *
-     * @param right new right node
+     * @param newRightNode new right node
      */
-    private void setRight(AVLTreeNode<Type> right) {
-        this.right = right;
+    private void setRight(AVLTreeNode<Type> newRightNode) {
+        right = newRightNode;
     }
 
     /**
@@ -86,6 +93,10 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
      */
     AVLTreeNode<Type> getParent() {
         return parent;
+    }
+
+    private void setParent(AVLTreeNode<Type> newParent) {
+        parent = newParent;
     }
 
     /**
@@ -103,10 +114,11 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     private void updateHeight() {
         int heightLeft = getLeft() == null ? 0 : getHeight();
         int heightRight = getRight() == null ? 0 : getHeight();
-        if (heightLeft > heightRight)
+        if (heightLeft > heightRight) {
             setHeight(heightLeft + 1);
-        else
+        } else {
             setHeight(heightRight + 1);
+        }
     }
 
     /**
@@ -116,25 +128,24 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
      */
     private void rotateRight(AVLTree<Type> tree) {
         AVLTreeNode<Type> pivot = getLeft();
-        if (pivot.getRight() != null) {
-            pivot.getRight().parent = this;
-        }
         setLeft(pivot.getRight());
+        if (pivot.getRight() != null) {
+            pivot.getRight().setParent(this);
+        }
         pivot.setRight(this);
-
-        if (parent == null) {
+        if (getParent() == null) {
             tree.setRoot(pivot);
         } else {
-            if (equals(parent.getLeft())) {
+            if (equals(getParent().getLeft())) {
                 parent.setLeft(pivot);
             } else {
                 parent.setRight(pivot);
             }
         }
-        pivot.parent = parent;
-        parent = pivot;
+        pivot.setParent(parent);
+        setParent(pivot);
 
-        this.updateHeight();
+        updateHeight();
         pivot.updateHeight();
     }
 
@@ -145,25 +156,24 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
      */
     private void rotateLeft(AVLTree<Type> tree) {
         AVLTreeNode<Type> pivot = getRight();
-        if (pivot.getLeft() != null) {
-            pivot.getLeft().parent = this;
-        }
         setRight(pivot.getLeft());
+        if (pivot.getLeft() != null) {
+            pivot.getLeft().setParent(this);
+        }
         pivot.setLeft(this);
-
-        if (parent == null) {
+        if (getParent() == null) {
             tree.setRoot(pivot);
         } else {
-            if (equals(parent.getRight())) {
-                parent.setRight(pivot);
-            } else {
+            if (equals(getParent().getLeft())) {
                 parent.setLeft(pivot);
+            } else {
+                parent.setRight(pivot);
             }
         }
-        pivot.parent = parent;
-        parent = pivot;
+        pivot.setParent(parent);
+        setParent(pivot);
 
-        this.updateHeight();
+        updateHeight();
         pivot.updateHeight();
     }
 
@@ -176,14 +186,16 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
         updateHeight();
 
         if (balanceFactor() == 2) {
-            if (getRight().balanceFactor() < 0)
+            if (getRight().balanceFactor() < 0) {
                 getRight().rotateRight(tree);
+            }
             rotateLeft(tree);
         }
 
         if (balanceFactor() == -2) {
-            if (getLeft().balanceFactor() > 0)
+            if (getLeft().balanceFactor() > 0) {
                 getLeft().rotateLeft(tree);
+            }
             rotateRight(tree);
         }
     }
@@ -245,35 +257,6 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     }
 
     /**
-     * realize change node
-     * (redirects links left, right, parent, change value)
-     *
-     * @param newNode node, which you want to change
-     * @param tree    your avl tree
-     */
-    private void changeNode(AVLTreeNode<Type> newNode, AVLTree<Type> tree) {
-        if (newNode == null) {
-            if (parent == null) {
-                tree.setRoot(null);
-            } else {
-                if (equals(parent.getLeft())) {
-                    parent.setLeft(null);
-                } else {
-                    parent.setRight(null);
-                }
-            }
-            return;
-        }
-
-        value = newNode.getValue();
-        if (newNode.equals(newNode.parent.getLeft())) {
-            newNode.parent.setLeft(null);
-        } else {
-            newNode.parent.setRight(null);
-        }
-    }
-
-    /**
      * Removes the node
      *
      * @param value which you want to remove
@@ -281,16 +264,26 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
      */
     void removeNode(Type value, AVLTree<Type> tree) {
         if (value.equals(getValue())) {
-            tree.setSize(tree.size() - 1);
             if ((getRight() != null) && (getLeft() != null)) {
-                AVLTreeNode<Type> newNode = getLeft().findMax();
-                changeNode(newNode, tree);
+                AVLTreeNode<Type> maxNode = getLeft().findMax();
+                removeNode(maxNode.getValue(), tree);
+                setValue(maxNode.getValue());
             } else if (getRight() != null) {
-                changeNode(getRight(), tree);
+                setValue(getRight().value);
+                setRight(null);
             } else if (getLeft() != null) {
-                changeNode(getLeft(), tree);
+                setValue(getLeft().value);
+                setLeft(null);
             } else {
-                changeNode(null, tree);
+                if (getParent() == null) {
+                    tree.setRoot(null);
+                } else {
+                    if (equals(getParent().getLeft())) {
+                        getParent().setLeft(null);
+                    } else {
+                        getParent().setRight(null);
+                    }
+                }
             }
         } else if (value.compareTo(getValue()) > 0) {
             getRight().removeNode(value, tree);
@@ -302,12 +295,12 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     /**
      * Compares the values
      *
-     * @param o object, with which you want to compare
-     * @return
+     * @param node node, with which you want to compare
+     * @return 0, if equals, < 0 if value < node value, > 0 else
      */
     @Override
-    public int compareTo(AVLTreeNode<Type> o) {
-        return this.value.compareTo(o.value);
+    public int compareTo(AVLTreeNode<Type> node) {
+        return value.compareTo(node.value);
     }
 
     /**
@@ -318,15 +311,15 @@ class AVLTreeNode<Type extends Comparable<Type>> implements Comparable<AVLTreeNo
     @Override
     public String toString() {
         String result = "( " + value.toString() + " ";
-        if (this.getLeft() == null) {
+        if (getLeft() == null) {
             result += "null ";
         } else {
-            result += this.getLeft().toString() + " ";
+            result += getLeft().toString() + " ";
         }
-        if (this.getRight() == null) {
+        if (getRight() == null) {
             result += "null )";
         } else {
-            result += this.getRight().toString() + ")";
+            result += getRight().toString() + ")";
         }
         return result;
     }

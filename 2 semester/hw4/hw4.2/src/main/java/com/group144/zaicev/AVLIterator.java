@@ -39,28 +39,24 @@ public class AVLIterator<Type extends Comparable<Type>> implements Iterator<Type
      */
     @Override
     public Type next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-
-        Type result = next.getValue();
+        if (!hasNext()) throw new NoSuchElementException();
+        AVLTreeNode<Type> result = next;
 
         if (next.getRight() != null) {
             next = next.getRight();
-            while (next.getLeft() != null) {
+            while (next.getLeft() != null)
                 next = next.getLeft();
-            }
-            return result;
+            return result.getValue();
         }
 
         while (true) {
             if (next.getParent() == null) {
                 next = null;
-                return result;
+                return result.getValue();
             }
             if (next.getParent().getLeft() == next) {
                 next = next.getParent();
-                return result;
+                return result.getValue();
             }
             next = next.getParent();
         }

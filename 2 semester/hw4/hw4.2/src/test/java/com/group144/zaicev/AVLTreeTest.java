@@ -9,18 +9,19 @@ import java.util.Iterator;
 
 public class AVLTreeTest {
 
-    private AVLTree<Integer> tree = new AVLTree<Integer>();
+    private AVLTree<Integer> tree = new AVLTree<>();
 
     @Test
-    public void size() {
+    public void sizeTest() {
         tree.add(1);
         tree.add(-3);
         tree.add(5);
-        Assert.assertEquals(3, tree.size());
+        int EXPECTED = 3;
+        Assert.assertEquals(EXPECTED, tree.size());
     }
 
     @Test
-    public void isEmpty() {
+    public void isEmptyTest() {
         Assert.assertTrue(tree.isEmpty());
         tree.add(1);
         Assert.assertFalse(tree.isEmpty());
@@ -29,35 +30,41 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void contains() {
+    public void containsTest() {
+        Assert.assertFalse(tree.contains(1));
+        tree.add(1);
+        Assert.assertTrue(tree.contains(1));
     }
 
     @Test
-    public void iterator() {
+    public void iteratorTest() {
         AVLTree<String> tree = new AVLTree<>();
         tree.add("LOL");
-        tree.add("KEK");
+        tree.add("707");
         tree.add("LOL");
         Iterator<String> avlTreeIterator = tree.iterator();
         Assert.assertTrue(avlTreeIterator.hasNext());
-        Assert.assertEquals(avlTreeIterator.next(), "KEK");
-        Assert.assertEquals(avlTreeIterator.next(), "LOL");
+        String EXPECTED1 = "707";
+        Assert.assertEquals(EXPECTED1, avlTreeIterator.next());
+        String EXPECTED2 = "LOL";
+        Assert.assertEquals(EXPECTED2, avlTreeIterator.next());
         Assert.assertFalse(avlTreeIterator.hasNext());
     }
 
     @Test
-    public void toArray() {
+    public void toArrayTest() {
         tree.add(1);
         tree.add(2);
         tree.add(4);
         tree.add(1);
         tree.add(5);
         tree.add(3);
-        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, tree.toArray());
+        Integer[] EXPECTED = new Integer[]{1, 2, 3, 4, 5};
+        Assert.assertArrayEquals(EXPECTED, tree.toArray());
     }
 
     @Test
-    public void add() {
+    public void addTest() {
         Assert.assertTrue(tree.add(0));
         Assert.assertTrue(tree.add(-2));
         Assert.assertTrue(tree.add(5));
@@ -79,10 +86,12 @@ public class AVLTreeTest {
         tree.add(1);
         tree.add(-100);
         tree.add(5);
-        Assert.assertEquals(5, tree.size());
+        int EXPECTED1 = 5;
+        Assert.assertEquals(EXPECTED1, tree.size());
         Assert.assertTrue(tree.contains(-5));
         Assert.assertTrue(tree.remove(-5));
-        Assert.assertEquals(4, tree.size());
+        int EXPECTED2 = 4;
+        Assert.assertEquals(EXPECTED2, tree.size());
         Assert.assertFalse(tree.contains(-5));
         Assert.assertFalse(tree.remove(101));
         tree.add(0);
@@ -109,7 +118,7 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void containsAll() {
+    public void containsAllTest() {
         Assert.assertTrue(tree.add(4));
         Assert.assertTrue(tree.add(2));
         Assert.assertTrue(tree.add(6));
@@ -121,18 +130,19 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void addAll() {
+    public void addAllTest() {
         Collection<Integer> collection = new ArrayList<>();
         collection.add(1);
         collection.add(2);
         collection.add(3);
         tree.addAll(collection);
         Assert.assertTrue(tree.containsAll(collection));
-        Assert.assertEquals(collection.size(), tree.size());
+        int EXPECTED = 3;
+        Assert.assertEquals(EXPECTED, tree.size());
     }
 
     @Test
-    public void removeAll() {
+    public void removeAllTest() {
         Collection<Integer> collection = new ArrayList<>();
         collection.add(1);
         collection.add(2);
@@ -140,12 +150,13 @@ public class AVLTreeTest {
         tree.add(2);
         tree.add(3);
         tree.removeAll(collection);
-        Assert.assertEquals(1, tree.size());
+        int EXPECTED = 1;
+        Assert.assertEquals(EXPECTED, tree.size());
         Assert.assertTrue(tree.contains(3));
     }
 
     @Test
-    public void retainAll() {
+    public void retainAllTest() {
         Collection<Integer> collection = new ArrayList<>();
         collection.add(1);
         collection.add(2);
@@ -153,14 +164,15 @@ public class AVLTreeTest {
         tree.add(2);
         tree.add(3);
         tree.retainAll(collection);
-        Assert.assertEquals(2, tree.size());
+        int EXPECTED = 2;
+        Assert.assertEquals(EXPECTED, tree.size());
         Assert.assertTrue(tree.contains(1));
         Assert.assertTrue(tree.contains(2));
         Assert.assertFalse(tree.contains(3));
     }
 
     @Test
-    public void clear() {
+    public void clearTest() {
         tree.add(1);
         tree.add(2);
         tree.add(5);
@@ -171,8 +183,9 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void emptyTreeToString() {
-        Assert.assertEquals("null", tree.toString());
+    public void emptyTreeToStringTest() {
+        String EXPECTED = "null";
+        Assert.assertEquals(EXPECTED, tree.toString());
     }
 
     @Test
@@ -181,6 +194,7 @@ public class AVLTreeTest {
         tree.add(2);
         tree.add(5);
         tree.add(0);
-        Assert.assertEquals("( 2 ( 1 ( 0 null null ) null ) ( 5 null null ))", tree.toString());
+        String EXPECTED = "( 2 ( 1 ( 0 null null ) null ) ( 5 null null ))";
+        Assert.assertEquals(EXPECTED, tree.toString());
     }
 }

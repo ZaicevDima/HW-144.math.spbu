@@ -39,15 +39,6 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
     }
 
     /**
-     * Changes the value of a size
-     *
-     * @param value value, which will be the new size
-     */
-    void setSize(int value) {
-        size = value;
-    }
-
-    /**
      * Returns the  AVL Tree size
      */
     @Override
@@ -73,7 +64,7 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
      */
     @Override
     public boolean contains(Object value) {
-        return root.isContainsNode((Type) value, this);
+        return !isEmpty() && root.isContainsNode((Type) value, this);
     }
 
     /**
@@ -101,8 +92,8 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
     @Override
     public <Type1> Type1[] toArray(Type1[] array) {
         ArrayList<Type1> arrayList = new ArrayList<>();
-        for (Type tmp : this) {
-            arrayList.add((Type1) tmp);
+        for (Type temp : this) {
+            arrayList.add((Type1) temp);
         }
 
         return arrayList.toArray(array);
@@ -139,6 +130,7 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
     @Override
     public boolean remove(Object value) {
         if (contains(value)) {
+            size--;
             root.removeNode((Type) value, this);
             return true;
         }
@@ -199,9 +191,9 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
     @Override
     public boolean retainAll(Collection<?> collection) {
         boolean result = false;
-        for (Type tmp : this) {
-            if (!collection.contains(tmp)) {
-                remove(tmp);
+        for (Type temp : this) {
+            if (!collection.contains(temp)) {
+                remove(temp);
                 result = true;
             }
         }
@@ -227,5 +219,4 @@ public class AVLTree<Type extends Comparable<Type>> implements Collection<Type> 
             return "null";
         }
     }
-
 }
