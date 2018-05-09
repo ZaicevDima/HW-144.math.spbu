@@ -1,18 +1,15 @@
 package group144.zaicev;
 
-import javax.jws.soap.SOAPMessageHandlers;
 import java.util.Stack;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.String.copyValueOf;
 
 /**
  * Class, which calculate your expression
  */
-class Calculator {
+class Calculator extends BracketSequence {
 
     /**
      * Method, which checks whether your symbol is an operator
+     *
      * @param symbol - symbol, which you want to check
      * @return true, if symbol is an operator, else return false
      */
@@ -22,6 +19,7 @@ class Calculator {
 
     /**
      * Method, which returns the priority of your symbol
+     *
      * @param symbol - your symbol
      * @return priority of your symbol
      */
@@ -43,6 +41,7 @@ class Calculator {
 
     /**
      * Method, which converts your expression to postfix form
+     *
      * @param expression - your expression
      * @return your expression in postfix form
      */
@@ -52,7 +51,14 @@ class Calculator {
 
         for (int i = 0; i < expression.length(); i++) {
             if (!isOperator(expression.charAt(i)) && (expression.charAt(i) != '(') && (expression.charAt(i) != ')')) {
-                result.append(expression.charAt(i));
+                StringBuilder number = new StringBuilder();
+                number.append(expression.charAt(i));
+                while ((i < expression.length() - 1) && (isDigit(expression.charAt(i + 1)))) {
+                    number.append(expression.charAt(i + 1));
+                    i++;
+                }
+                number.append("&");
+                result.append(number);
             } else if (isOperator(expression.charAt(i))) {
                 actionOnOperator(expression.charAt(i), operation, result);
             } else if (expression.charAt(i) == '(') {
@@ -70,12 +76,12 @@ class Calculator {
 
     /**
      * Method for work with remaining operators of your expression
-     * @param result variable string in postfix form, in the future the postfix form of your expression
+     *
+     * @param result    variable string in postfix form, in the future the postfix form of your expression
      * @param operation stack of your expression operations
      */
     private void actionOnRemainingOperations(StringBuffer result, Stack<Character> operation) {
-        while (!operation.empty())
-        {
+        while (!operation.empty()) {
             result.append(operation.peek());
             operation.pop();
         }
@@ -83,8 +89,9 @@ class Calculator {
 
     /**
      * Method for work with action on closing brackets
+     *
      * @param operations stack of your expression operations
-     * @param result variable string in postfix form, in the future the postfix form of your expression
+     * @param result     variable string in postfix form, in the future the postfix form of your expression
      */
     private void actionOnClosingBracket(Stack<Character> operations, StringBuffer result) {
         while ((!operations.empty()) && (operations.peek() != '(')) {
@@ -98,8 +105,9 @@ class Calculator {
 
     /**
      * Method for work with action on opening brackets
+     *
      * @param operations stack of your expression operations
-     * @param symbol - symbol of opening bracket
+     * @param symbol     - symbol of opening bracket
      */
     private void actionOnOpeningBracket(Stack<Character> operations, char symbol) {
         operations.push(symbol);
@@ -107,9 +115,10 @@ class Calculator {
 
     /**
      * Method for work with action on operators
-     * @param symbol - symbol of your operator
+     *
+     * @param symbol     - symbol of your operator
      * @param operations stack of your expression operations
-     * @param result variable string in postfix form, in the future the postfix form of your expression
+     * @param result     variable string in postfix form, in the future the postfix form of your expression
      */
     private void actionOnOperator(char symbol, Stack<Character> operations, StringBuffer result) throws WrongExpressionException {
         if ((operations.empty()) || (operations.peek() == '(')) {
@@ -128,6 +137,7 @@ class Calculator {
 
     /**
      * Method, which checks whether your symbol is a digit
+     *
      * @param symbol - symbol, which you want to check
      * @return true, if symbol is a digit, else return false
      */
@@ -142,18 +152,12 @@ class Calculator {
         return symbol == ' ';
     }
 
-    /**
-     * Method, which checks whether your symbol is a numeral
-     */
-    private int numeral(char symbol) {
-        return symbol - '0';
-    }
-
     private boolean divByZero = false;
 
     /**
      * Method, for calculate number1 action number2
-     * @param symbol - operation
+     *
+     * @param symbol  - operation
      * @param number1 - first number
      * @param number2 - second number
      * @return result this expression
@@ -186,16 +190,23 @@ class Calculator {
 
     /**
      * Method. which calculate your expression of postfix form
+     *
      * @param expression your expression
      * @return result of your expression
      * @throws WrongExpressionException if your expression is incorrect
-     * @throws DivisionByZeroException if you division by zero
+     * @throws DivisionByZeroException  if you division by zero
+     * @throws EmptyExpressionExeption if your expression is empty
      */
-    private int resultExpression(String expression) throws WrongExpressionException, DivisionByZeroException {
+    private int resultExpression(String expression) throws WrongExpressionException, DivisionByZeroException, EmptyExpressionExeption {
         Stack<Integer> result = new Stack<>();
         for (int i = 0; i < expression.length(); i++) {
             if (isDigit(expression.charAt(i))) {
-                result.push(numeral(expression.charAt(i)));
+                int number = 0;
+                while ((isDigit(expression.charAt(i))) && (i < expression.length())) {
+                    number = number * 10 + Integer.parseInt(String.valueOf(expression.charAt(i)));
+                    i++;
+                }
+                result.push(number);
             } else if (!isSpace(expression.charAt(i))) {
                 if (result.size() == 0) {
                     incorrect = true;
@@ -215,15 +226,22 @@ class Calculator {
                 result.push(resultOperation);
             }
         }
+        if (result.empty()) {
+            throw new EmptyExpressionExeption("Exeption is empty");
+        }
         return result.peek();
     }
 
     /**
      * Method, which convert the expression: add * between the number and (
+     *
      * @param expression your expression
      * @return converting expression
      */
     private String convertExpression(String expression) {
+        if (expression.equals("")) {
+            return "";
+        }
         String result = "";
         for (int i = 0; i < expression.length() - 1; i++) {
             result = result.concat(String.valueOf(expression.charAt(i)));
@@ -233,7 +251,7 @@ class Calculator {
             }
 
             if ((isDigit(expression.charAt(i + 1))) && (expression.charAt(i) == ')')) {
-                return "(";
+                result = result.concat("*");
             }
         }
         result = result.concat(String.valueOf(expression.charAt(expression.length() - 1)));
@@ -242,15 +260,23 @@ class Calculator {
 
     /**
      * Method, which  calculate your expression using postfix form
+     *
      * @param expression your expression
      * @return result your expression and error, if expression is incorrect
      * @throws WrongExpressionException if expression is incorrect
-     * @throws DivisionByZeroException if you division by zero
+     * @throws DivisionByZeroException  if you division by zero
+     * @throws EmptyExpressionExeption if your expression is empty
      */
-    String calculate(String expression) throws WrongExpressionException, DivisionByZeroException {
+    String calculate(String expression) throws WrongExpressionException, DivisionByZeroException, WrongBracketSequenceExeption, EmptyExpressionExeption {
         this.divByZero = false;
         this.incorrect = false;
+
         expression = convertExpression(expression);
+
+        if (!isCorrectBracketSequence(bracketSequence(expression))) {
+            throw new WrongBracketSequenceExeption("Incorrect bracket sequence");
+        }
+
         String postfixForm = toPostfix(expression);
         int result = resultExpression(postfixForm);
         if ((!divByZero) && (!incorrect)) {

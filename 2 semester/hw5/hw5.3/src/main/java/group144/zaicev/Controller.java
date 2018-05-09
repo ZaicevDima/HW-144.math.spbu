@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
  * Controller for calculator
  */
 public class Controller extends Calculator {
-    
+
     /**
      * expression - the window of your calculator, in which you write an expression
      */
@@ -20,84 +20,124 @@ public class Controller extends Calculator {
      */
     @FXML
     private TextField result = new TextField();
-    /** Button with 1 */
+
+    /**
+     * Button with 1
+     */
     @FXML
     Button button1 = new Button();
 
-    /** Button with 2 */
+    /**
+     * Button with 2
+     */
     @FXML
     Button button2 = new Button();
 
-    /** Button with 3 */
+    /**
+     * Button with 3
+     */
     @FXML
     Button button3 = new Button();
 
-    /** Button with 4 */
+    /**
+     * Button with 4
+     */
     @FXML
     Button button4 = new Button();
 
-    /** Button with 5 */
+    /**
+     * Button with 5
+     */
     @FXML
     Button button5 = new Button();
 
-    /** Button with 6 */
+    /**
+     * Button with 6
+     */
     @FXML
     Button button6 = new Button();
 
-    /** Button with 7 */
+    /**
+     * Button with 7
+     */
     @FXML
     Button button7 = new Button();
 
-    /** Button with 8 */
+    /**
+     * Button with 8
+     */
     @FXML
     Button button8 = new Button();
 
-    /** Button with 9 */
+    /**
+     * Button with 9
+     */
     @FXML
     Button button9 = new Button();
 
-    /** Button with 0 */
+    /**
+     * Button with 0
+     */
     @FXML
     Button button0 = new Button();
 
-    /** Button which clear the window of calculator */
+    /**
+     * Button which clear the window of calculator
+     */
     @FXML
     Button buttonClear = new Button();
 
-    /** Button with + */
+    /**
+     * Button with +
+     */
     @FXML
     Button buttonSum = new Button();
 
-    /** Button with - */
+    /**
+     * Button with -
+     */
     @FXML
     Button buttonMinus = new Button();
 
-    /** Button with * */
+    /**
+     * Button with *
+     */
     @FXML
     Button buttonMulti = new Button();
 
-    /** Button with / */
+    /**
+     * Button with /
+     */
     @FXML
     Button buttonDiv = new Button();
 
-    /** Button with = */
+    /**
+     * Button with =
+     */
     @FXML
     Button buttonResult = new Button();
 
-    /** Button with ( */
+    /**
+     * Button with (
+     */
     @FXML
     Button buttonOpenBracket = new Button();
 
-    /** Button with ) */
+    /**
+     * Button with )
+     */
     @FXML
     Button buttonCloseBracket = new Button();
 
-    /** Button with ← */
+    /**
+     * Button with ←
+     */
     @FXML
     Button buttonBackSpace = new Button();
 
     /**
      * Method, to press a button
+     *
      * @param button - Button, which you press
      */
     private void pressNumberButton(Button button) {
@@ -108,13 +148,17 @@ public class Controller extends Calculator {
                 if (!expression.getText().equals("")) {
                     result.textProperty().setValue(String.valueOf(calculate(expression.getText())));
                 }
-            } catch (WrongExpressionException | DivisionByZeroException exeption) {
+            } catch (WrongExpressionException | DivisionByZeroException | WrongBracketSequenceExeption exeption) {
                 result.setText("Error");
+            } catch (EmptyExpressionExeption emptyExpressionExeption) {
+                result.setText("");
             }
         });
     }
 
-    /** initialize */
+    /**
+     * initialize
+     */
     @FXML
     private void initialize() {
         pressNumberButton(button0);
@@ -140,11 +184,15 @@ public class Controller extends Calculator {
         });
 
         buttonBackSpace.setOnAction(event -> {
-            expression.setText(expression.getText().substring(0, expression.getText().length() - 1));
-            try {
-                result.textProperty().setValue(String.valueOf(calculate(expression.getText())));
-            } catch (WrongExpressionException | DivisionByZeroException exception) {
-                result.setText("Error");
+            if (!expression.getText().equals("")) {
+                expression.setText(expression.getText().substring(0, expression.getText().length() - 1));
+                try {
+                    result.textProperty().setValue(String.valueOf(calculate(expression.getText())));
+                } catch (WrongExpressionException | DivisionByZeroException | WrongBracketSequenceExeption exception) {
+                    result.setText("Error");
+                } catch (EmptyExpressionExeption emptyExpressionExeption) {
+                    result.setText("");
+                }
             }
         });
     }
