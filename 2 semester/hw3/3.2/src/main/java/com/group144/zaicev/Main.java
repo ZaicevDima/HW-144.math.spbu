@@ -9,13 +9,21 @@ public class Main {
         Scanner in;
         try {
             in = new Scanner(new FileInputStream("input"));
-            ExpressionTree tree = new ExpressionTree(in);
+            String infixForm = "";
+            while (in.hasNext()) {
+                infixForm = infixForm.concat(in.next());
+                if (in.hasNext()) {
+                    infixForm = infixForm.concat(" ");
+                }
+            }
+            ExpressionTree tree = new ExpressionTree(infixForm);
             System.out.println("Your expression tree: ");
-            tree.print(System.out);
+            tree.printTree();
+            System.out.println();
             System.out.println("The result of your expression: ");
-            System.out.println(tree.calculate());
-        }
-        catch (FileNotFoundException exception) {
+            int result = tree.calculateTree();
+            System.out.print(result);
+        } catch (FileNotFoundException exception) {
             System.out.println("File not found");
         }
     }

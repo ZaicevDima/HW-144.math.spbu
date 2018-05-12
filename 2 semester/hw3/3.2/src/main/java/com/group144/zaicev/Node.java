@@ -1,23 +1,30 @@
 package com.group144.zaicev;
 
-import java.io.PrintStream;
-
 /**
- * Interface for working with nodes from the expression tree
+ * Class for working with nodes from tree
  */
-public interface Node {
+abstract class Node {
+    Node leftNode = null;
+    Node rightNode = null;
+    String valueOfNode;
 
     /**
-     * Method, wich calculate value from your tree
-     * @return computation value
-     * @throws IncorrectTreeException if tree is incorrect
-     * for example a tree with an incorrect operation or a symbol instead of a number
+     * Prints node
      */
-    int calculate() throws IncorrectTreeException;
+    abstract void print();
 
     /**
-     * Method, wich print your tree
-     * @param printStream print stream where the tree will be output
+     * Calculates node of expression tree
+     *
+     * @return result of calculating
+     * @throws IncorrectTreeException if your node is incorrect (e.g. has incorrect symbol)
      */
-    void print(PrintStream printStream);
+    abstract int calculate() throws IncorrectTreeException;
+
+    /**
+     * Converts node to a string
+     *
+     * @return converting node
+     */
+    public abstract String toString();
 }

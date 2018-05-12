@@ -1,68 +1,73 @@
 package com.group144.zaicev;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ExpressionTreeTest {
 
     @Test
     public void calculateExpressionTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(* (+ 1 1) 2)"));
-        int EXPECTED = 4;
-        Assert.assertEquals(EXPECTED, tree.calculate());
+        ExpressionTree tree = new ExpressionTree("(* (- 1 1) 2)");
+        int EXPECTED = 0;
+        assertEquals(EXPECTED, tree.calculateTree());
     }
 
     @Test
-    public void printTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(* (+ 1 1) 2)"));
-        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-        tree.print(new PrintStream(arrayOutputStream));
-        String EXPECTED = "( * ( + 1 1 ) 2 )";
-        Assert.assertEquals(EXPECTED, arrayOutputStream.toString());
+    public void calculateExpressionWithTwoOperatorsTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(* (+ 12 2) (+ 2 3))");
+        int EXPECTED = 70;
+        assertEquals(EXPECTED, tree.calculateTree());
     }
 
     @Test
-    public void expressionWithOneValueTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("5"));
-        int EXPECTED = 5;
-        Assert.assertEquals(EXPECTED, tree.calculate());
+    public void calculateExpressionWithOneOperatorTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(* 5 2)");
+        int EXPECTED = 10;
+        assertEquals(EXPECTED, tree.calculateTree());
     }
 
     @Test
-    public void expressionWithOneOperationTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(- 5 2)"));
-        int EXPECTED = 3;
-        Assert.assertEquals(EXPECTED, tree.calculate());
+    public void printTreeTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(* 2 (+ 1 1))");
+        String EXPECTED = "( * 2 ( + 1 1 ) )";
+
+        assertEquals(EXPECTED, tree.toString());
     }
 
     @Test (expected = IncorrectTreeException.class)
     public void expressionWithWrongOperationTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(% (- 1 1) 2)"));
-        tree.calculate();
+        ExpressionTree tree = new ExpressionTree("(% (- 1 1) 2)");
+        tree.calculateTree();
     }
 
     @Test (expected = IncorrectTreeException.class)
     public void expressionWithWrongValueTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(+ (/ 1 1) a)"));
-        tree.calculate();
+        ExpressionTree tree = new ExpressionTree("(+ 1 a)");
+        tree.calculateTree();
     }
 
     @Test (expected = ArithmeticException.class)
-    public void expressionWithDivisionOperationTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(/ 5 0)"));
-        tree.calculate();
+    public void expressionWithDivisionByZeroOperationTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(/ 5 0)");
+        tree.calculateTree();
     }
 
     @Test (expected = IncorrectTreeException.class)
-    public void expressionWithNotFoundOperationTest() throws IncorrectTreeException {
-        ExpressionTree tree = new ExpressionTree(new Scanner("(% 5 2)"));
-        tree.calculate();
+    public void expressionWithIncorrectOpeningBracketsTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(+ (* 2 3)");
+        tree.calculateTree();
+    }
+
+    @Test (expected = IncorrectTreeException.class)
+    public void expressionWithIncorrectClosingBracketsTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("(+ (* 2 3))))");
+        tree.calculateTree();
+    }
+
+    @Test (expected = IncorrectTreeException.class)
+    public void calculateExpressionWithoutOperatorsTest() throws IncorrectTreeException {
+        ExpressionTree tree = new ExpressionTree("1");
+        tree.calculateTree();
     }
 }
