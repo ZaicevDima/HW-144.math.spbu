@@ -1,5 +1,8 @@
 package com.group144.zaicev;
 
+/**
+ * Class, which realises usual quick sort
+ */
 public class QSort implements Sorter {
 
     @Override
@@ -9,6 +12,12 @@ public class QSort implements Sorter {
         sort(startIndex, endIndex, array);
     }
 
+    /**
+     * realises usual quick sort
+     * @param startIndex start index
+     * @param endIndex end index
+     * @param array array to be sorted
+     */
     private void sort(int startIndex, int endIndex, int[] array) {
         if (startIndex >= endIndex) {
             return;

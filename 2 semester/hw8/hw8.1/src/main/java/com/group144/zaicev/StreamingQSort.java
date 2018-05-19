@@ -3,6 +3,9 @@ package com.group144.zaicev;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
+/**
+ * Class, which realises multi streaming quick sort
+ */
 public class StreamingQSort implements Sorter {
 
     @Override
@@ -11,17 +14,29 @@ public class StreamingQSort implements Sorter {
         forkJoinPool.invoke(new Sort(0, array.length - 1, array));
     }
 
+    /**
+     * Class, which realises recursive quick sort
+     */
     private class Sort extends RecursiveAction {
         int startIndex;
         int endIndex;
         int[] array;
 
+        /**
+         * Sort constructor
+         * @param start new start index
+         * @param end new end index
+         * @param array new array
+         */
         Sort(int start, int end, int[] array) {
             this.array = array;
             this.startIndex = start;
             this.endIndex = end;
         }
 
+        /**
+         * realises multi streaming quick sort
+         */
         @Override
         public void compute() {
             if (startIndex >= endIndex) {
