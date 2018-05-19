@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class QSortTest {
 
     @Test
-    public void sortSortedArray() {
+    public void sortSortedArrayTest() {
         int[] array = {1, 2, 3, 4, 5};
         int[] sorted = {1, 2, 3, 4, 5};
         Sorter sorter = new QSort();
@@ -16,7 +16,7 @@ public class QSortTest {
     }
 
     @Test
-    public void sortSame() {
+    public void sortSameTest() {
         int[] array = {1, 1, 1, 1, 1};
         int[] sorted = {1, 1, 1, 1, 1};
         Sorter sorter = new QSort();
@@ -25,7 +25,7 @@ public class QSortTest {
     }
 
     @Test
-    public void sortUnsorted() {
+    public void sortUnsortedTest() {
         int[] array = {1, 3, 5, 4, 2};
         int[] sorted = {1, 2, 3, 4, 5};
         Sorter sorter = new QSort();
