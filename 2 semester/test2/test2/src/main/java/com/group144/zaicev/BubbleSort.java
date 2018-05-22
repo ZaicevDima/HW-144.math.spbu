@@ -1,6 +1,5 @@
 package com.group144.zaicev;
 
-
 import java.util.Comparator;
 
 /**
@@ -30,9 +29,10 @@ public class BubbleSort<Type> {
 
     /**
      * Checks the first element is greater than the second element
-     * @param firstElement first element value
+     *
+     * @param firstElement  first element value
      * @param secondElement second element value
-     * @param comparator for comparing two element
+     * @param comparator    for comparing two element
      * @return true, if first element > or = than second
      */
     private boolean isFirstElementGreatest(Type firstElement, Type secondElement, Comparator<Type> comparator) {
