@@ -71,7 +71,6 @@ public class LazyTest {
         second.join();
 
         assertFalse(isFailed[0]);
-
         assertEquals(null, lazy.get());
     }
 
