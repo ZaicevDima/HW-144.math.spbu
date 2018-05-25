@@ -24,8 +24,9 @@ public class StreamingQSort implements Sorter {
 
         /**
          * Sort constructor
+         *
          * @param start new start index
-         * @param end new end index
+         * @param end   new end index
          * @param array new array
          */
         Sort(int start, int end, int[] array) {

@@ -9,6 +9,9 @@ import static java.lang.Math.abs;
  */
 public class Main {
 
+    private static int AMOUNT_ARRAYS = 10;
+    private static int MAX_SIZE = 100000000;
+
     public static void main(String[] args) {
         comparison();
     }
@@ -19,56 +22,49 @@ public class Main {
     private static void comparison() {
         Sorter usualQSort = new QSort();
         Sorter streamingQSort = new StreamingQSort();
-        int AMOUNT_ARRAYS = 10;
 
-        int sumTimeUsualQSort = 0;
-        int sumTimeStreamingQSort = 0;
+        double sumTimeUsualQSort = 0;
+        double sumTimeStreamingQSort = 0;
+
+        int[] firstArray = new int[MAX_SIZE];
+        int[] secondArray = firstArray.clone();
+
 
         for (int i = 0; i < AMOUNT_ARRAYS; i++) {
-            System.out.println("test number: " + (i + 1));
-            int ARRAY_MAX_SIZE = 1000;
-            int[] firstArray = createArray(ARRAY_MAX_SIZE);
-            int[] secondArray = firstArray.clone();
 
-            long timeUsualQSort = getTime(firstArray, usualQSort);
-            System.out.println("time for which the array was sorted with usual quick sort: " + timeUsualQSort);
-            sumTimeUsualQSort += timeUsualQSort;
+            sumTimeUsualQSort += getTime(firstArray, usualQSort);
+            sumTimeStreamingQSort += getTime(secondArray, streamingQSort);
 
-            long timeStreamingQSort = getTime(secondArray, streamingQSort);
-            System.out.println("time for which the array was sorted with streaming quick sort: " + timeStreamingQSort);
-            sumTimeStreamingQSort += timeStreamingQSort;
-
-            System.out.println();
+            initialize(firstArray);
+            secondArray = firstArray.clone();
         }
 
-        System.out.println("\n" + "Average time for sorting arrays using usual quick sorting: " + (double) sumTimeUsualQSort / AMOUNT_ARRAYS);
-        System.out.println("Average time for sorting arrays using streaming quick qsort: " + (double) sumTimeStreamingQSort / AMOUNT_ARRAYS);
+        System.out.println("\n" + "Average time for sorting arrays using usual quick sorting: " + sumTimeUsualQSort / AMOUNT_ARRAYS);
+        System.out.println("Average time for sorting arrays using streaming quick qsort: " + sumTimeStreamingQSort / AMOUNT_ARRAYS);
     }
 
     /**
      * Gets the time of work of sort
-     * @param array array for sorting
+     *
+     * @param array  array for sorting
      * @param sorter sort, which you choiced
      * @return time of work this sorting
      */
     private static long getTime(int[] array, Sorter sorter) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         sorter.qsort(array);
-        return System.nanoTime() - startTime;
+        return System.currentTimeMillis() - startTime;
     }
 
     /**
-     * generates array
-     * @param maxLength max length of the array
-     * @return new array
+     * initializes the array
+     *
+     * @param array array, to be changed
      */
-    private static int[] createArray(int maxLength) {
+    private static void initialize(int[] array) {
         Random random = new Random();
-        int length = abs(random.nextInt()) % maxLength;
-        int[] array = new int[length];
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < MAX_SIZE; i++) {
             array[i] = random.nextInt();
         }
-        return array;
     }
 }

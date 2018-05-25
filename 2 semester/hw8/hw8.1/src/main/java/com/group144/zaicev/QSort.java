@@ -14,9 +14,10 @@ public class QSort implements Sorter {
 
     /**
      * realises usual quick sort
+     *
      * @param startIndex start index
-     * @param endIndex end index
-     * @param array array to be sorted
+     * @param endIndex   end index
+     * @param array      array to be sorted
      */
     private void sort(int startIndex, int endIndex, int[] array) {
         if (startIndex >= endIndex) {
