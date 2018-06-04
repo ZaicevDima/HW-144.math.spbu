@@ -32,7 +32,6 @@
 *.app
 
 *.qbs.user
-*.class
 *.xml
 
 
