@@ -30,7 +30,7 @@ public class LazyTest {
     @Test
     public void nullThreadSimpleTest() {
         Lazy<Integer> lazy = LazyFactory.createLazySingleThread(null);
-
+        lazy.get();
         assertEquals(null, lazy.get());
     }
 
