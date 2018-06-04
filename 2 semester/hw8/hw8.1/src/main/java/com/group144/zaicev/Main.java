@@ -1,5 +1,6 @@
 package com.group144.zaicev;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -9,8 +10,8 @@ import static java.lang.Math.abs;
  */
 public class Main {
 
-    private static int AMOUNT_ARRAYS = 10;
-    private static int MAX_SIZE = 100000000;
+    private static int AMOUNT_ARRAYS = 20;
+    private static int MAX_SIZE = 100000;
 
     public static void main(String[] args) {
         comparison();
@@ -31,12 +32,20 @@ public class Main {
 
 
         for (int i = 0; i < AMOUNT_ARRAYS; i++) {
-
-            sumTimeUsualQSort += getTime(firstArray, usualQSort);
-            sumTimeStreamingQSort += getTime(secondArray, streamingQSort);
+            double timeUsualQsort = 0;
+            double timeStreamingQsort = 0;
 
             initialize(firstArray);
             secondArray = firstArray.clone();
+
+            timeUsualQsort = getTime(firstArray, usualQSort);
+            timeStreamingQsort = getTime(secondArray, streamingQSort);
+            System.out.println("usual qsort: " + timeUsualQsort);
+            System.out.println("streaming qsort: " + timeStreamingQsort + "\n");
+
+
+            sumTimeUsualQSort += timeUsualQsort;
+            sumTimeStreamingQSort += timeStreamingQsort;
         }
 
         System.out.println("\n" + "Average time for sorting arrays using usual quick sorting: " + sumTimeUsualQSort / AMOUNT_ARRAYS);
@@ -47,13 +56,14 @@ public class Main {
      * Gets the time of work of sort
      *
      * @param array  array for sorting
-     * @param sorter sort, which you choiced
+     * @param sorter sort, which you choices
      * @return time of work this sorting
      */
-    private static long getTime(int[] array, Sorter sorter) {
+    private static double getTime(int[] array, Sorter sorter) {
         long startTime = System.currentTimeMillis();
         sorter.qsort(array);
-        return System.currentTimeMillis() - startTime;
+        long finishTime = System.currentTimeMillis();
+        return (double) (finishTime - startTime);
     }
 
     /**

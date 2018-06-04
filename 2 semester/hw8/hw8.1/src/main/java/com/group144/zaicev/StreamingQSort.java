@@ -72,10 +72,8 @@ public class StreamingQSort implements Sorter {
             Sort left = new Sort(this.startIndex, middle, array);
             Sort right = new Sort(middle + 1, endIndex, array);
 
-            left.fork();
             right.fork();
-
-            left.join();
+            left.compute();
             right.join();
         }
     }
