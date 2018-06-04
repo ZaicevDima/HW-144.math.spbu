@@ -1,7 +1,5 @@
 package com.group144.zaicev;
 
-import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,7 +17,6 @@ class ClassInformation {
      * @param clazz class about which you want know information
      * @return information about class in the string
      */
-    @Test
     static String classInformation(Class clazz) {
         StringBuilder information = new StringBuilder();
         getNameInformation(clazz, information);
