@@ -1,6 +1,7 @@
 package com.group144.zaicev;
 
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,8 +9,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import static com.group144.zaicev.GameController.ipAddress;
 
 /**
  * Class for work with client socket
@@ -19,6 +18,11 @@ public class ClientGame implements Game {
     private Socket client;
     private PrintWriter out;
     private BufferedReader in;
+    private String ipAddress;
+
+    ClientGame(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
     @Override
     public synchronized void send(String command) {
@@ -40,7 +44,7 @@ public class ClientGame implements Game {
         InetAddress inetAddress = null;
         if (client == null) {
             try {
-                client = new Socket(inetAddress = InetAddress.getByName(ipAddress.getText()), ServerGame.PORT);
+                client = new Socket(inetAddress = InetAddress.getByName(ipAddress), ServerGame.PORT);
                 out = new PrintWriter(client.getOutputStream());
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             } catch (UnknownHostException uhe) {

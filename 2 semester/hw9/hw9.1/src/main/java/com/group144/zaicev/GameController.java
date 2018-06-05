@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
@@ -28,15 +29,15 @@ public class GameController extends Application {
     private static Button serverButton;
     private static Button clientButton;
     private static Button connect;
-    public static TextField ipAddress;
+    private static TextField ipAddress;
     private static GridPane connectScreen = new GridPane();
     private Scene scene = new Scene(connectScreen, 500, 300);
 
-    private static boolean isMyMove = false;
-    private static int amountMovesFirstPlayer = 0;
+    private boolean isMyMove = false;
+    private int amountMovesFirstPlayer = 0;
 
-    static Button[][] buttons = new Button[3][3];
-    private static Stage clientWindow = new Stage();
+    private static Button[][] buttons = new Button[3][3];
+    private Stage clientWindow = new Stage();
     private GridPane clientField = new GridPane();
 
     private static Stage serverWindow = new Stage();
@@ -89,6 +90,7 @@ public class GameController extends Application {
 
     /**
      * sens the command other player
+     *
      * @param command your command
      */
     private void processCommand(String command) {
@@ -97,6 +99,7 @@ public class GameController extends Application {
 
     /**
      * action on buttons
+     *
      * @param symbol "X" if the client move, else "O";
      */
     private void pressButtons(String symbol) {
@@ -135,6 +138,7 @@ public class GameController extends Application {
 
     /**
      * changes player playing field
+     *
      * @param symbol symbol of the opposite player
      */
     private void changeField(String symbol) {
@@ -144,6 +148,9 @@ public class GameController extends Application {
             String result = "";
             while (!result.equals("exit")) {
                 result = game.receive();
+                if (result == null) {
+                    return;
+                }
                 String finalResult = result;
                 Platform.runLater(() -> {
                     if (finalResult.equals("close")) {
@@ -156,12 +163,20 @@ public class GameController extends Application {
                         buttons[coordinates[0]][coordinates[1]].setText(symbol);
                         if (CheckingWin.isWinner(getValueFromButtons())) {
                             game.send("exit");
-                            System.exit(1);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
+                                    ButtonType.CLOSE);
+                            alert.setTitle("exit");
+                            alert.setContentText((symbol.equals("X") ? "O" : "X") + " lose");
+                            alert.showAndWait().ifPresent(response -> System.exit(1));
                         }
 
                         if (amountMovesFirstPlayer == 4 && symbol.equals("X") && !CheckingWin.isWinner(getValueFromButtons())) {
                             game.send("exit");
-                            System.exit(1);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
+                                    ButtonType.CLOSE);
+                            alert.setTitle("exit");
+                            alert.setContentText("Draw");
+                            alert.showAndWait().ifPresent(response -> System.exit(1));
                         }
                     }
                 });
@@ -171,6 +186,7 @@ public class GameController extends Application {
 
     /**
      * starts game
+     *
      * @param primaryStage main stage
      */
     @Override
@@ -240,7 +256,20 @@ public class GameController extends Application {
      */
     private void connectButtonAction() {
         connect.setOnAction(event -> {
-            game = new ClientGame();
+            String text = ipAddress.getText();
+
+            try {
+                if (!InetAddress.getByName(text).isReachable(1000)) {
+                    JOptionPane.showMessageDialog(null, "Error, wrong IP!", "error",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(1);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error, wrong IP!", "error",
+                        JOptionPane.INFORMATION_MESSAGE);
+                System.exit(1);
+            }
+            game = new ClientGame(text);
             game.send("hello");
 
             clientField.setMinSize(300, 300);
@@ -264,6 +293,7 @@ public class GameController extends Application {
 
     /**
      * creates playing field
+     *
      * @param gridPane old field
      * @return new playing field
      */

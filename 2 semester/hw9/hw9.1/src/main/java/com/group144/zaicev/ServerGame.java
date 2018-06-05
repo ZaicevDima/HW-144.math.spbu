@@ -40,7 +40,7 @@ public class ServerGame implements Game {
     @Override
     public String receive() {
         init();
-        return in.lines().limit(1).findAny().get();
+        return in.lines().limit(1).findAny().orElse(null);
     }
 
     /** initialization */
