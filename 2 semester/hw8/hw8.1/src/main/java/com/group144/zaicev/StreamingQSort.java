@@ -8,9 +8,10 @@ import java.util.concurrent.RecursiveAction;
  */
 public class StreamingQSort implements Sorter {
 
+    private ForkJoinPool forkJoinPool = new ForkJoinPool();
+
     @Override
     public void qsort(int[] array) {
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new Sort(0, array.length - 1, array));
     }
 

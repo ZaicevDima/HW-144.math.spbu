@@ -7,6 +7,7 @@ public interface Sorter {
 
     /**
      * realises quick sort
+     *
      * @param array array to be sorted
      */
     void qsort(int[] array);

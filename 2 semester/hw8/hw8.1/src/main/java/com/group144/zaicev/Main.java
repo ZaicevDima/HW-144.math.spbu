@@ -1,16 +1,12 @@
 package com.group144.zaicev;
 
-import java.util.Arrays;
 import java.util.Random;
-
-import static java.lang.Math.abs;
 
 /**
  * Class for checking the working time of two sorts
  */
 public class Main {
 
-    private static int AMOUNT_ARRAYS = 20;
     private static int MAX_SIZE = 100000;
 
     public static void main(String[] args) {
@@ -28,12 +24,13 @@ public class Main {
         double sumTimeStreamingQSort = 0;
 
         int[] firstArray = new int[MAX_SIZE];
-        int[] secondArray = firstArray.clone();
+        int[] secondArray;
 
 
+        int AMOUNT_ARRAYS = 100;
         for (int i = 0; i < AMOUNT_ARRAYS; i++) {
-            double timeUsualQsort = 0;
-            double timeStreamingQsort = 0;
+            double timeUsualQsort;
+            double timeStreamingQsort;
 
             initialize(firstArray);
             secondArray = firstArray.clone();
@@ -73,6 +70,7 @@ public class Main {
      */
     private static void initialize(int[] array) {
         Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
         for (int i = 0; i < MAX_SIZE; i++) {
             array[i] = random.nextInt();
         }
