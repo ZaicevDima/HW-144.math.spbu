@@ -1,6 +1,5 @@
 package com.group144.zaicev;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -17,8 +16,8 @@ public class LazyFactory {
      */
     public static <Type> Lazy<Type> createLazySingleThread(Supplier<Type> supplier) {
         return new Lazy<Type>() {
-            private volatile Type value = null;
-            volatile boolean isPerformed = false;
+            private Type value = null;
+            boolean isPerformed = false;
 
             @Override
             public Type get() {
