@@ -13,7 +13,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,11 +36,7 @@ public class GameController extends Application {
     private int amountMovesFirstPlayer = 0;
 
     private static Button[][] buttons = new Button[3][3];
-    private Stage clientWindow = new Stage();
-    private GridPane clientField = new GridPane();
 
-    private static Stage serverWindow = new Stage();
-    private GridPane serverField = new GridPane();
     private volatile Game game;
     private final ExecutorService executor;
 
@@ -103,7 +98,6 @@ public class GameController extends Application {
      * @param symbol "X" if the client move, else "O";
      */
     private void pressButtons(String symbol) {
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 int finalI = i;
@@ -116,24 +110,34 @@ public class GameController extends Application {
                         processCommand(finalI + " " + finalJ);
                         isMyMove = !isMyMove;
                         if (CheckingWin.isWinner(getValueFromButtons())) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
-                                    ButtonType.CLOSE);
-                            alert.setTitle("exit");
-                            alert.setContentText(symbol + " win");
-                            alert.showAndWait().ifPresent(response -> System.exit(1));
+                            exitWindow(symbol, " win");
                         }
 
-                        if (amountMovesFirstPlayer == 5 && !CheckingWin.isWinner(getValueFromButtons())) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
-                                    ButtonType.CLOSE);
-                            alert.setTitle("exit");
-                            alert.setContentText("Draw");
-                            alert.showAndWait().ifPresent(response -> System.exit(1));
+                        if ((amountMovesFirstPlayer == 5) && (!CheckingWin.isWinner(getValueFromButtons()))) {
+                            exitWindow(symbol, "Draw");
                         }
                     }
                 });
             }
         }
+    }
+
+    /**
+     * Show dialog window, when the game ends
+     *
+     * @param state  state game (win, lose or draw)
+     * @param symbol user symbol
+     */
+    private void exitWindow(String symbol, String state) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, null, ButtonType.CLOSE);
+        alert.setTitle("exit");
+        alert.setHeaderText(null);
+        if (state.equals("Draw")) {
+            alert.setContentText(state);
+        } else {
+            alert.setContentText(symbol + state);
+        }
+        alert.showAndWait().ifPresent(response -> System.exit(1));
     }
 
     /**
@@ -153,30 +157,19 @@ public class GameController extends Application {
                 }
                 String finalResult = result;
                 Platform.runLater(() -> {
-                    if (finalResult.equals("close")) {
-                        game.send("exit");
-                    } else if (finalResult.matches("\\d \\d")) {
+                    if (finalResult.matches("\\d \\d")) {
                         isMyMove = true;
                         int[] coordinates = Stream.of(finalResult.trim().split(" "))
                                 .mapToInt(Integer::parseInt)
                                 .toArray();
                         buttons[coordinates[0]][coordinates[1]].setText(symbol);
                         if (CheckingWin.isWinner(getValueFromButtons())) {
-                            game.send("exit");
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
-                                    ButtonType.CLOSE);
-                            alert.setTitle("exit");
-                            alert.setContentText((symbol.equals("X") ? "O" : "X") + " lose");
-                            alert.showAndWait().ifPresent(response -> System.exit(1));
+                            exitWindow(symbol.equals("X") ? "O" : "X", " lose");
                         }
 
-                        if (amountMovesFirstPlayer == 4 && symbol.equals("X") && !CheckingWin.isWinner(getValueFromButtons())) {
-                            game.send("exit");
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File already exists. Do you want to override?",
-                                    ButtonType.CLOSE);
-                            alert.setTitle("exit");
-                            alert.setContentText("Draw");
-                            alert.showAndWait().ifPresent(response -> System.exit(1));
+                        if ((amountMovesFirstPlayer == 4) && (symbol.equals("X"))
+                                && (!CheckingWin.isWinner(getValueFromButtons()))) {
+                            exitWindow(symbol, "Draw");
                         }
                     }
                 });
@@ -222,33 +215,39 @@ public class GameController extends Application {
             try {
                 thisIp = InetAddress.getLocalHost();
             } catch (UnknownHostException ex) {
-                JOptionPane.showMessageDialog(null, "Fatal error! Can't get IP!", "Sorry, fatal error!",
-                        JOptionPane.INFORMATION_MESSAGE);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Can't get IP", ButtonType.CLOSE);
+                alert.setHeaderText(null);
+                alert.showAndWait();
                 System.exit(1);
             }
 
             Label ip = new Label("Your IP address: " + thisIp.getHostAddress());
             connectScreen.add(ip, 0, 4);
-
-            game = new ServerGame();
-
             serverButton.setDisable(true);
 
-
-            StackPane serverStackPane = new StackPane();
-
-            serverField = createField(serverField);
-            serverStackPane.getChildren().add(serverField);
-            Scene serverScene = new Scene(serverStackPane, 300, 300);
-
-            serverWindow.setTitle("Server Window");
-            serverWindow.setScene(serverScene);
-            serverWindow.show();
-
-            changeField("X");
-            pressButtons("O");
-
+            gameForServer();
         });
+    }
+
+    /**
+     * realise game for server
+     */
+    private void gameForServer() {
+        game = new ServerGame();
+        GridPane serverField = new GridPane();
+        Stage serverWindow = new Stage();
+        StackPane serverStackPane = new StackPane();
+
+        serverField = createField(serverField);
+        serverStackPane.getChildren().add(serverField);
+        Scene serverScene = new Scene(serverStackPane, 300, 300);
+
+        serverWindow.setTitle("Server Window");
+        serverWindow.setScene(serverScene);
+        serverWindow.show();
+
+        changeField("X");
+        pressButtons("O");
     }
 
     /**
@@ -260,35 +259,47 @@ public class GameController extends Application {
 
             try {
                 if (!InetAddress.getByName(text).isReachable(1000)) {
-                    JOptionPane.showMessageDialog(null, "Error, wrong IP!", "error",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Wrong IP", ButtonType.CLOSE);
+                    alert.setHeaderText(null);
+                    alert.setTitle("error");
+                    alert.showAndWait();
                     System.exit(1);
                 }
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error, wrong IP!", "error",
-                        JOptionPane.INFORMATION_MESSAGE);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        "Couldn't get I/O for the connection to: " + text, ButtonType.CLOSE);
+                alert.setHeaderText(null);
+                alert.setTitle("error");
+                alert.showAndWait();
                 System.exit(1);
             }
             game = new ClientGame(text);
-            game.send("hello");
-
-            clientField.setMinSize(300, 300);
-            clientField = createField(clientField);
-
-            StackPane clientStackPane = new StackPane();
-            clientStackPane.getChildren().add(clientField);
-            Scene clientScene = new Scene(clientStackPane, 300, 300);
-
-            clientWindow.setTitle("Client Window");
-            clientWindow.setScene(clientScene);
-            clientWindow.show();
-
-            isMyMove = true;
-
-            changeField("O");
-            pressButtons("X");
-
+            gameForClient();
         });
+    }
+
+    /**
+     * realise game for client
+     */
+    private void gameForClient() {
+        Stage clientWindow = new Stage();
+        GridPane clientField = new GridPane();
+
+        clientField.setMinSize(300, 300);
+        clientField = GameController.createField(clientField);
+
+        StackPane clientStackPane = new StackPane();
+        clientStackPane.getChildren().add(clientField);
+        Scene clientScene = new Scene(clientStackPane, 300, 300);
+
+        clientWindow.setTitle("Client Window");
+        clientWindow.setScene(clientScene);
+        clientWindow.show();
+
+        isMyMove = true;
+
+        changeField("O");
+        pressButtons("X");
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.group144.zaicev;
 
-import javax.swing.*;
+import javafx.scene.control.Alert;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,7 +24,10 @@ public class ServerGame implements Game {
         try {
             server = new ServerSocket(PORT);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Error, the server is already running");
+            alert.showAndWait();
             System.exit(1);
         }
     }
@@ -31,7 +35,6 @@ public class ServerGame implements Game {
     @Override
     public synchronized void send(String command) {
         init();
-
         out.println(command);
         out.flush();
 
@@ -43,7 +46,9 @@ public class ServerGame implements Game {
         return in.lines().limit(1).findAny().orElse(null);
     }
 
-    /** initialization */
+    /**
+     * initialization
+     */
     private void init() {
         if (client == null) {
             try {

@@ -1,6 +1,5 @@
 package com.group144.zaicev;
 
-
 /**
  * Class for the win checking
  */
@@ -64,5 +63,4 @@ class CheckingWin {
 
         return isWin;
     }
-
 }
