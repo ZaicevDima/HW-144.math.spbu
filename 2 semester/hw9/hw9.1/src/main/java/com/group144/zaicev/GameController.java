@@ -185,6 +185,7 @@ public class GameController extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Connecting");
+        primaryStage.setResizable(false);
 
         initialize();
 
@@ -235,8 +236,9 @@ public class GameController extends Application {
     private void gameForServer() {
         game = new ServerGame();
         GridPane serverField = new GridPane();
-        Stage serverWindow = new Stage();
         StackPane serverStackPane = new StackPane();
+        Stage serverWindow = new Stage();
+        serverWindow.setResizable(false);
 
         serverField = createField(serverField);
         serverStackPane.getChildren().add(serverField);
@@ -255,10 +257,10 @@ public class GameController extends Application {
      */
     private void connectButtonAction() {
         connect.setOnAction(event -> {
-            String text = ipAddress.getText();
+            String ipAddressText = ipAddress.getText();
 
             try {
-                if (!InetAddress.getByName(text).isReachable(1000)) {
+                if (!InetAddress.getLocalHost().getHostAddress().equals(ipAddressText)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Wrong IP", ButtonType.CLOSE);
                     alert.setHeaderText(null);
                     alert.setTitle("error");
@@ -267,13 +269,16 @@ public class GameController extends Application {
                 }
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                        "Couldn't get I/O for the connection to: " + text, ButtonType.CLOSE);
+                        "Couldn't get I/O for the connection to: " + ipAddressText, ButtonType.CLOSE);
                 alert.setHeaderText(null);
                 alert.setTitle("error");
                 alert.showAndWait();
                 System.exit(1);
             }
-            game = new ClientGame(text);
+            connect.setDisable(true);
+            ipAddress.setDisable(true);
+
+            game = new ClientGame(ipAddressText);
             gameForClient();
         });
     }
@@ -283,6 +288,8 @@ public class GameController extends Application {
      */
     private void gameForClient() {
         Stage clientWindow = new Stage();
+        clientWindow.setResizable(false);
+
         GridPane clientField = new GridPane();
 
         clientField.setMinSize(300, 300);

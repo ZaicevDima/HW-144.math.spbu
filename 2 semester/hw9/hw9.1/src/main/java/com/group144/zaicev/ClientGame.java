@@ -28,13 +28,12 @@ public class ClientGame implements Game {
 
         out.println(command);
         out.flush();
-
     }
 
     @Override
     public String receive() {
         init();
-        return in.lines().limit(1).findAny().get();
+        return in.lines().limit(1).findAny().orElse(null);
     }
 
     /** initialization **/
