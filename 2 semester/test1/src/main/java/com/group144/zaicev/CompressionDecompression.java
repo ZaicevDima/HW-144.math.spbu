@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 class CompressionDecompression {
     /**
-     * compress array
+     * compresses array
      *
      * @param array array, which you want to compress
      * @return compressing array
@@ -32,7 +32,7 @@ class CompressionDecompression {
     }
 
     /**
-     * decompress array
+     * decompresses array
      *
      * @param array array, which you want to decompress
      * @return decompressing array
@@ -45,6 +45,7 @@ class CompressionDecompression {
             }
             i++;
         }
+
         return toArray(result);
     }
 
@@ -59,6 +60,7 @@ class CompressionDecompression {
         for (int i = 0; i < arrayList.size(); i++) {
             result[i] = arrayList.get(i);
         }
+
         return result;
     }
 }
