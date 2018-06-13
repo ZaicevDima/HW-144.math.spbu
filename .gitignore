@@ -32,7 +32,6 @@
 *.app
 
 *.qbs.user
-*.class
 *.xml
 
 
@@ -107,7 +106,6 @@ fabric.properties
 
 ### Java ###
 # Compiled class file
-*.class
 
 # Log file
 *.log
