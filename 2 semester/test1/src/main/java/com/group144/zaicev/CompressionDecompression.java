@@ -12,7 +12,7 @@ class CompressionDecompression {
      * @param array array, which you want to compress
      * @return compressing array
      */
-    byte[] compression(byte[] array) {
+    static byte[] compression(byte[] array) {
         ArrayList<Byte> resultInList = new ArrayList<>();
         int amountRepetitions = 1;
         for (int i = 1; i < array.length; i++) {
@@ -37,7 +37,7 @@ class CompressionDecompression {
      * @param array array, which you want to decompress
      * @return decompressing array
      */
-    byte[] decompression(byte[] array) {
+    static byte[] decompression(byte[] array) {
         ArrayList<Byte> result = new ArrayList<>();
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array[i]; j++) {
@@ -55,7 +55,7 @@ class CompressionDecompression {
      * @param arrayList your array list, which you want to transformation
      * @return transformed into array list
      */
-    private byte[] toArray(ArrayList<Byte> arrayList) {
+    private static byte[] toArray(ArrayList<Byte> arrayList) {
         byte[] result = new byte[arrayList.size()];
         for (int i = 0; i < arrayList.size(); i++) {
             result[i] = arrayList.get(i);

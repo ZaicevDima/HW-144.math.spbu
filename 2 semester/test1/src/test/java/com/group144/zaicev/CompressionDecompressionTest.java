@@ -3,7 +3,11 @@ package com.group144.zaicev;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CompressionDecompressionTest extends CompressionDecompression {
+import static com.group144.zaicev.CompressionDecompression.compression;
+import static com.group144.zaicev.CompressionDecompression.decompression;
+
+
+public class CompressionDecompressionTest {
 
     @Test
     public void compressionTest() {
